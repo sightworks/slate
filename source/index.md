@@ -2,12 +2,9 @@
 title: API Reference
 
 language_tabs:
-  - shell
-  - ruby
-  - python
+  - json
 
 toc_footers:
-  - <a href='#'>Sign Up for a Developer Key</a>
   - <a href='http://github.com/tripit/slate'>Documentation Powered by Slate</a>
 
 includes:
@@ -18,151 +15,518 @@ search: true
 
 # Introduction
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
+Sightworks platform API doc header here
 
-We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
+# Conventions
 
-This example API documentation page was created with [Slate](http://github.com/tripit/slate). Feel free to edit it and use it as a base for your own API's documentation.
+## Tokens
+
+Various tokens are used below to describe URLs. All tokens are presented as ``{{token}}`` in the rest of this document.
+
+All of them defined here in the Conventions section are presented as all uppercase: ``{{ROOT}}``.
+
+Name | Description | ``$type`` field contents
+---- | ----------- | ------------------------
+{{ROOT}} | The top-level URL for the API: ``https://example.digitalxe.com/api/1``. | [``Root``](#root-root)
+{{CHANNEL}} | The URL to a channel resource: ``{{ROOT}}/channels/{{channel-id}}`` | [``ChannelResource``](#channel-channelresource)
+{{APP}} | The URL to an app resource: ``{{ROOT}}/apps/{{app-id}}`` | [``AppResource``](#app-appresource)
+{{GROUP}} | The URL to a group resource: ``{{APP}}/groups/{{group-id}}`` | ``AppGroup``
+{{RECORD}} | The URL to a record resource: ``{{APP}}/records/{{record-id}}`` | ``AppRecord``
+{{RESOURCE}} | An arbitrary resource URL. | [``Resource``](#resource-resource)
+
+Other tokens, like ``{{channel-id}}`` and ``{{group-id}}`` are described as they appear.
+
+Within a given example code block, each token will carry the same meaning: if multiple objects of the same type are presented in any
+code block, like multiple records or groups, each will have it's URL expanded out.
+ 
+## Object Types
+
+For all objects described as being of the [``Resource``](#resource-resource) type, their header includes the token that appears in their ``$type`` property. Others,
+which are used primarily for exposition of the rest of the API, do not have this in their header.
 
 # Authentication
 
-> To authorize, use this code:
+TODO
 
-```ruby
-require 'kittn'
+# Objects
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-```
-
-```shell
-# With shell, you can just pass the correct header with each request
-curl "api_endpoint_here"
-  -H "Authorization: meowmeowmeow"
-```
-
-> Make sure to replace `meowmeowmeow` with your API key.
-
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
-
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
-
-`Authorization: meowmeowmeow`
-
-<aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
-</aside>
-
-# Kittens
-
-## Get All Kittens
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
-```
-
-```shell
-curl "http://example.com/api/kittens"
-  -H "Authorization: meowmeowmeow"
-```
-
-> The above command returns JSON structured like this:
-
-```json
-[
-  {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
-  },
-  {
-    "id": 2,
-    "name": "Isis",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
-  }
-]
-```
-
-This endpoint retrieves all kittens.
-
-### HTTP Request
-
-`GET http://example.com/api/kittens`
-
-### Query Parameters
-
-Parameter | Default | Description
---------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
-
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
-
-## Get a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2"
-  -H "Authorization: meowmeowmeow"
-```
-
-> The above command returns JSON structured like this:
+## Resource (``Resource``)
 
 ```json
 {
-  "id": 2,
-  "name": "Isis",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
+	"$type": [ "Resource" ],
+	"id": "{{RESOURCE}}",
+	"data": "/* The contents of the resource goes here */",
+	"children": {
+		"{{name}}": {
+			"$Resource": "{{RESOURCE}}/{{name}}"
+		}
+	}
 }
 ```
 
-This endpoint retrieves a specific kitten.
+A resource is the basic object in the API.
 
-<aside class="warning">If you're not using an administrator API key, note that some kittens will return 403 Forbidden if they are hidden for admins only.</aside>
+### Fields in a resource
 
-### HTTP Request
+Name | Type | Description
+---- | ---- | -----------
+$type | Array of String | The various type names associated with this resource object. All resources include 'Resource'; see the relevant sections on each resource to find out what other types might appear here.
+id | String | The URL to this resource
+data | Any | The contents of this resource.
+children | Resource Map | Other resources available as children of this resource. The ``{{name}}`` of each item depends on the resource itself. Each resource object contains a list of it's children
 
-`GET http://example.com/kittens/<ID>`
+The ``data`` property is not required and does not appear on certain resources (those whose ``$type`` property includes ``Collection``, primarily). The same is true of the ``children`` property. 
 
-### URL Parameters
+### Query Parameters for Resources
 
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to retrieve
+Name | Type | Default | Description
+---- | ---- | ------- | -----------
+depth | Number | 0 | How deep to traverse the resource graph to retrieve items. For a depth value greater than 0, each Resource Pointer object found in the result is inserted into the resulting data that is returned to you.
+
+For ``depth``: Each object retrieved by this method is pulled as if it had no parameters specified for it.
+
+### Children
+
+Since ``Resource`` is the base type of all resources, it doesn't define any children. See the other object types for details about their child objects.
+
+## Channel (``ChannelResource``)
+
+```json
+{
+	"id": "{{CHANNEL}}",
+	"data": {
+		"title": "Channel Title"
+	},
+	"children": {
+		"apps": {
+			"$Resource": "{{CHANNEL}}/apps"
+		}
+	},
+	"$type": [
+		"Resource",
+		"ChannelResource"
+	]
+}
+```
+
+This represents a channel in the platform.
+
+### Location
+
+``ChannelResource`` objects are available as children of a [``ChannelCollection``](#collection-types).
+
+Canonical URL: ``{{ROOT}}/channels/{{channel-id}}``
+
+* ``{{ROOT}}`` is the API root
+* ``{{channel-id}}`` is the channel identifier.
+
+Example:
+
+``https://example.digitalxe.com/api/1/channels/7bb50dc958ecf596cbb43e0db584c6dc``
+
+The URL to a ``ChannelResource`` object is also a value for the ``{{CHANNEL}}`` [token](#tokens) used elsewhere.
+
+### Fields
+
+Name | Type | Description
+---- | ---- | -----------
+``data.title`` | String | The name of the channel
+
+### Children
+
+Name | URL | Description | Type
+---- | ------------- | ----------- | ----
+apps | ``{{CHANNEL}}/apps`` | The collection of apps in this channel | [``AppCollection``](#collection-types)
+
+## App (``AppResource``)
+
+```json
+{
+	"id": "{{APP}}",
+	"data": {
+		"id": "{{APP}}",
+		"title": "App Title"
+	},
+	"children": {
+		"root": {
+			"$Resource": "{{APP}}/root"
+		},
+		"records": {
+			"$Resource": "{{APP}}/records"
+		},
+		"groups": {
+			"$Resource": "{{APP}}/groups"
+		},
+		"meta": {
+			"$Resource": "{{APP}}/meta"
+		}
+	},
+	"$type": [
+		"Resource",
+		"AppResource"
+	]
+}
+```
+
+An App in the platform.
+
+### Location
+
+``AppResource`` objects are available as children of an [``AppCollection``](#collection-types).
+
+Canonical URL: ``{{ROOT}}/apps/{{app-id}}``
+
+* ``{{ROOT}}`` is the API root
+* ``{{app-id}}`` is the app ID
+
+Example URL:
+
+``https://example.digitalxe.com/api/1/apps/swt_addressBook``
+
+The URL to an ``AppResource`` object is also a value for the ``{{APP}}`` [token](#tokens) used elsewhere.
+
+### Fields
+
+Name | Type | Description
+---- | ---- | -----------
+``data.title`` | String | The name of the app
+
+### Children
+
+Name | URL | Description | Type
+---- | ------------- | ----------- | ----
+root | ``{{APP}}/root`` | The group in this app that holds 'ungrouped' records and top-level groups. | ``AppGroup``
+records | ``{{APP}}/records`` | The collection of all records in this app. | ``AppRecordList``
+groups | ``{{APP}}/groups`` | The collection of all groups in this app, excluding 'ungrouped'. | ``AppGroupList``
+meta | ``{{APP}}/meta`` | The app metadata container. | ``AppMetaData``
+
+## App Meta Data (``AppMetaData``)
+
+```json
+{
+	"id": "{{APP}}/meta",
+	"data": null,
+	"children": {
+		"group": {
+			"$Resource": "{{APP}}/meta/group"
+		},
+		"record": {
+			"$Resource": "{{APP}}/meta/record"
+		}
+	},
+	"$type": [
+		"Resource",
+		"AppMetaData"
+	]
+}
+```
+
+Contains metadata about the app's records & groups, detailing the structure of a record.
+
+### Location
+
+``AppMetaData`` objects are available as children of an [``AppResource``](#app-appresource).
+
+Canonical URL: ``{{ROOT}}/apps/{{app-id}}/meta``
+
+* ``{{ROOT}}`` is the API root
+* ``{{app-id}}`` is the ID of the app
+
+### Children
+
+Name | URL | Description | Type
+---- | ------------- | ----------- | ----
+group | ``{{APP}}/meta/group`` | Description of an ``AppGroup`` object within this app. | ``AppGroupMetaData``
+record | ``{{APP}}/meta/record`` | Description of an ``AppRecord`` object within this app. | ``AppRecordMetaData``
+
+<span class='warning'>These objects are not currently documented.</span>
+
+## Groups and Records (``RecordLikeObject``)
+
+```json
+{
+	"id": "{{RESOURCE}}",
+	"data": {
+		"meta": {
+			"active": true,
+			"created": "2015-11-16T08:45:21.000Z",
+			"createdBy": {
+				"$Resource": "{{ROOT}}/apps/swt_addressBook/records/{{person-id}}"
+			},
+			"modified": "2015-11-16T08:45:21.000Z",
+			"modifiedBy": {
+				"$Resource": "{{ROOT}}/apps/swt_addressBook/records/{{person-id}}"
+			},
+			"publishing": {
+				"active": "2015-11-16T07:00:00.000Z",
+				"archive": null
+			}
+		},
+		"SEO": {
+			"url": "Fragment",
+			"title": "Title",
+			"keywords": "Keywords",
+			"description": "Description"
+		},
+		"data": {}
+	},
+	"children": {},
+	"$type": [ "Resource", "RecordLikeObject" ]
+}
+```
+
+This structure is used for any object that behaves similarly to a record.
+
+### Location
+
+``RecordLikeObject`` objects are not directly found. Their subtypes, [``AppRecord``](#record-apprecord) and [``AppGroup``](#group-appgroup),
+are found in various places; see their documentation for details.
+
+### Fields
+
+Name | Type | Description
+---- | ---- | -----------
+``data.meta.active`` | Boolean | Whether the record is active or archived.
+``data.meta.created`` | Timestamp | The time the record was created.
+``data.meta.createdBy`` | [Resource Pointer](#resource-pointer) to a [Person](#person-record) [record](#record-apprecord). | The person who created this record.
+``data.meta.modified`` | Timestamp | The time the record was last modified.
+``data.meta.modifiedBy`` | [Resource Pointer](#resource-pointer) to a [Person](#person-record) [record](#record-apprecord). | The person who last modified this record.
+``data.meta.publishing.active`` | Timestamp | The timestamp that the ``data.meta.active`` flag should be toggled to ``true``.
+``data.meta.publishing.archive`` | Timestamp | The timestamp that the ``data.meta.active`` flag should be toggled to ``false``.
+``data.SEO.url`` | String | If the record provides SEO data, the fragment used on the website for accessing this object.
+``data.SEO.title`` | String | The title to use on pages that represent this record in the HTML &lt;title&gt; tag.
+``data.SEO.keywords`` | Text | The keywords to use in the HTML &lt;meta name="keywords"&gt; tag.
+``data.SEO.description`` | Text | The keywords to use in the HTML &lt;meta name="description"&gt; tag.
+
+### Children
+
+The children of a record-like object are determined dynamically by the type of record being displayed. 
+
+See the Children sections in [``AppRecord``](#record-apprecord) and [``AppGroup``](#group-appgroup) for others that are always here.
+
+
+
+## Root (``Root``)
+
+```json
+{
+	"id": "{{ROOT}}",
+	"data": null,
+	"children": {
+		"channels": {
+			"$Resource": "{{ROOT}}/channels"
+		},
+		"apps": {
+			"$Resource": "{{ROOT}}/apps"
+		},
+		"multi": {
+			"$Resource": "{{ROOT}}/multi"
+		}
+	},
+	"$type": [
+		"Resource",
+		"Root"
+	]
+}
+```
+
+The API root object. This is the top-level of the API namespace.
+
+### Location
+
+This is the "Root" object in the API.
+
+Canonical URL: ``{{ROOT}}``
+
+* ``{{ROOT}}`` is the API root.
+
+### Children
+
+Name | URL | Description | Type
+---- | ------------- | ----------- | ----
+channels | ``{{ROOT}}/channels`` | The collection of channels on the platform instance | [``ChannelCollection``](#collection-types)
+apps | ``{{ROOT}}/apps`` | All of the apps available on the platform instance | [``AppCollection``](#collection-types)
+multi | ``{{ROOT}}/multi`` | Make multiple API requests at the same time. | [``Resource``](#resource)
+
+The ``multi`` child does not really represent a child resource, but rather a callable method. See [POST Multiple Request Endpoint](#post-multiple-request-endpoint) for details.
+
+## Collections (``Collection``)
+
+```json
+{
+	"$type": [ "Resource", "Collection" ],
+	"id": "{{RESOURCE}}",
+	"collection": {
+		"length": 1,
+		"items": [
+			{ "$Resource": "{{RESOURCE}}/{{id}}" }
+		]
+	}
+}
+```
+
+Collections are a resource which contains an ordered set of other resources.
+
+### Fields
+
+Name | Type | Description
+---- | ---- | -----------
+$type | Array of String | The type of object. Collections always include 'Collection' in this set.
+id | String | The URL to this resource
+collection.length | Number | The number of entities in this collection
+collection.items | Array of [Resource Pointers](#resource-pointer) | The entities in the collection
+
+### Parameters that can be used with a collection
+
+Name | Type | Default | Description
+---- | ---- | ------- | -----------
+start | Number | 0 | The starting position in the collection to return items from
+limit | Number | 10 | The maximum number of items in this collection to return
+filter | String | ``null`` | A filter to be applied to the collection's result. (FIXME: Document this).
+
+### Collection Types
+
+Name | Description | Content Type
+---- | ----------- | ------------
+``ChannelCollection`` | A list of channels. | [``ChannelResource``](#channel-channelresource)
+``AppCollection`` | A list of apps. | [``AppResource``](#app-appresource)
+``AppRecordList`` | A list of records within an app | [``AppRecord``](#record-apprecord)
+``AppGroupList`` | A list of groups within an app | [``AppGroup``](#group-appgroup)
+
+## Resource Pointer
+
+```json
+{
+	"$Resource": "{{RESOURCE}}"
+}
+```
+
+A resource pointer is an object that contains a resource URL. They are constructed as to be easily noticed when using a resource.
+
+The ``$Resource`` property contains the canonical URL of the resource.
+
+## Resource Map
+
+```json
+{
+	"name": {
+		"$Resource": "{{RESOURCE}}"
+	}
+}
+```
+
+A resource map contains a set of named objects representing children of a given resource.
+
+With a resource map, there are 2 ways to get to the resources provided:
+
+* Take the value of the ``$Resource`` property in the object.
+* Construct a URL using the URL of the current resource and appending '/' and the key from the resource map.
+
+```
+{
+	"test-item": {
+		"$Resource": "{{ROOT}}/test-item"
+	}
+}
+```
+
+> Resource map from {{ROOT}}/test
+
+Using the resource map to the right, the ``test-item`` child can be accessed through either:
+
+* ``{{ROOT}}/test-item`` - from the ``$Resource`` property
+* ``{{ROOT}}/test/test-item`` - as a child of the original resource
+
+## Response
+
+```json
+{
+	"resource": "{{RESOURCE}}",
+	"resources": {
+		"{{RESOURCE}}": {
+			"id": "{{RESOURCE}}",
+			"data": null,
+			"children": {
+				"channels": {
+					"$Resource": "{{RESOURCE}}/channels"
+				}
+			},
+			"$type": [
+				"Resource",
+				"Root"
+			]
+		}
+	}
+}
+```
+
+This is an object containing the results of a resource request.
+
+### Fields
+
+Name | Type | Description
+---- | ---- | -----------
+resource | String | The canonical URL of the resource you requested. (This may not be the same as the one you requested, as many resources are available through multiple paths.)
+resources | Object | An object whose keys consist of the canonical resource URLs that were retrieved and whose values are the resources themselves.
+
+# Miscellaneous API methods
+
+## POST Multiple Request Endpoint
+
+``POST {{ROOT}}/multi``
+
+Retrieve or update a number of resources simultaneously. This method does not perform a transaction (where, if for example, a set of POST or PUT requests are included, if one were to fail, none would happen), but
+rather just performs each request.
+
+### Request Body
+
+```json
+{
+	"requests": [
+		{
+			"method": "HTTP-Method",
+			"resource": "Resource-URL",
+			"query": {
+				"Query": "Parameter"
+			},
+			"data": {
+				"POST": "Data goes here"
+			}
+		}
+	]
+}
+```
+
+Property | Type | Description
+-------- | ---- | -----------
+``requests`` | Array | Array of the requests to be made
+``requests[N].method`` | String | The request method to invoke. This should be a valid HTTP request method
+``requests[N].resource`` | String | The full URI to the resource that the request is for. This should be relative to the API base URL (in this documentation, ``https://example.digitalxe.com/api/1``.)
+``requests[N].query`` | Map | The query parameters to append. The values should be provided as strings.
+``requests[N].data`` | Object | The data that would be provided in the POST body. Since the API only accepts JSON bodies for POST data, the data should be the object without being JSON encoded itself.
+
+### Response Body
+
+```json
+{
+	"result": [
+		{
+			"responseCode": 200,
+			"result": "Response-Body"
+		}
+	]
+}
+```
+
+The result contains a list of encapsulated responses.
+
+Response:
+
+Property | Type | Description
+-------- | ---- | -----------
+``result`` | Array | The responses, in the same order that the requests were in the original request.
+``result[N].responseCode`` | Number | The HTTP response code that would have been returned for the request.
+``result[N].headers`` | Map | A map of HTTP headers that would have been returned, if any.
+``result[N].result`` | Any | The response body of the request.
 
