@@ -112,7 +112,100 @@ which are used primarily for exposition of the rest of the API, do not have this
 
           <h1 id="authentication">Authentication</h1>
 
+<h2 id="get-api-credentials">Get API credentials</h2>
+
 <p>TODO</p>
+
+<h2 id="get-a-bearer-token">Get a Bearer token</h2>
+
+<h3 id="request">Request</h3>
+<pre class="highlight plaintext"><code>POST /oauth2/token
+Authorization: Basic a2V5OnRva2Vu
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=client_credentials
+</code></pre>
+
+<p>Given your set of API credentials, make a request to /oauth2/token on your platform&rsquo;s instance. </p>
+
+<ul>
+<li>Authorization: Basic <em>token</em> 
+The HTTP Auth header. The username and password for this are the API credentials you got above.</li>
+<li>The content body: <code class="prettyprint">grant_type=client_credentials</code>
+This specifies the type of token to retrieve. The access tokens provided here are application access tokens - all changes
+will show that they were done by the application, not by any specific user.</li>
+</ul>
+
+<h3 id="response">Response</h3>
+<pre class="highlight plaintext"><code>HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+    "token_type": "bearer",
+    "access_token": "eyJ0b2tlbiI6ImtleSIsImtleSI6InRva2VuIn0="
+}
+</code></pre>
+
+<p>This JSON response body indicates:</p>
+
+<ul>
+<li>The token is a &lsquo;Bearer&rsquo; token (<code class="prettyprint">&quot;token_type&quot;: &quot;bearer&quot;</code>)</li>
+<li>The included access token to use.</li>
+</ul>
+
+<p>In the future, this API may return other token types (possibly an OAuth token for the app using the &#39;OAuth&rsquo; mechanism for HTTP Auth).</p>
+
+<h2 id="use-the-bearer-token-in-a-request">Use the Bearer token in a request</h2>
+<pre class="highlight plaintext"><code>GET {{ROOT}}/channels
+Authorization: Bearer eyJ0b2tlbiI6ImtleSIsImtleSI6InRva2VuIn0=
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+    "resource": "{{ROOT}}/channels",
+    "resources": {
+        "{{ROOT}}/channels": {
+            "id": "{{ROOT}}/channels", 
+            "collection": {
+                "length": 1,
+                "items": [
+                    {
+                        "$Resource": "{{ROOT}}/channels/44bc0861e2ad8f8b158a2842c7207009"
+                    }
+                ]
+            },
+            "$type": [
+                "Resource",
+                "Collection",
+                "ChannelCollection"
+            ]
+        }
+    },
+    "debug": {}
+}
+</code></pre>
+
+<p>This is just an example of using the token.</p>
+
+<h2 id="invalidate-the-bearer-token">Invalidate the Bearer token</h2>
+<pre class="highlight plaintext"><code>POST /oauth2/invalidate_token
+Authorization: Basic a2V5OnRva2Vu
+Content-Type: application/x-www-form-urlencoded
+
+access_token=eyJ0b2tlbiI6ImtleSIsImtleSI6InRva2VuIn0%3D
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+    "access_token": "eyJ0b2tlbiI6ImtleSIsImtleSI6InRva2VuIn0="
+}
+</code></pre>
+
+<p><span class='warning'>This actually doesn&rsquo;t do anything currently except return success with the passed access token.</span></p>
+
+<p>This API will invalidate the provided access token, making it no longer usable.</p>
 
           <h1 id="basic-types">Basic Types</h1>
 
