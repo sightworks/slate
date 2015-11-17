@@ -8,12 +8,12 @@
 
     <link href="stylesheets/screen.css" rel="stylesheet" type="text/css" media="screen" />
     <link href="stylesheets/print.css" rel="stylesheet" type="text/css" media="print" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
       <script src="javascripts/all.js" type="text/javascript"></script>
 
       <script>
         $(function() {
-          setupLanguages(["shell","ruby","python"]);
+          setupLanguages(["json"]);
         });
       </script>
   </head>
@@ -28,9 +28,7 @@
     <div class="tocify-wrapper">
       <img src="images/logo.png" />
         <div class="lang-selector">
-              <a href="#" data-language-name="shell">shell</a>
-              <a href="#" data-language-name="ruby">ruby</a>
-              <a href="#" data-language-name="python">python</a>
+              <a href="#" data-language-name="json">json</a>
         </div>
         <div class="search">
           <input type="text" class="search" id="input-search" placeholder="Search">
@@ -39,156 +37,2501 @@
       <div id="toc">
       </div>
         <ul class="toc-footer">
-            <li><a href='#'>Sign Up for a Developer Key</a></li>
             <li><a href='http://github.com/tripit/slate'>Documentation Powered by Slate</a></li>
         </ul>
     </div>
     <div class="page-wrapper">
       <div class="dark-box"></div>
       <div class="content">
-        <h1 id='introduction'>Introduction</h1>
-<p>Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.</p>
+        
+          <h1 id="introduction">Introduction</h1>
 
-<p>We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.</p>
+<p>Sightworks platform API doc header here</p>
 
-<p>This example API documentation page was created with <a href="http://github.com/tripit/slate">Slate</a>. Feel free to edit it and use it as a base for your own API&rsquo;s documentation.</p>
-<h1 id='authentication'>Authentication</h1>
-<blockquote>
-<p>To authorize, use this code:</p>
-</blockquote>
-<pre><code class="highlight ruby"><span class="nb">require</span> <span class="s1">'kittn'</span>
+          <h1 id="conventions">Conventions</h1>
 
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-</code></pre>
-<pre><code class="highlight python"><span class="kn">import</span> <span class="nn">kittn</span>
+<h2 id="tokens">Tokens</h2>
 
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-</code></pre>
-<pre><code class="highlight shell"><span class="c"># With shell, you can just pass the correct header with each request</span>
-curl <span class="s2">"api_endpoint_here"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre>
+<p>Various tokens are used below to describe URLs. All tokens are presented as <code class="prettyprint">{{token}}</code> in the rest of this document.</p>
 
-<blockquote>
-<p>Make sure to replace <code class="prettyprint">meowmeowmeow</code> with your API key.</p>
-</blockquote>
+<p>All of them defined here in the Conventions section are presented as all uppercase: <code class="prettyprint">{{ROOT}}</code>.</p>
 
-<p>Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our <a href="http://example.com/developers">developer portal</a>.</p>
-
-<p>Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:</p>
-
-<p><code class="prettyprint">Authorization: meowmeowmeow</code></p>
-
-<p><aside class="notice">
-You must replace <code class="prettyprint">meowmeowmeow</code> with your personal API key.
-</aside></p>
-<h1 id='kittens'>Kittens</h1><h2 id='get-all-kittens'>Get All Kittens</h2><pre><code class="highlight ruby"><span class="nb">require</span> <span class="s1">'kittn'</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">get</span>
-</code></pre>
-<pre><code class="highlight python"><span class="kn">import</span> <span class="nn">kittn</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
-</code></pre>
-<pre><code class="highlight shell">curl <span class="s2">"http://example.com/api/kittens"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre>
-
-<blockquote>
-<p>The above command returns JSON structured like this:</p>
-</blockquote>
-<pre><code class="highlight json"><span class="p">[</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Fluffums"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"calico"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Isis"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">]</span><span class="w">
-</span></code></pre>
-
-<p>This endpoint retrieves all kittens.</p>
-<h3 id='http-request'>HTTP Request</h3>
-<p><code class="prettyprint">GET http://example.com/kittens</code></p>
-<h3 id='query-parameters'>Query Parameters</h3>
 <table><thead>
 <tr>
-<th>Parameter</th>
+<th>Name</th>
+<th>Description</th>
+<th><code class="prettyprint">$type</code> field contents</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>{{ROOT}}</td>
+<td>The top-level URL for the API: <code class="prettyprint">https://example.digitalxe.com/api/1</code>.</td>
+<td><a href="#root-root"><code class="prettyprint">Root</code></a></td>
+</tr>
+<tr>
+<td>{{CHANNEL}}</td>
+<td>The URL to a channel resource: <code class="prettyprint">{{ROOT}}/channels/{{channel-id}}</code></td>
+<td><a href="#channel-channelresource"><code class="prettyprint">ChannelResource</code></a></td>
+</tr>
+<tr>
+<td>{{APP}}</td>
+<td>The URL to an app resource: <code class="prettyprint">{{ROOT}}/apps/{{app-id}}</code></td>
+<td><a href="#app-appresource"><code class="prettyprint">AppResource</code></a></td>
+</tr>
+<tr>
+<td>{{GROUP}}</td>
+<td>The URL to a group resource: <code class="prettyprint">{{APP}}/groups/{{group-id}}</code></td>
+<td><code class="prettyprint">AppGroup</code></td>
+</tr>
+<tr>
+<td>{{RECORD}}</td>
+<td>The URL to a record resource: <code class="prettyprint">{{APP}}/records/{{record-id}}</code></td>
+<td><code class="prettyprint">AppRecord</code></td>
+</tr>
+<tr>
+<td>{{RESOURCE}}</td>
+<td>An arbitrary resource URL.</td>
+<td><a href="#resource-resource"><code class="prettyprint">Resource</code></a></td>
+</tr>
+<tr>
+<td>{{KEY}}</td>
+<td>A channel key.</td>
+<td>N/A</td>
+</tr>
+</tbody></table>
+
+<p>Other tokens, like <code class="prettyprint">{{channel-id}}</code> and <code class="prettyprint">{{group-id}}</code> are described as they appear.</p>
+
+<p>Within a given example code block, each token will carry the same meaning: if multiple objects of the same type are presented in any
+code block, like multiple records or groups, each will have it&rsquo;s URL expanded out.</p>
+
+<h2 id="object-types">Object Types</h2>
+
+<p>For all objects described as being of the <a href="#resource-resource"><code class="prettyprint">Resource</code></a> type, their header includes the token that appears in their <code class="prettyprint">$type</code> property. Others,
+which are used primarily for exposition of the rest of the API, do not have this in their header.</p>
+
+          <h1 id="authentication">Authentication</h1>
+
+<p>TODO</p>
+
+          <h1 id="basic-types">Basic Types</h1>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Resource ID</td>
+<td>The canonical URL to a resource, as a JSON String</td>
+<td><code class="prettyprint">&quot;https://example.digitalxe.com/api/1/channels/888da06d62339a2a72706ef2502ae5ed&quot;</code></td>
+</tr>
+<tr>
+<td>Timestamp</td>
+<td>A string containing an ISO-8601 format timestamp (more specifically: in JavaScript, <code class="prettyprint">JSON.stringify(aDateObject)</code> where <code class="prettyprint">aDateObject</code> is an instance of the <code class="prettyprint">Date</code> type.)</td>
+<td><code class="prettyprint">&quot;2015-11-16T08:45:21.000Z&quot;</code></td>
+</tr>
+<tr>
+<td>Boolean</td>
+<td>The literal values <code class="prettyprint">true</code> or <code class="prettyprint">false</code></td>
+<td><code class="prettyprint">true</code></td>
+</tr>
+<tr>
+<td>String</td>
+<td>A JSON string whose length is at most 255</td>
+<td><code class="prettyprint">&quot;A string&quot;</code></td>
+</tr>
+<tr>
+<td>Text</td>
+<td>A JSON string whose length is at most 16777215 (about 16Mbytes)</td>
+<td><code class="prettyprint">&quot;This is some text&quot;</code></td>
+</tr>
+<tr>
+<td>Enumeration</td>
+<td>A JSON string whose value is one of the values specified in the enumeration set where this is used</td>
+<td><code class="prettyprint">&quot;Text&quot;</code></td>
+</tr>
+<tr>
+<td>Array of {{Type}}</td>
+<td>An array that contains a uniform set of values of the specified type.</td>
+<td><code class="prettyprint">[ 1, 2, 3 ]</code></td>
+</tr>
+<tr>
+<td>String Map</td>
+<td>An object whose values are all strings.</td>
+<td><code class="prettyprint">{&quot;Key&quot;: &quot;Value&quot;}</code></td>
+</tr>
+<tr>
+<td>Number</td>
+<td>A number</td>
+<td><code class="prettyprint">1</code></td>
+</tr>
+</tbody></table>
+
+          <h1 id="objects">Objects</h1>
+
+          <h2 id="resource-resource">Resource (<code class="prettyprint">Resource</code>)</h2>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"$type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"Resource"</span><span class="w"> </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RESOURCE}}"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/* The contents of the resource goes here */"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"children"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"{{name}}"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RESOURCE}}/{{name}}"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>A resource is the basic object in the API.</p>
+
+<h3 id="fields-in-a-resource">Fields in a resource</h3>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>$type</td>
+<td>Array of String</td>
+<td>The various type names associated with this resource object. All resources include &lsquo;Resource&rsquo;; see the relevant sections on each resource to find out what other types might appear here.</td>
+</tr>
+<tr>
+<td>id</td>
+<td>String</td>
+<td>The URL to this resource</td>
+</tr>
+<tr>
+<td>data</td>
+<td>Any</td>
+<td>The contents of this resource.</td>
+</tr>
+<tr>
+<td>children</td>
+<td>Resource Map</td>
+<td>Other resources available as children of this resource. The <code class="prettyprint">{{name}}</code> of each item depends on the resource itself. Each resource object contains a list of it&rsquo;s children</td>
+</tr>
+</tbody></table>
+
+<p>The <code class="prettyprint">data</code> property is not required and does not appear on certain resources (those whose <code class="prettyprint">$type</code> property includes <code class="prettyprint">Collection</code>, primarily). The same is true of the <code class="prettyprint">children</code> property. </p>
+
+<h3 id="query-parameters-for-resources">Query Parameters for Resources</h3>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
 <th>Default</th>
 <th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
-<td>include_cats</td>
-<td>false</td>
-<td>If set to true, the result will also include cats.</td>
-</tr>
-<tr>
-<td>available</td>
-<td>true</td>
-<td>If set to false, the result will include kittens that have already been adopted.</td>
+<td>depth</td>
+<td>Number</td>
+<td>0</td>
+<td>How deep to traverse the resource graph to retrieve items. For a depth value greater than 0, each Resource Pointer object found in the result is inserted into the resulting data that is returned to you.</td>
 </tr>
 </tbody></table>
 
-<p><aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside></p>
-<h2 id='get-a-specific-kitten'>Get a Specific Kitten</h2><pre><code class="highlight ruby"><span class="nb">require</span> <span class="s1">'kittn'</span>
+<p>For <code class="prettyprint">depth</code>: Each object retrieved by this method is pulled as if it had no parameters specified for it.</p>
 
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre>
-<pre><code class="highlight python"><span class="kn">import</span> <span class="nn">kittn</span>
+<h3 id="children">Children</h3>
 
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre>
-<pre><code class="highlight shell">curl <span class="s2">"http://example.com/api/kittens/3"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre>
+<p>Since <code class="prettyprint">Resource</code> is the base type of all resources, it doesn&rsquo;t define any children. See the other object types for details about their child objects.</p>
 
-<blockquote>
-<p>The above command returns JSON structured like this:</p>
-</blockquote>
-<pre><code class="highlight json"><span class="p">{</span><span class="w">
-  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Isis"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
+          <h2 id="channel-channelresource">Channel (<code class="prettyprint">ChannelResource</code>)</h2>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{CHANNEL}}"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Channel Title"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"key"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"children"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"apps"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{CHANNEL}}/apps"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"$type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"Resource"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"ChannelResource"</span><span class="w">
+    </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<p>This endpoint retrieves a specific kitten.</p>
+<p>This represents a channel in the platform.</p>
 
-<p><aside class="warning">If you&rsquo;re not using an administrator API key, note that some kittens will return 403 Forbidden if they are hidden for admins only.</aside></p>
-<h3 id='http-request'>HTTP Request</h3>
-<p><code class="prettyprint">GET http://example.com/kittens/&lt;ID&gt;</code></p>
-<h3 id='url-parameters'>URL Parameters</h3>
+<h3 id="location">Location</h3>
+
+<p><code class="prettyprint">ChannelResource</code> objects are available as children of a <a href="#collection-types"><code class="prettyprint">ChannelCollection</code></a>.</p>
+
+<p>Canonical URL: <code class="prettyprint">{{ROOT}}/channels/{{channel-id}}</code></p>
+
+<ul>
+<li><code class="prettyprint">{{ROOT}}</code> is the API root</li>
+<li><code class="prettyprint">{{channel-id}}</code> is the channel identifier.</li>
+</ul>
+
+<p>Example:</p>
+
+<p><code class="prettyprint">https://example.digitalxe.com/api/1/channels/7bb50dc958ecf596cbb43e0db584c6dc</code></p>
+
+<p>The URL to a <code class="prettyprint">ChannelResource</code> object is also a value for the <code class="prettyprint">{{CHANNEL}}</code> <a href="#tokens">token</a> used elsewhere.</p>
+
+<h3 id="fields">Fields</h3>
+
 <table><thead>
 <tr>
-<th>Parameter</th>
+<th>Name</th>
+<th>Type</th>
 <th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
-<td>ID</td>
-<td>The ID of the cat to retrieve</td>
+<td><code class="prettyprint">data.title</code></td>
+<td>String</td>
+<td>The name of the channel</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.key</code></td>
+<td>String</td>
+<td>The &lsquo;key&rsquo; for this channel, used as part of all App IDs that are bound to this channel.</td>
 </tr>
 </tbody></table>
 
-          <h1 id='errors'>Errors</h1>
-<p><aside class="notice">This error section is stored in a separate file in <code class="prettyprint">includes/_errors.md</code>. Slate allows you to optionally separate out your docs into many files&hellip;just save them to the <code class="prettyprint">includes</code> folder and add them to the top of your <code class="prettyprint">index.md</code>&rsquo;s frontmatter. Files are included in the order listed.</aside></p>
+<h3 id="children">Children</h3>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>URL</th>
+<th>Description</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>apps</td>
+<td><code class="prettyprint">{{CHANNEL}}/apps</code></td>
+<td>The collection of apps in this channel</td>
+<td><a href="#collection-types"><code class="prettyprint">AppCollection</code></a></td>
+</tr>
+</tbody></table>
+
+          <h2 id="app-appresource">App (<code class="prettyprint">AppResource</code>)</h2>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{APP}}"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{APP}}"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"App Title"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"children"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"root"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{APP}}/root"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"records"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{APP}}/records"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"groups"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{APP}}/groups"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{APP}}/meta"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"$type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"Resource"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"AppResource"</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>An App in the platform.</p>
+
+<h3 id="location">Location</h3>
+
+<p><code class="prettyprint">AppResource</code> objects are available as children of an <a href="#collection-types"><code class="prettyprint">AppCollection</code></a>.</p>
+
+<p>Canonical URL: <code class="prettyprint">{{ROOT}}/apps/{{app-id}}</code></p>
+
+<ul>
+<li><code class="prettyprint">{{ROOT}}</code> is the API root</li>
+<li><code class="prettyprint">{{app-id}}</code> is the app ID</li>
+</ul>
+
+<p>Example URL:</p>
+
+<p><code class="prettyprint">https://example.digitalxe.com/api/1/apps/swt_addressBook</code></p>
+
+<p>The URL to an <code class="prettyprint">AppResource</code> object is also a value for the <code class="prettyprint">{{APP}}</code> <a href="#tokens">token</a> used elsewhere.</p>
+
+<h3 id="fields">Fields</h3>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">data.title</code></td>
+<td>String</td>
+<td>The name of the app</td>
+</tr>
+</tbody></table>
+
+<h3 id="children">Children</h3>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>URL</th>
+<th>Description</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>root</td>
+<td><code class="prettyprint">{{APP}}/root</code></td>
+<td>The group in this app that holds &lsquo;ungrouped&rsquo; records and top-level groups.</td>
+<td><code class="prettyprint">AppGroup</code></td>
+</tr>
+<tr>
+<td>records</td>
+<td><code class="prettyprint">{{APP}}/records</code></td>
+<td>The collection of all records in this app.</td>
+<td><code class="prettyprint">AppRecordList</code></td>
+</tr>
+<tr>
+<td>groups</td>
+<td><code class="prettyprint">{{APP}}/groups</code></td>
+<td>The collection of all groups in this app, excluding &#39;ungrouped&rsquo;.</td>
+<td><code class="prettyprint">AppGroupList</code></td>
+</tr>
+<tr>
+<td>meta</td>
+<td><code class="prettyprint">{{APP}}/meta</code></td>
+<td>The app metadata container.</td>
+<td><code class="prettyprint">AppMetaData</code></td>
+</tr>
+</tbody></table>
+
+          <h2 id="app-meta-data-appmetadata">App Meta Data (<code class="prettyprint">AppMetaData</code>)</h2>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{APP}}/meta"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"children"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"group"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{APP}}/meta/group"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"record"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{APP}}/meta/record"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"$type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"Resource"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"AppMetaData"</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>Contains metadata about the app&rsquo;s records &amp; groups, detailing the structure of a record.</p>
+
+<h3 id="location">Location</h3>
+
+<p><code class="prettyprint">AppMetaData</code> objects are available as children of an <a href="#app-appresource"><code class="prettyprint">AppResource</code></a>.</p>
+
+<p>Canonical URL: <code class="prettyprint">{{ROOT}}/apps/{{app-id}}/meta</code></p>
+
+<ul>
+<li><code class="prettyprint">{{ROOT}}</code> is the API root</li>
+<li><code class="prettyprint">{{app-id}}</code> is the ID of the app</li>
+</ul>
+
+<h3 id="children">Children</h3>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>URL</th>
+<th>Description</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>group</td>
+<td><code class="prettyprint">{{APP}}/meta/group</code></td>
+<td>Description of an <code class="prettyprint">AppGroup</code> object within this app.</td>
+<td><code class="prettyprint">AppGroupMetaData</code></td>
+</tr>
+<tr>
+<td>record</td>
+<td><code class="prettyprint">{{APP}}/meta/record</code></td>
+<td>Description of an <code class="prettyprint">AppRecord</code> object within this app.</td>
+<td><code class="prettyprint">AppRecordMetaData</code></td>
+</tr>
+</tbody></table>
+
+<p><span class='warning'>These objects are not currently documented.</span></p>
+
+          <h2 id="groups-and-records-recordlikeobject">Groups and Records (<code class="prettyprint">RecordLikeObject</code>)</h2>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RESOURCE}}"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"active"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-16T08:45:21.000Z"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"createdBy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{ROOT}}/apps/swt_addressBook/records/{{person-id}}"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nt">"modified"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-16T08:45:21.000Z"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"modifiedBy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{ROOT}}/apps/swt_addressBook/records/{{person-id}}"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nt">"publishing"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"active"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-16T07:00:00.000Z"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"archive"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"SEO"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Fragment"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Title"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"keywords"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Keywords"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Description"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"children"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
+    </span><span class="nt">"$type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"Resource"</span><span class="p">,</span><span class="w"> </span><span class="s2">"RecordLikeObject"</span><span class="w"> </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>This structure is used for any object that behaves similarly to a record.</p>
+
+<h3 id="location">Location</h3>
+
+<p><code class="prettyprint">RecordLikeObject</code> objects are not directly found. Their subtypes, <a href="#record-apprecord"><code class="prettyprint">AppRecord</code></a> and <a href="#group-appgroup"><code class="prettyprint">AppGroup</code></a>,
+are found in various places; see their documentation for details.</p>
+
+<h3 id="fields">Fields</h3>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">data.meta.active</code></td>
+<td>Boolean</td>
+<td>Whether the record is active or archived.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.meta.created</code></td>
+<td>Timestamp</td>
+<td>The time the record was created.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.meta.createdBy</code></td>
+<td><a href="#resource-pointer">Resource Pointer</a> to a <a href="#person-record">Person</a> <a href="#record-apprecord">record</a>.</td>
+<td>The person who created this record.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.meta.modified</code></td>
+<td>Timestamp</td>
+<td>The time the record was last modified.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.meta.modifiedBy</code></td>
+<td><a href="#resource-pointer">Resource Pointer</a> to a <a href="#person-record">Person</a> <a href="#record-apprecord">record</a>.</td>
+<td>The person who last modified this record.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.meta.publishing.active</code></td>
+<td>Timestamp</td>
+<td>The timestamp that the <code class="prettyprint">data.meta.active</code> flag should be toggled to <code class="prettyprint">true</code>.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.meta.publishing.archive</code></td>
+<td>Timestamp</td>
+<td>The timestamp that the <code class="prettyprint">data.meta.active</code> flag should be toggled to <code class="prettyprint">false</code>.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.SEO.url</code></td>
+<td>String</td>
+<td>If the record provides SEO data, the fragment used on the website for accessing this object.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.SEO.title</code></td>
+<td>String</td>
+<td>The title to use on pages that represent this record in the HTML &lt;title&gt; tag.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.SEO.keywords</code></td>
+<td>Text</td>
+<td>The keywords to use in the HTML &lt;meta name=&ldquo;keywords&rdquo;&gt; tag.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.SEO.description</code></td>
+<td>Text</td>
+<td>The keywords to use in the HTML &lt;meta name=&ldquo;description&rdquo;&gt; tag.</td>
+</tr>
+</tbody></table>
+
+<h3 id="children">Children</h3>
+
+<p>The children of a record-like object are determined dynamically by the type of record being displayed. </p>
+
+<p>See the Children sections in <a href="#record-apprecord"><code class="prettyprint">AppRecord</code></a> and <a href="#group-appgroup"><code class="prettyprint">AppGroup</code></a> for others that are always here.</p>
+
+          <h2 id="group-appgroup">Group (<code class="prettyprint">AppGroup</code>)</h2>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{GROUP}}"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"active"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-16T08:45:21.000Z"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"createdBy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{ROOT}}/apps/swt_addressBook/records/{{person-id}}"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nt">"modified"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-16T08:45:21.000Z"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"modifiedBy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{ROOT}}/apps/swt_addressBook/records/{{person-id}}"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nt">"publishing"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"active"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-16T07:00:00.000Z"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"archive"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"SEO"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Fragment"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Title"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"keywords"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Keywords"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Description"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Group title"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"summary"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Group summary"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Group description"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"displayOrder"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"file"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://example.digitalxe.com/path/to/a/file"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"image/png"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">1345</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"smartGroup"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"children"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"parent"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{APP}}/groups/{{id}}"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"groups"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{GROUP}}/groups"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"records"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{GROUP}}/records"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"$type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"Resource"</span><span class="p">,</span><span class="w"> </span><span class="s2">"RecordLikeObject"</span><span class="p">,</span><span class="w"> </span><span class="s2">"AppGroup"</span><span class="w"> </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>A group within an app.</p>
+
+<h3 id="location">Location</h3>
+
+<p><code class="prettyprint">AppGroup</code> objects are available as both:</p>
+
+<ul>
+<li>Children of an <a href="#collection-types"><code class="prettyprint">AppGroupList</code></a> collection</li>
+<li>The <code class="prettyprint">root</code> node of an <a href="#app-appresource"><code class="prettyprint">AppResource</code></a> object</li>
+</ul>
+
+<p>Canonical URL:</p>
+
+<ul>
+<li>For the <code class="prettyprint">root</code> node:
+<code class="prettyprint">{{ROOT}}/apps/{{app-id}}/root</code></li>
+<li>For any other group:
+<code class="prettyprint">{{ROOT}}/apps/{{app-id}}/groups/{{group-id}}</code></li>
+</ul>
+
+<p>In the above:</p>
+
+<ul>
+<li><code class="prettyprint">{{ROOT}}</code> is the API root.</li>
+<li><code class="prettyprint">{{app-id}}</code> is the app that this group is from</li>
+<li><code class="prettyprint">{{group-id}}</code> is the ID of the group</li>
+</ul>
+
+<p>Examples:</p>
+
+<p><code class="prettyprint">https://example.digitalxe.com/api/1/apps/swt_addressBook/root</code>
+<code class="prettyprint">https://example.digitalxe.com/api/1/apps/swt_addressBook/groups/7bb50dc958ecf596cbb43e0db584c6dc</code></p>
+
+<h3 id="fields">Fields</h3>
+
+<p>In addition to the fields described in <a href="#groups-and-records-recordlikeobject"><code class="prettyprint">RecordLikeObject</code></a>, an <code class="prettyprint">AppGroup</code> includes the following:</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">data.title</code></td>
+<td>String</td>
+<td>The title of the group</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.summary</code></td>
+<td>Text</td>
+<td>The summary text of the group; HTML</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.description</code></td>
+<td>Text</td>
+<td>The description text of the group; HTP</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.displayOrder</code></td>
+<td>Number</td>
+<td>The sort order within this object&rsquo;s parent group</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.file</code></td>
+<td>File</td>
+<td>A file attached to this group.</td>
+</tr>
+</tbody></table>
+
+<p><span class='warning'>This can change between apps! Check to see if the app has a group description available for it before assuming this is the layout of the group.</span></p>
+
+<h3 id="children">Children</h3>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>URL</th>
+<th>Description</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>parent</td>
+<td><code class="prettyprint">{{GROUP}}</code></td>
+<td>The parent group of this group.</td>
+<td><a href="#group-appgroup"><code class="prettyprint">AppGroup</code></a></td>
+</tr>
+<tr>
+<td>groups</td>
+<td><code class="prettyprint">{{GROUP}}/groups</code></td>
+<td>Groups contained within this group</td>
+<td><a href="#collection-types"><code class="prettyprint">AppGroupList</code></a></td>
+</tr>
+<tr>
+<td>records</td>
+<td><code class="prettyprint">{{GROUP}}/records</code></td>
+<td>Records contained within this group</td>
+<td><a href="#collection-types"><code class="prettyprint">AppRecordList</code></a></td>
+</tr>
+</tbody></table>
+
+<p>The group identified by <code class="prettyprint">{{APP}}/root</code> does not have a child node called <code class="prettyprint">parent</code> as it is the top of the tree.</p>
+
+<p><span class='info'>Apps may also define their own children here, if the group has pointers to other objects in the system.</span></p>
+
+          <h2 id="record-apprecord">Record (<code class="prettyprint">AppRecord</code>)</h2>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"active"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-16T08:45:21.000Z"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"createdBy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{ROOT}}/apps/swt_addressBook/records/{{person-id}}"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nt">"modified"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-16T08:45:21.000Z"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"modifiedBy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{ROOT}}/apps/swt_addressBook/records/{{person-id}}"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nt">"publishing"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"active"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-16T07:00:00.000Z"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"archive"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"SEO"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Fragment"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Title"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"keywords"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Keywords"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Description"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
+    </span><span class="err">}</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"children"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"groups"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}/groups"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"related"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}/related"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"$type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"Resource"</span><span class="p">,</span><span class="w"> </span><span class="s2">"RecordLikeObject"</span><span class="p">,</span><span class="w"> </span><span class="s2">"AppRecord"</span><span class="w"> </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>A record within an app.</p>
+
+<h3 id="location">Location</h3>
+
+<p><code class="prettyprint">AppRecord</code> objects are available as children of an <a href="#collection-types"><code class="prettyprint">AppRecordList</code></a> collection.</p>
+
+<p>Canonical URL:</p>
+
+<p><code class="prettyprint">{{ROOT}}/apps/{{app-id}}/records/{{record-id}}</code></p>
+
+<p>In the above:</p>
+
+<ul>
+<li><code class="prettyprint">{{ROOT}}</code> is the API root.</li>
+<li><code class="prettyprint">{{app-id}}</code> is the app that this record is from</li>
+<li><code class="prettyprint">{{record-id}}</code> is the ID of the record</li>
+</ul>
+
+<p>Examples:</p>
+
+<p><code class="prettyprint">https://example.digitalxe.com/api/1/apps/swt_addressBook/records/7bb50dc958ecf596cbb43e0db584c6dc</code></p>
+
+<h3 id="fields">Fields</h3>
+
+<p>The fields in an <code class="prettyprint">AppRecord</code> are dependent on the app they came from. Various apps within the system have their own documentation below.</p>
+
+<h3 id="children">Children</h3>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>URL</th>
+<th>Description</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>groups</td>
+<td><code class="prettyprint">{{RECORD}}/groups</code></td>
+<td>Groups that this record is in</td>
+<td><a href="#collection-types"><code class="prettyprint">AppGroupList</code></a></td>
+</tr>
+<tr>
+<td>related</td>
+<td><code class="prettyprint">{{RECORD}}/related</code></td>
+<td>Apps which have related records for this record</td>
+<td><a href="#collection-types"><code class="prettyprint">AppRelatedList</code></a></td>
+</tr>
+</tbody></table>
+
+<p><span class='info'>Apps may also define their own children here, if the record has pointers to other objects in the system.</span></p>
+
+<h3 id="relationships">Relationships</h3>
+
+<p>In any specific record type, record lists accessible beneath <code class="prettyprint">related</code> will be noted in a Relationships section.</p>
+
+          <h2 id="root-root">Root (<code class="prettyprint">Root</code>)</h2>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{ROOT}}"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"children"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"channels"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{ROOT}}/channels"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"apps"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{ROOT}}/apps"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"multi"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{ROOT}}/multi"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"$type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"Resource"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"Root"</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>The API root object. This is the top-level of the API namespace.</p>
+
+<h3 id="location">Location</h3>
+
+<p>This is the &ldquo;Root&rdquo; object in the API.</p>
+
+<p>Canonical URL: <code class="prettyprint">{{ROOT}}</code></p>
+
+<ul>
+<li><code class="prettyprint">{{ROOT}}</code> is the API root.</li>
+</ul>
+
+<h3 id="children">Children</h3>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>URL</th>
+<th>Description</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>channels</td>
+<td><code class="prettyprint">{{ROOT}}/channels</code></td>
+<td>The collection of channels on the platform instance</td>
+<td><a href="#collection-types"><code class="prettyprint">ChannelCollection</code></a></td>
+</tr>
+<tr>
+<td>apps</td>
+<td><code class="prettyprint">{{ROOT}}/apps</code></td>
+<td>All of the apps available on the platform instance</td>
+<td><a href="#collection-types"><code class="prettyprint">AppCollection</code></a></td>
+</tr>
+<tr>
+<td>multi</td>
+<td><code class="prettyprint">{{ROOT}}/multi</code></td>
+<td>Make multiple API requests at the same time.</td>
+<td><a href="#resource"><code class="prettyprint">Resource</code></a></td>
+</tr>
+</tbody></table>
+
+<p>The <code class="prettyprint">multi</code> child does not really represent a child resource, but rather a callable method. See <a href="#post-multiple-request-endpoint">POST Multiple Request Endpoint</a> for details.</p>
+
+<h2 id="collections-collection">Collections (<code class="prettyprint">Collection</code>)</h2>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"$type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"Resource"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Collection"</span><span class="w"> </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RESOURCE}}"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"collection"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"length"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="p">{</span><span class="w"> </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RESOURCE}}/{{id}}"</span><span class="w"> </span><span class="p">}</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>Collections are a resource which contains an ordered set of other resources.</p>
+
+<h3 id="fields">Fields</h3>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>$type</td>
+<td>Array of String</td>
+<td>The type of object. Collections always include &lsquo;Collection&rsquo; in this set.</td>
+</tr>
+<tr>
+<td>id</td>
+<td>String</td>
+<td>The URL to this resource</td>
+</tr>
+<tr>
+<td>collection.length</td>
+<td>Number</td>
+<td>The number of entities in this collection</td>
+</tr>
+<tr>
+<td>collection.items</td>
+<td>Array of <a href="#resource-pointer">Resource Pointers</a></td>
+<td>The entities in the collection</td>
+</tr>
+</tbody></table>
+
+<h3 id="parameters-that-can-be-used-with-a-collection">Parameters that can be used with a collection</h3>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>start</td>
+<td>Number</td>
+<td>0</td>
+<td>The starting position in the collection to return items from</td>
+</tr>
+<tr>
+<td>limit</td>
+<td>Number</td>
+<td>10</td>
+<td>The maximum number of items in this collection to return</td>
+</tr>
+<tr>
+<td>filter</td>
+<td>String</td>
+<td><code class="prettyprint">null</code></td>
+<td>A filter to be applied to the collection&rsquo;s result. (FIXME: Document this).</td>
+</tr>
+</tbody></table>
+
+<h3 id="collection-types">Collection Types</h3>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Content Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">ChannelCollection</code></td>
+<td>A list of channels.</td>
+<td><a href="#channel-channelresource"><code class="prettyprint">ChannelResource</code></a></td>
+</tr>
+<tr>
+<td><code class="prettyprint">AppCollection</code></td>
+<td>A list of apps.</td>
+<td><a href="#app-appresource"><code class="prettyprint">AppResource</code></a></td>
+</tr>
+<tr>
+<td><code class="prettyprint">AppRecordList</code></td>
+<td>A list of records within an app</td>
+<td><a href="#record-apprecord"><code class="prettyprint">AppRecord</code></a></td>
+</tr>
+<tr>
+<td><code class="prettyprint">AppGroupList</code></td>
+<td>A list of groups within an app</td>
+<td><a href="#group-appgroup"><code class="prettyprint">AppGroup</code></a></td>
+</tr>
+<tr>
+<td><code class="prettyprint">AppRelatedList</code></td>
+<td>A list of apps which have related records for a given record</td>
+<td><a href="#collection-types"><code class="prettyprint">AppRecordList</code></a></td>
+</tr>
+</tbody></table>
+
+          <h2 id="collections-collection">Collections (<code class="prettyprint">Collection</code>)</h2>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"$type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"Resource"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Collection"</span><span class="w"> </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RESOURCE}}"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"collection"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"length"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="p">{</span><span class="w"> </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RESOURCE}}/{{id}}"</span><span class="w"> </span><span class="p">}</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>Collections are a resource which contains an ordered set of other resources.</p>
+
+<h3 id="fields">Fields</h3>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>$type</td>
+<td>Array of String</td>
+<td>The type of object. Collections always include &lsquo;Collection&rsquo; in this set.</td>
+</tr>
+<tr>
+<td>id</td>
+<td>String</td>
+<td>The URL to this resource</td>
+</tr>
+<tr>
+<td>collection.length</td>
+<td>Number</td>
+<td>The number of entities in this collection</td>
+</tr>
+<tr>
+<td>collection.items</td>
+<td>Array of <a href="#resource-pointer">Resource Pointers</a></td>
+<td>The entities in the collection</td>
+</tr>
+</tbody></table>
+
+<h3 id="parameters-that-can-be-used-with-a-collection">Parameters that can be used with a collection</h3>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>start</td>
+<td>Number</td>
+<td>0</td>
+<td>The starting position in the collection to return items from</td>
+</tr>
+<tr>
+<td>limit</td>
+<td>Number</td>
+<td>10</td>
+<td>The maximum number of items in this collection to return</td>
+</tr>
+<tr>
+<td>filter</td>
+<td>String</td>
+<td><code class="prettyprint">null</code></td>
+<td>A filter to be applied to the collection&rsquo;s result. (FIXME: Document this).</td>
+</tr>
+</tbody></table>
+
+<h3 id="collection-types">Collection Types</h3>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Content Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">ChannelCollection</code></td>
+<td>A list of channels.</td>
+<td><a href="#channel-channelresource"><code class="prettyprint">ChannelResource</code></a></td>
+</tr>
+<tr>
+<td><code class="prettyprint">AppCollection</code></td>
+<td>A list of apps.</td>
+<td><a href="#app-appresource"><code class="prettyprint">AppResource</code></a></td>
+</tr>
+<tr>
+<td><code class="prettyprint">AppRecordList</code></td>
+<td>A list of records within an app</td>
+<td><a href="#record-apprecord"><code class="prettyprint">AppRecord</code></a></td>
+</tr>
+<tr>
+<td><code class="prettyprint">AppGroupList</code></td>
+<td>A list of groups within an app</td>
+<td><a href="#group-appgroup"><code class="prettyprint">AppGroup</code></a></td>
+</tr>
+<tr>
+<td><code class="prettyprint">AppRelatedList</code></td>
+<td>A list of apps which have related records for a given record</td>
+<td><a href="#collection-types"><code class="prettyprint">AppRecordList</code></a></td>
+</tr>
+</tbody></table>
+
+          <h2 id="file">File</h2>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://example.digitalxe.com/path/to/a/file"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"image/png"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">4455</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>An object that describes a file.</p>
+
+<h3 id="fields">Fields</h3>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">name</code></td>
+<td>String</td>
+<td>The URL to the file</td>
+</tr>
+<tr>
+<td><code class="prettyprint">type</code></td>
+<td>String</td>
+<td>The MIME type of the file</td>
+</tr>
+<tr>
+<td><code class="prettyprint">size</code></td>
+<td>Number</td>
+<td>The size of the file</td>
+</tr>
+</tbody></table>
+
+<h2 id="interval">Interval</h2>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"minute"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>An object that represents a time interval.</p>
+
+<h3 id="fields">Fields</h3>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">unit</code></td>
+<td>Enumeration</td>
+<td>The unit type represented by this object. One of <code class="prettyprint">second</code>, <code class="prettyprint">minute</code>, <code class="prettyprint">day</code>, <code class="prettyprint">month</code>, <code class="prettyprint">year</code>.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">count</code></td>
+<td>Number</td>
+<td>The number of <code class="prettyprint">unit</code> items specified.</td>
+</tr>
+</tbody></table>
+
+<p><code class="prettyprint">unit</code> does not include entries for &lsquo;hour&rsquo; or &#39;week&rsquo;: to specify 1 hour, specify 60 minutes; for 1 week, specify 7 days.</p>
+
+<h2 id="resource-pointer">Resource Pointer</h2>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RESOURCE}}"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>A resource pointer is an object that contains a resource URL. They are constructed as to be easily noticed when using a resource.</p>
+
+<p>The <code class="prettyprint">$Resource</code> property contains the canonical URL of the resource.</p>
+
+<h2 id="resource-map">Resource Map</h2>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RESOURCE}}"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>A resource map contains a set of named objects representing children of a given resource.</p>
+
+<p>With a resource map, there are 2 ways to get to the resources provided:</p>
+
+<ul>
+<li>Take the value of the <code class="prettyprint">$Resource</code> property in the object.</li>
+<li>Construct a URL using the URL of the current resource and appending &rsquo;/&rsquo; and the key from the resource map.</li>
+</ul>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"test-item"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{ROOT}}/test-item"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<blockquote>
+<p>Resource map from {{ROOT}}/test</p>
+</blockquote>
+
+<p>Using the resource map to the right, the <code class="prettyprint">test-item</code> child can be accessed through either:</p>
+
+<ul>
+<li><code class="prettyprint">{{ROOT}}/test-item</code> - from the <code class="prettyprint">$Resource</code> property</li>
+<li><code class="prettyprint">{{ROOT}}/test/test-item</code> - as a child of the original resource</li>
+</ul>
+
+<h2 id="response">Response</h2>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RESOURCE}}"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"resources"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"{{RESOURCE}}"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RESOURCE}}"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"children"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"channels"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RESOURCE}}/channels"</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nt">"$type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="s2">"Resource"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"Root"</span><span class="w">
+            </span><span class="p">]</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>This is an object containing the results of a resource request.</p>
+
+<h3 id="fields">Fields</h3>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>resource</td>
+<td>String</td>
+<td>The canonical URL of the resource you requested. (This may not be the same as the one you requested, as many resources are available through multiple paths.)</td>
+</tr>
+<tr>
+<td>resources</td>
+<td>Object</td>
+<td>An object whose keys consist of the canonical resource URLs that were retrieved and whose values are the resources themselves.</td>
+</tr>
+</tbody></table>
+
+          <h1 id="apps">Apps</h1>
+
+          <h2 id="courses">Courses</h2>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"active"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-16T08:45:21.000Z"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"createdBy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{ROOT}}/apps/swt_addressBook/records/{{person-id}}"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nt">"modified"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-16T08:45:21.000Z"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"modifiedBy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{ROOT}}/apps/swt_addressBook/records/{{person-id}}"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nt">"publishing"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"active"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-16T07:00:00.000Z"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"archive"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"SEO"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Fragment"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Title"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"keywords"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Keywords"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Description"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Title"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"summary"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Summary"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Description"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"image"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://example.digitalxe.com/path/to/image"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">1823</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"image/png"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nt">"icon"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://example.digitalxe.com/path/to/image"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">1823</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"image/png"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nt">"difficulty"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Basic"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"estimatedTimeRequired"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"minute"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nt">"isGraded"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"courseOverviewVideoEmbedCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"text"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"enforceTheOrderOfActivitiesInThisCourse"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"courseHasStartDate"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"courseStartDate"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"doNotIncludeInCourseCatalog"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"thisCourseRequirtesOffsitePurchase"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"externalCourseId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"disableOffsitePurchase"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"purchaseButtonText"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"disabledPurchaseButtonText"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"children"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"activityRoot"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{ROOT}}/apps/{{KEY}}_activities/records/{{record-id}}"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"coursesAnnouncements"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}/coursesAnnouncements"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"coursesComments"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}/coursesComments"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"coursesDownloads"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}/coursesDownloads"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"coursesGrading"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}/coursesGrading"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"coursesInstructors"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}/coursesInstructors"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"coursesPrerequisites"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}/coursesPrerequisites"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"groups"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}/groups"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"related"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}/related"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+
+    </span><span class="nt">"$type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"Resource"</span><span class="p">,</span><span class="w"> </span><span class="s2">"RecordLikeObject"</span><span class="p">,</span><span class="w"> </span><span class="s2">"AppRecord"</span><span class="w"> </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>A course in the LMS.</p>
+
+<h3 id="location">Location</h3>
+
+<p>Canonical URL:</p>
+
+<p><code class="prettyprint">{{ROOT}}/apps/{{KEY}_courses/records/{{record-id}}</code></p>
+
+<h3 id="fields">Fields</h3>
+
+<p>In addition to those specified by <a href="#record-apprecord"><code class="prettyprint">AppRecord</code></a>, a course includes:</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">data.title</code></td>
+<td>String</td>
+<td>The course title</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.summary</code></td>
+<td>Text</td>
+<td>The course summary (plaintext)</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.description</code></td>
+<td>Text</td>
+<td>The course description (HTML)</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.image</code></td>
+<td>File</td>
+<td>The course header image</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.icon</code></td>
+<td>File</td>
+<td>The course icon</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.difficulty</code></td>
+<td>Enumeration</td>
+<td>The difficulty level of the course; one of <code class="prettyprint">Basic</code>, <code class="prettyprint">Intermediate</code>, <code class="prettyprint">Advanced</code>.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.estimatedTimeRequired</code></td>
+<td><a href="#interval">Interval</a></td>
+<td>The amount of time you think it will take to complete the course</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.isGraded</code></td>
+<td>Boolean</td>
+<td>Whether this course has a grading scale associated with it</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.courseOverviewVideoEmbedCode</code></td>
+<td>Text</td>
+<td>Video embed code for the course overview page (HTML)</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.enforceTheOrderOfActivitiesInThisCourse</code></td>
+<td>Boolean</td>
+<td>Whether to force the user to go through this course in the order of activities or not.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.courseHasStartDate</code></td>
+<td>Boolean</td>
+<td>Whether this course has a start date</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.courseStartDate</code></td>
+<td>Timestamp</td>
+<td>When the course begins</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.doNotIncludeInCourseCatalog</code></td>
+<td>Boolean</td>
+<td>Whether to hide this from most views of courses on the site</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.thisCourseRequiresOffsitePurchase</code></td>
+<td>Boolean</td>
+<td>Whether this course needs to be purchased or not before it can be taken.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.externalCourseId</code></td>
+<td>String</td>
+<td>The external course identifier for this course.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.disableOffsitePurchase</code></td>
+<td>Boolean</td>
+<td>Whether to disable the offsite purchase functionality (linking the course &ldquo;Start&rdquo; button to the &ldquo;Buy a Course&rdquo; page)</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.purchaseButtonText</code></td>
+<td>String</td>
+<td>The title of the &lsquo;Buy a Course&rsquo; button when displayed</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.disabledPurchaseButtonText</code></td>
+<td>String</td>
+<td>The text to display in place of the &#39;Buy a Course&rsquo; or &ldquo;Start&rdquo; buttons when the course cannot be purchased.</td>
+</tr>
+</tbody></table>
+
+<h3 id="children">Children</h3>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>URL</th>
+<th>Description</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>activityRoot</td>
+<td><code class="prettyprint">{{ROOT}}/apps/{{KEY}}_activities/records/{{record-id}}</code></td>
+<td>The top-level activity section for this course</td>
+<td><a href="#record-apprecord"><code class="prettyprint">AppRecord</code></a> of type <a href="#activities">Activity</a></td>
+</tr>
+<tr>
+<td>coursesAnnouncements</td>
+<td><code class="prettyprint">{{RECORD}}/coursesAnnouncements</code></td>
+<td>Announcements made on this course</td>
+<td><a href="#collection-types"><code class="prettyprint">AppRecordList</code></a> with <a href="#course-announcements">Course Announcement</a> objects</td>
+</tr>
+<tr>
+<td>coursesComments</td>
+<td><code class="prettyprint">{{RECORD}}/coursesComments</code></td>
+<td>Comments made on this course</td>
+<td><a href="#collection-types"><code class="prettyprint">AppRecordList</code></a> with <a href="#course-comments">Course Comment</a> objects</td>
+</tr>
+<tr>
+<td>coursesDownloads</td>
+<td><code class="prettyprint">{{RECORD}}/coursesDownloads</code></td>
+<td>Downloads made availble on this course</td>
+<td><a href="#collection-types"><code class="prettyprint">AppRecordList</code></a> with <a href="#course-downloads">Course Download</a> objects</td>
+</tr>
+<tr>
+<td>coursesGrading</td>
+<td><code class="prettyprint">{{RECORD}}/coursesGrading</code></td>
+<td>Grading scale for this course</td>
+<td><a href="#collection-types"><code class="prettyprint">AppRecordList</code></a> with <a href="#course-grading">Course Grade</a> objects</td>
+</tr>
+<tr>
+<td>coursesInstructors</td>
+<td><code class="prettyprint">{{RECORD}}/coursesInstructors</code></td>
+<td>Instructors for this course</td>
+<td><a href="#collection-types"><code class="prettyprint">AppRecordList</code></a> with <a href="#course-instructors">Course Instructor</a> objects. The first item in the set (with the smallest value for <code class="prettyprint">parent_index</code>) is considered the &ldquo;lead&rdquo; instructor.</td>
+</tr>
+<tr>
+<td>coursesPrerequisites</td>
+<td><code class="prettyprint">{{RECORD}}/coursesPrerequisites</code></td>
+<td>Prerequisite lists for this course</td>
+<td><a href="#collection-types"><code class="prettyprint">AppRecordList</code></a> with <a href="#course-prerequisites">Course Prerequisite</a> objects.</td>
+</tr>
+</tbody></table>
+
+<h3 id="relationships">Relationships</h3>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>URL</th>
+<th>Description</th>
+<th>Item Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>sponsors</td>
+<td><code class="prettyprint">{{RECORD}}/related/sponsors</code></td>
+<td>Sponsors for this course</td>
+<td><a href="#collection-types"><code class="prettyprint">AppRecordList</code></a> with <a href="#sponsors">Sponsor</a> objects</td>
+</tr>
+</tbody></table>
+
+          <h2 id="course-announcements">Course Announcements</h2>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"active"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-16T08:45:21.000Z"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"createdBy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{ROOT}}/apps/swt_addressBook/records/{{person-id}}"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nt">"modified"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-16T08:45:21.000Z"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"modifiedBy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{ROOT}}/apps/swt_addressBook/records/{{person-id}}"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nt">"publishing"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"active"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-16T07:00:00.000Z"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"archive"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"announcement"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"parent_index"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"children"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"parent"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{ROOT}}/apps/{{KEY}}_courses/records/{{record-id}}"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"groups"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}/groups"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"related"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}/related"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"$type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"Resource"</span><span class="p">,</span><span class="w"> </span><span class="s2">"RecordLikeObject"</span><span class="p">,</span><span class="w"> </span><span class="s2">"AppRecord"</span><span class="w"> </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>An announcement on a course in the LMS.</p>
+
+<h3 id="location">Location</h3>
+
+<p>Canonical URL:</p>
+
+<p><code class="prettyprint">{{ROOT}}/apps/{{KEY}}_coursesAnnouncements/records/{{record-id}}</code></p>
+
+<h3 id="fields">Fields</h3>
+
+<p>In addition to those specified by <a href="#record-apprecord"><code class="prettyprint">AppRecord</code></a>, an announcement includes:</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">data.announcment</code></td>
+<td>Text</td>
+<td>The text of the announcement</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.parent_index</code></td>
+<td>Number</td>
+<td>The order of this announcement on it&rsquo;s parent course</td>
+</tr>
+</tbody></table>
+
+<h3 id="children">Children</h3>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>URL</th>
+<th>Description</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>parent</td>
+<td><code class="prettyprint">{{ROOT}}/apps/{{KEY}}_courses/records/{{record-id}}</code></td>
+<td>The parent course for this announcement</td>
+<td><a href="#record-apprecord"><code class="prettyprint">AppRecord</code></a> of type <a href="#courses">Course</a></td>
+</tr>
+</tbody></table>
+
+          <h2 id="course-comments">Course Comments</h2>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"active"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-16T08:45:21.000Z"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"createdBy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{ROOT}}/apps/swt_addressBook/records/{{person-id}}"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nt">"modified"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-16T08:45:21.000Z"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"modifiedBy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{ROOT}}/apps/swt_addressBook/records/{{person-id}}"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nt">"publishing"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"active"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-16T07:00:00.000Z"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"archive"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-16T08:45:21.000Z"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"comment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"This is awesome!"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"parent_index"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"children"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"parent"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{ROOT}}/apps/{{KEY}}_courses/records/{{record-id}}"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"author"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{ROOT}}/apps/{{KEY}}_accounts/records/{{record-id}}"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"inReplyTo"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{ROOT}}/apps/{{KEY}}_comments/records/{{record-id}}"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"groups"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}/groups"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"related"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}/related"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"$type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"Resource"</span><span class="p">,</span><span class="w"> </span><span class="s2">"RecordLikeObject"</span><span class="p">,</span><span class="w"> </span><span class="s2">"AppRecord"</span><span class="w"> </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>An comment on a course in the LMS.</p>
+
+<h3 id="location">Location</h3>
+
+<p>Canonical URL:</p>
+
+<p><code class="prettyprint">{{ROOT}}/apps/{{KEY}}_coursesComments/records/{{record-id}}</code></p>
+
+<h3 id="fields">Fields</h3>
+
+<p>In addition to those specified by <a href="#record-apprecord"><code class="prettyprint">AppRecord</code></a>, a comment includes:</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">data.time</code></td>
+<td>Timestamp</td>
+<td>The time of the comment</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.comment</code></td>
+<td>Text</td>
+<td>The text of the comment</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.parent_index</code></td>
+<td>Number</td>
+<td>The order of this comment on it&rsquo;s parent course</td>
+</tr>
+</tbody></table>
+
+<h3 id="children">Children</h3>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>URL</th>
+<th>Description</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>parent</td>
+<td><code class="prettyprint">{{ROOT}}/apps/{{KEY}}_courses/records/{{record-id}}</code></td>
+<td>The parent course for this comment</td>
+<td><a href="#record-apprecord"><code class="prettyprint">AppRecord</code></a> of type <a href="#courses">Course</a></td>
+</tr>
+<tr>
+<td>author</td>
+<td><code class="prettyprint">{{ROOT}}/apps/{{KEY}}_accounts/records/{{record-id}}</code></td>
+<td>The author for this comment</td>
+<td><a href="#record-apprecord"><code class="prettyprint">AppRecord</code></a> of type <a href="#accounts">Account</a></td>
+</tr>
+<tr>
+<td>inReplyTo</td>
+<td><code class="prettyprint">{{ROOT}}/apps/{{KEY}}_coursesComments/records/{{record-id}}</code></td>
+<td>The comment that this is in reply to</td>
+<td><a href="#record-apprecord"><code class="prettyprint">AppRecord</code></a> of type <a href="#course-comments">Course Comment</a></td>
+</tr>
+</tbody></table>
+
+          <h2 id="course-downloads">Course Downloads</h2>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"active"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-16T08:45:21.000Z"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"createdBy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{ROOT}}/apps/swt_addressBook/records/{{person-id}}"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nt">"modified"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-16T08:45:21.000Z"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"modifiedBy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{ROOT}}/apps/swt_addressBook/records/{{person-id}}"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nt">"publishing"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"active"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-16T07:00:00.000Z"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"archive"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"An awesome download"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"file"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://example.digitalxe.com/awesome.pdf"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"application/pdf"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">34322</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nt">"parent_index"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"children"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"parent"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{ROOT}}/apps/{{KEY}}_courses/records/{{record-id}}"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"groups"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}/groups"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"related"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}/related"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"$type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"Resource"</span><span class="p">,</span><span class="w"> </span><span class="s2">"RecordLikeObject"</span><span class="p">,</span><span class="w"> </span><span class="s2">"AppRecord"</span><span class="w"> </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>An download on a course in the LMS.</p>
+
+<h3 id="location">Location</h3>
+
+<p>Canonical URL:</p>
+
+<p><code class="prettyprint">{{ROOT}}/apps/{{KEY}}_coursesDownloads/records/{{record-id}}</code></p>
+
+<h3 id="fields">Fields</h3>
+
+<p>In addition to those specified by <a href="#record-apprecord"><code class="prettyprint">AppRecord</code></a>, a download includes:</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">data.title</code></td>
+<td>String</td>
+<td>The title of the download</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.file</code></td>
+<td>File</td>
+<td>The file to download</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.parent_index</code></td>
+<td>Number</td>
+<td>The order of this comment on it&rsquo;s parent course</td>
+</tr>
+</tbody></table>
+
+<h3 id="children">Children</h3>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>URL</th>
+<th>Description</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>parent</td>
+<td><code class="prettyprint">{{ROOT}}/apps/{{KEY}}_courses/records/{{record-id}}</code></td>
+<td>The parent course for this download</td>
+<td><a href="#record-apprecord"><code class="prettyprint">AppRecord</code></a> of type <a href="#courses">Course</a></td>
+</tr>
+</tbody></table>
+
+          <h2 id="course-grading">Course Grading</h2>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"active"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-16T08:45:21.000Z"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"createdBy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{ROOT}}/apps/swt_addressBook/records/{{person-id}}"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nt">"modified"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-16T08:45:21.000Z"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"modifiedBy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{ROOT}}/apps/swt_addressBook/records/{{person-id}}"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nt">"publishing"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"active"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-16T07:00:00.000Z"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"archive"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"A+"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"minimum"</span><span class="p">:</span><span class="w"> </span><span class="mi">97</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"maximum"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"thisIsAPassingGrade"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"parent_index"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"children"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"parent"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{ROOT}}/apps/{{KEY}}_courses/records/{{record-id}}"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"groups"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}/groups"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"related"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}/related"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"$type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"Resource"</span><span class="p">,</span><span class="w"> </span><span class="s2">"RecordLikeObject"</span><span class="p">,</span><span class="w"> </span><span class="s2">"AppRecord"</span><span class="w"> </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>A grade on a course in the LMS.</p>
+
+<h3 id="location">Location</h3>
+
+<p>Canonical URL:</p>
+
+<p><code class="prettyprint">{{ROOT}}/apps/{{KEY}}_coursesGrading/records/{{record-id}}</code></p>
+
+<h3 id="fields">Fields</h3>
+
+<p>In addition to those specified by <a href="#record-apprecord"><code class="prettyprint">AppRecord</code></a>, a grade includes:</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">data.name</code></td>
+<td>String</td>
+<td>The name of this grade</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.minimum</code></td>
+<td>Number</td>
+<td>The minimum score (percentage) to have earned this grade</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.maximum</code></td>
+<td>Number</td>
+<td>The maximum score (percentage) to have earned this grade</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.thisIsAPassingGrade</code></td>
+<td>Boolean</td>
+<td>Whether this grade constitutes a &ldquo;pass&rdquo; or not</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.parent_index</code></td>
+<td>Number</td>
+<td>The order of this grade on it&rsquo;s parent course</td>
+</tr>
+</tbody></table>
+
+<p>The grading scale for a course should not contain overlapping entries, and the grading scale will be extended to fill the entire span
+between 0 and 100%.</p>
+
+<ul>
+<li>At the top end of the grading scale: the highest entry will have it&rsquo;s range extended to 100%.</li>
+<li>At the bottom end of the grading scale: If the lowest entry is a passing grade, then an entry for the bottom portion of the scale will be
+treated as existing with <code class="prettyprint">name</code> being &lsquo;Fail&rsquo;, <code class="prettyprint">minimum</code> being 0, <code class="prettyprint">maximum</code> being 1 smaller than the lowest grade given, and <code class="prettyprint">thisIsAPassingGrade</code>
+being considered <code class="prettyprint">false</code>; if the lowest entry is a failing grade, then it&rsquo;s <code class="prettyprint">minimum</code> value will be treated as 0.<br></li>
+</ul>
+
+<p>Scores are inclusive (the example entry covers all scores from 97% to 100%); all scores are rounded to the nearest
+percentage value.</p>
+
+<h3 id="children">Children</h3>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>URL</th>
+<th>Description</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>parent</td>
+<td><code class="prettyprint">{{ROOT}}/apps/{{KEY}}_courses/records/{{record-id}}</code></td>
+<td>The parent course for this grade</td>
+<td><a href="#record-apprecord"><code class="prettyprint">AppRecord</code></a> of type <a href="#courses">Course</a></td>
+</tr>
+</tbody></table>
+
+          <h2 id="course-instructor">Course Instructor</h2>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"active"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-16T08:45:21.000Z"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"createdBy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{ROOT}}/apps/swt_addressBook/records/{{person-id}}"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nt">"modified"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-16T08:45:21.000Z"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"modifiedBy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{ROOT}}/apps/swt_addressBook/records/{{person-id}}"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nt">"publishing"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"active"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-16T07:00:00.000Z"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"archive"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"parent_index"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"children"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"instructor"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{ROOT}}/apps/{{KEY}}_accounts/records/{{record-id}}"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"parent"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{ROOT}}/apps/{{KEY}}_courses/records/{{record-id}}"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"groups"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}/groups"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"related"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}/related"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"$type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"Resource"</span><span class="p">,</span><span class="w"> </span><span class="s2">"RecordLikeObject"</span><span class="p">,</span><span class="w"> </span><span class="s2">"AppRecord"</span><span class="w"> </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>An instructor on a course in the LMS.</p>
+
+<h3 id="location">Location</h3>
+
+<p>Canonical URL:</p>
+
+<p><code class="prettyprint">{{ROOT}}/apps/{{KEY}}_coursesInstructors/records/{{record-id}}</code></p>
+
+<h3 id="fields">Fields</h3>
+
+<p>In addition to those specified by <a href="#record-apprecord"><code class="prettyprint">AppRecord</code></a>, an instructor record includes:</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">data.parent_index</code></td>
+<td>Number</td>
+<td>The order of this instructor on it&rsquo;s parent course</td>
+</tr>
+</tbody></table>
+
+<p>The instructor record itself can be found in the Children section. The lead instructor is the one on this course that has the smallest value
+in the <code class="prettyprint">parent_index</code> field.</p>
+
+<h3 id="children">Children</h3>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>URL</th>
+<th>Description</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>instructor</td>
+<td><code class="prettyprint">{{ROOT}}/apps/{{KEY}}_accounts/records/{{record-id}}</code></td>
+<td>The instructor for this course</td>
+<td><a href="#record-apprecord"><code class="prettyprint">AppRecord</code></a> of type <a href="#accounts">Account</a></td>
+</tr>
+<tr>
+<td>parent</td>
+<td><code class="prettyprint">{{ROOT}}/apps/{{KEY}}_courses/records/{{record-id}}</code></td>
+<td>The parent course for this instructor entry</td>
+<td><a href="#record-apprecord"><code class="prettyprint">AppRecord</code></a> of type <a href="#courses">Course</a></td>
+</tr>
+</tbody></table>
+
+          <h2 id="course-prerequisites">Course Prerequisites</h2>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"active"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-16T08:45:21.000Z"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"createdBy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{ROOT}}/apps/swt_addressBook/records/{{person-id}}"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nt">"modified"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-16T08:45:21.000Z"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"modifiedBy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{ROOT}}/apps/swt_addressBook/records/{{person-id}}"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nt">"publishing"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"active"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-16T07:00:00.000Z"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"archive"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"parent_index"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"children"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"parent"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{ROOT}}/apps/{{KEY}}_courses/records/{{record-id}}"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"groups"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}/groups"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"related"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}/related"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"$type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"Resource"</span><span class="p">,</span><span class="w"> </span><span class="s2">"RecordLikeObject"</span><span class="p">,</span><span class="w"> </span><span class="s2">"AppRecord"</span><span class="w"> </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>An prerequisite list on a course in the LMS.</p>
+
+<h3 id="location">Location</h3>
+
+<p>Canonical URL:</p>
+
+<p><code class="prettyprint">{{ROOT}}/apps/{{KEY}}_coursesPrerequisites/records/{{record-id}}</code></p>
+
+<h3 id="fields">Fields</h3>
+
+<p>In addition to those specified by <a href="#record-apprecord"><code class="prettyprint">AppRecord</code></a>, a prerequisite record includes:</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">data.parent_index</code></td>
+<td>Number</td>
+<td>The order of this prerequisite on it&rsquo;s parent course</td>
+</tr>
+</tbody></table>
+
+<p>The actual prerequisite courses are stored in the <code class="prettyprint">courses</code> relationship on this record.</p>
+
+<h3 id="children">Children</h3>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>URL</th>
+<th>Description</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>parent</td>
+<td><code class="prettyprint">{{ROOT}}/apps/{{KEY}}_courses/records/{{record-id}}</code></td>
+<td>The parent course for this prerequisite entry</td>
+<td><a href="#record-apprecord"><code class="prettyprint">AppRecord</code></a> of type <a href="#courses">Course</a></td>
+</tr>
+</tbody></table>
+
+<h3 id="relationships">Relationships</h3>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>URL</th>
+<th>Description</th>
+<th>Item Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>courses</td>
+<td><code class="prettyprint">{{RECORD}}/related/courses</code></td>
+<td>The list of prerequisite courses</td>
+<td><a href="#collection-types"><code class="prettyprint">AppRecordList</code></a> with <a href="#courses">Course</a> objects</td>
+</tr>
+</tbody></table>
+
+          <h2 id="sponsors">Sponsors</h2>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"active"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-16T08:45:21.000Z"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"createdBy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{ROOT}}/apps/swt_addressBook/records/{{person-id}}"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nt">"modified"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-16T08:45:21.000Z"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"modifiedBy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{ROOT}}/apps/swt_addressBook/records/{{person-id}}"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nt">"publishing"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"active"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-16T07:00:00.000Z"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"archive"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Awesome Sponsor"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"logo"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"file"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://example.digitalxe.com/sponsors/awesome-logo.gif"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">1234</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"image/gif"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nt">"link"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://awesome.example.com/"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"openInNewWindow"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"children"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"groups"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}/groups"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"related"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}/related"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"$type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"Resource"</span><span class="p">,</span><span class="w"> </span><span class="s2">"RecordLikeObject"</span><span class="p">,</span><span class="w"> </span><span class="s2">"AppRecord"</span><span class="w"> </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>A sponsor in the LMS.</p>
+
+<h3 id="location">Location</h3>
+
+<p>Canonical URL:</p>
+
+<p><code class="prettyprint">{{ROOT}}/apps/{{KEY}}_sponsors/records/{{record-id}}</code></p>
+
+<h3 id="fields">Fields</h3>
+
+<p>In addition to those specified by <a href="#record-apprecord"><code class="prettyprint">AppRecord</code></a>, a sponsor includes:</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">data.title</code></td>
+<td>String</td>
+<td>The name of the sponsor</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.logo</code></td>
+<td>File</td>
+<td>The sponsor&rsquo;s logo</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.link</code></td>
+<td>String</td>
+<td>The URL of the sponsor&rsquo;s website (where the link should go when this sponsor is displayed)</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.openInNewWindow</code></td>
+<td>Boolean</td>
+<td>Whether to open the link in the same window or a new window</td>
+</tr>
+</tbody></table>
+
+<h3 id="relationships">Relationships</h3>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>URL</th>
+<th>Description</th>
+<th>Item Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>courses</td>
+<td><code class="prettyprint">{{RECORD}}/related/courses</code></td>
+<td>The courses that this sponsor is attached to.</td>
+<td><a href="#collection-types"><code class="prettyprint">AppRecordList</code></a> with <a href="#courses">Course</a> objects</td>
+</tr>
+</tbody></table>
+
+          <h2 id="accounts">Accounts</h2>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"active"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-16T08:45:21.000Z"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"createdBy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{ROOT}}/apps/swt_addressBook/records/{{person-id}}"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nt">"modified"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-16T08:45:21.000Z"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"modifiedBy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{ROOT}}/apps/swt_addressBook/records/{{person-id}}"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nt">"publishing"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"active"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-16T07:00:00.000Z"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"archive"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"SEO"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Person-Name"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Person Name"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"keywords"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"First Name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Person"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"Last Name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Name"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"{{KEY}}_instructor"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"Prefix"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"Suffix"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"Nickname"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"Title"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"Photo"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"Bio"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"{{KEY}}_notificationMethod"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Email"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"{{KET}}_EmailAddress"</span><span class="p">:</span><span class="w"> </span><span class="s2">"person.name@example.com"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"children"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"groups"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}/groups"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"related"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}/related"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"$type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"Resource"</span><span class="p">,</span><span class="w"> </span><span class="s2">"RecordLikeObject"</span><span class="p">,</span><span class="w"> </span><span class="s2">"AppRecord"</span><span class="w"> </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>An account in the LMS.</p>
+
+<h3 id="location">Location</h3>
+
+<p>Canonical URL:</p>
+
+<p><code class="prettyprint">{{ROOT}}/apps/{{KEY}}_accounts/records/{{record-id}}</code></p>
+
+<h3 id="fields">Fields</h3>
+
+<p>In addition to those specified by <a href="#record-apprecord"><code class="prettyprint">AppRecord</code></a>, an account includes:</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">data[&quot;First Name&quot;]</code></td>
+<td>String</td>
+<td>The first name of the person</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data[&quot;Last Name&quot;]</code></td>
+<td>String</td>
+<td>The last name of the person</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.{{KEY}}_instructor</code></td>
+<td>Boolean</td>
+<td>Whether the person is an instructor. (This only makes them appear in our backend for instructor selection)</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.Prefix</code></td>
+<td>String</td>
+<td>The prefix for the person&rsquo;s name (&lsquo;Mr.&rsquo;, &#39;Ms.&rsquo;, etc)</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.Suffix</code></td>
+<td>String</td>
+<td>A suffix for the person&rsquo;s name (&#39;Jr.&rsquo;, &#39;Sr.&rsquo;, etc)</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.Nickname</code></td>
+<td>String</td>
+<td>A nickname for the person (displayed in preference to First and Last Name)</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.Title</code></td>
+<td>String</td>
+<td>The person&rsquo;s business title (&#39;Director&rsquo;, &#39;CEO&rsquo;, etc)</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.Photo</code></td>
+<td>File</td>
+<td>The person&rsquo;s photo</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.Bio</code></td>
+<td>Text</td>
+<td>The person&rsquo;s bio (HTML)</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.{{KEY}}_notificationMethod</code></td>
+<td>Enumeration</td>
+<td>How the user wants to get notifications (&#39;None&rsquo;, &#39;Email&rsquo;)</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.{{KEY}}_EmailAddress</code></td>
+<td>String</td>
+<td>The email address of the user if they aren&rsquo;t a local user in our system. Required if notificationMethod is &#39;Email&rsquo; and they aren&rsquo;t a local user.</td>
+</tr>
+</tbody></table>
+
+<h3 id="relationships">Relationships</h3>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>URL</th>
+<th>Description</th>
+<th>Item Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>courses</td>
+<td><code class="prettyprint">{{RECORD}}/related/courses</code></td>
+<td>Courses that this user is considered to have purchased, for the purposes of the &ldquo;thisCourseRequiresOffsitePurchase&rdquo; flag on a Course.</td>
+<td><a href="#collection-types"><code class="prettyprint">AppRecordList</code></a> with <a href="#courses">Course</a> objects</td>
+</tr>
+</tbody></table>
+
+          <h1 id="miscellaneous-api-methods">Miscellaneous API methods</h1>
+
+<h2 id="post-multiple-request-endpoint">POST Multiple Request Endpoint</h2>
+
+<p><code class="prettyprint">POST {{ROOT}}/multi</code></p>
+
+<p>Retrieve or update a number of resources simultaneously. This method does not perform a transaction (where, if for example, a set of POST or PUT requests are included, if one were to fail, none would happen), but
+rather just performs each request.</p>
+
+<h3 id="request-body">Request Body</h3>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"requests"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"method"</span><span class="p">:</span><span class="w"> </span><span class="s2">"HTTP-Method"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Resource-URL"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"query"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"Query"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Parameter"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"POST"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Data goes here"</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">requests</code></td>
+<td>Array</td>
+<td>Array of the requests to be made</td>
+</tr>
+<tr>
+<td><code class="prettyprint">requests[N].method</code></td>
+<td>String</td>
+<td>The request method to invoke. This should be a valid HTTP request method</td>
+</tr>
+<tr>
+<td><code class="prettyprint">requests[N].resource</code></td>
+<td>String</td>
+<td>The full URI to the resource that the request is for. This should be relative to the API base URL (in this documentation, <code class="prettyprint">https://example.digitalxe.com/api/1</code>.)</td>
+</tr>
+<tr>
+<td><code class="prettyprint">requests[N].query</code></td>
+<td>String Map</td>
+<td>The query parameters to append.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">requests[N].data</code></td>
+<td>Object</td>
+<td>The data that would be provided in the POST body. Since the API only accepts JSON bodies for POST data, the data should be the object without being JSON encoded itself.</td>
+</tr>
+</tbody></table>
+
+<h3 id="response-body">Response Body</h3>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"responseCode"</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"result"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Response-Body"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>The result contains a list of encapsulated responses.</p>
+
+<p>Response:</p>
+
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">result</code></td>
+<td>Array</td>
+<td>The responses, in the same order that the requests were in the original request.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">result[N].responseCode</code></td>
+<td>Number</td>
+<td>The HTTP response code that would have been returned for the request.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">result[N].headers</code></td>
+<td>String Map</td>
+<td>A map of HTTP headers that would have been returned, if any.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">result[N].result</code></td>
+<td>Any</td>
+<td>The response body of the request.</td>
+</tr>
+</tbody></table>
+
+          <h1 id="errors">Errors</h1>
+
+<aside class="notice">This error section is stored in a separate file in `includes/_errors.md`. Slate allows you to optionally separate out your docs into many files&hellip;just save them to the `includes` folder and add them to the top of your `index.md`&rsquo;s frontmatter. Files are included in the order listed.</aside>
 
 <p>The Kittn API uses the following error codes:</p>
 
@@ -232,7 +2575,7 @@ Remember — a happy kitten is an authenticated kitten!
 </tr>
 <tr>
 <td>429</td>
-<td>Too Many Requests &ndash; You&rsquo;re requesting too many kittens! Slown down!</td>
+<td>Too Many Requests &ndash; You&rsquo;re requesting too many kittens! Slow down!</td>
 </tr>
 <tr>
 <td>500</td>
@@ -247,9 +2590,7 @@ Remember — a happy kitten is an authenticated kitten!
       </div>
       <div class="dark-box">
           <div class="lang-selector">
-                <a href="#" data-language-name="shell">shell</a>
-                <a href="#" data-language-name="ruby">ruby</a>
-                <a href="#" data-language-name="python">python</a>
+                <a href="#" data-language-name="json">json</a>
           </div>
       </div>
     </div>
