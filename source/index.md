@@ -504,6 +504,10 @@ related | ``{{RECORD}}/related`` | Apps which have related records for this reco
 
 <span class='info'>Apps may also define their own children here, if the record has pointers to other objects in the system.</span>
 
+### Relationships
+
+In any specific record type, record lists accessible beneath ``related`` will be noted in a Relationships section.
+
 ## Root (``Root``)
 
 ```json
@@ -711,6 +715,7 @@ resources | Object | An object whose keys consist of the canonical resource URLs
 # Apps
 
 ## Courses
+
 ```json
 {
 	"id": "{{RECORD}}",
@@ -766,9 +771,30 @@ resources | Object | An object whose keys consist of the canonical resource URLs
 			"disableOffsitePurchase": false,
 			"purchaseButtonText": "",
 			"disabledPurchaseButtonText": ""
-		},
+		}
 	},
 	"children": {
+		"activityRoot": {
+			"$Resource": "{{ROOT}}/apps/{{KEY}}_activities/records/{{record-id}}"
+		},
+		"coursesAnnouncements": {
+			"$Resource": "{{RECORD}}/coursesAnnouncements"
+		},
+		"coursesComments": {
+			"$Resource": "{{RECORD}}/coursesComments"
+		},
+		"coursesDownloads": {
+			"$Resource": "{{RECORD}}/coursesDownloads"
+		},
+		"coursesGrading": {
+			"$Resource": "{{RECORD}}/coursesGrading"
+		},
+		"coursesInstructors": {
+			"$Resource": "{{RECORD}}/coursesInstructors"
+		},
+		"coursesPrerequisites": {
+			"$Resource": "{{RECORD}}/coursesPrerequisites"
+		},
 		"groups": {
 			"$Resource": "{{RECORD}}/groups"
 		},
@@ -776,6 +802,7 @@ resources | Object | An object whose keys consist of the canonical resource URLs
 			"$Resource": "{{RECORD}}/related"
 		}
 	},
+
 	"$type": [ "Resource", "RecordLikeObject", "AppRecord" ]
 }
 ```
@@ -815,6 +842,603 @@ Name | Type | Description
 
 ### Children
 
+Name | URL | Description | Type
+---- | ------------- | ----------- | ----
+activityRoot | ``{{ROOT}}/apps/{{KEY}}_activities/records/{{record-id}}`` | The top-level activity section for this course | [``AppRecord``](#record-apprecord) of type [Activity](#activities)
+coursesAnnouncements | ``{{RECORD}}/coursesAnnouncements`` | Announcements made on this course | [``AppRecordList``](#collection-types) with [Course Announcement](#course-announcements) objects
+coursesComments | ``{{RECORD}}/coursesComments`` | Comments made on this course | [``AppRecordList``](#collection-types) with [Course Comment](#course-comments) objects
+coursesDownloads | ``{{RECORD}}/coursesDownloads`` | Downloads made availble on this course | [``AppRecordList``](#collection-types) with [Course Download](#course-downloads) objects
+coursesGrading | ``{{RECORD}}/coursesGrading`` | Grading scale for this course | [``AppRecordList``](#collection-types) with [Course Grade](#course-grading) objects
+coursesInstructors | ``{{RECORD}}/coursesInstructors`` | Instructors for this course | [``AppRecordList``](#collection-types) with [Course Instructor](#course-instructors) objects. The first item in the set (with the smallest value for ``parent_index``) is considered the "lead" instructor.
+coursesPrerequisites | ``{{RECORD}}/coursesPrerequisites`` | Prerequisite lists for this course | [``AppRecordList``](#collection-types) with [Course Prerequisite](#course-prerequisites) objects.
+
+### Relationships
+
+Name | URL | Description | Item Type
+---- | --- | ----------- | ---------
+sponsors | ``{{RECORD}}/related/sponsors`` | Sponsors for this course | [``AppRecordList``](#collection-types) with [Sponsor](#sponsors) objects
+
+## Course Announcements
+
+```json
+{
+	"id": "{{RECORD}}",
+	"data": {
+		"meta": {
+			"active": true,
+			"created": "2015-11-16T08:45:21.000Z",
+			"createdBy": {
+				"$Resource": "{{ROOT}}/apps/swt_addressBook/records/{{person-id}}"
+			},
+			"modified": "2015-11-16T08:45:21.000Z",
+			"modifiedBy": {
+				"$Resource": "{{ROOT}}/apps/swt_addressBook/records/{{person-id}}"
+			},
+			"publishing": {
+				"active": "2015-11-16T07:00:00.000Z",
+				"archive": null
+			}
+		},
+		"data": {
+			"announcement": "",
+			"parent_index": 0
+		}
+	},
+	"children": {
+		"parent": {
+			"$Resource": "{{ROOT}}/apps/{{KEY}}_courses/records/{{record-id}}"
+		},
+		"groups": {
+			"$Resource": "{{RECORD}}/groups"
+		},
+		"related": {
+			"$Resource": "{{RECORD}}/related"
+		}
+	},
+	"$type": [ "Resource", "RecordLikeObject", "AppRecord" ]
+}
+```
+
+An announcement on a course in the LMS.
+
+### Location
+
+Canonical URL:
+
+``{{ROOT}}/apps/{{KEY}}_coursesAnnouncements/records/{{record-id}}``
+
+### Fields
+
+In addition to those specified by [``AppRecord``](#record-apprecord), an announcement includes:
+
+Name | Type | Description
+---- | ---- | -----------
+``data.announcment`` | Text | The text of the announcement
+``data.parent_index`` | Number | The order of this announcement on it's parent course
+
+### Children
+
+Name | URL | Description | Type
+---- | ------------- | ----------- | ----
+parent | ``{{ROOT}}/apps/{{KEY}}_courses/records/{{record-id}}`` | The parent course for this announcement | [``AppRecord``](#record-apprecord) of type [Course](#courses)
+
+## Course Comments
+
+```json
+{
+	"id": "{{RECORD}}",
+	"data": {
+		"meta": {
+			"active": true,
+			"created": "2015-11-16T08:45:21.000Z",
+			"createdBy": {
+				"$Resource": "{{ROOT}}/apps/swt_addressBook/records/{{person-id}}"
+			},
+			"modified": "2015-11-16T08:45:21.000Z",
+			"modifiedBy": {
+				"$Resource": "{{ROOT}}/apps/swt_addressBook/records/{{person-id}}"
+			},
+			"publishing": {
+				"active": "2015-11-16T07:00:00.000Z",
+				"archive": null
+			}
+		},
+		"data": {
+			"time": "2015-11-16T08:45:21.000Z",
+			"comment": "This is awesome!",
+			"parent_index": 0
+		}
+	},
+	"children": {
+		"parent": {
+			"$Resource": "{{ROOT}}/apps/{{KEY}}_courses/records/{{record-id}}"
+		},
+		"author": {
+			"$Resource": "{{ROOT}}/apps/{{KEY}}_accounts/records/{{record-id}}"
+		},
+		"inReplyTo": {
+			"$Resource": "{{ROOT}}/apps/{{KEY}}_comments/records/{{record-id}}"
+		},
+		"groups": {
+			"$Resource": "{{RECORD}}/groups"
+		},
+		"related": {
+			"$Resource": "{{RECORD}}/related"
+		}
+	},
+	"$type": [ "Resource", "RecordLikeObject", "AppRecord" ]
+}
+```
+
+An comment on a course in the LMS.
+
+### Location
+
+Canonical URL:
+
+``{{ROOT}}/apps/{{KEY}}_coursesComments/records/{{record-id}}``
+
+### Fields
+
+In addition to those specified by [``AppRecord``](#record-apprecord), a comment includes:
+
+Name | Type | Description
+---- | ---- | -----------
+``data.time`` | Timestamp | The time of the comment
+``data.comment`` | Text | The text of the comment
+``data.parent_index`` | Number | The order of this comment on it's parent course
+
+### Children
+
+Name | URL | Description | Type
+---- | ------------- | ----------- | ----
+parent | ``{{ROOT}}/apps/{{KEY}}_courses/records/{{record-id}}`` | The parent course for this comment | [``AppRecord``](#record-apprecord) of type [Course](#courses)
+author | ``{{ROOT}}/apps/{{KEY}}_accounts/records/{{record-id}}`` | The author for this comment | [``AppRecord``](#record-apprecord) of type [Account](#accounts)
+inReplyTo | ``{{ROOT}}/apps/{{KEY}}_coursesComments/records/{{record-id}}`` | The comment that this is in reply to | [``AppRecord``](#record-apprecord) of type [Course Comment](#course-comments)
+
+## Course Downloads
+
+```json
+{
+	"id": "{{RECORD}}",
+	"data": {
+		"meta": {
+			"active": true,
+			"created": "2015-11-16T08:45:21.000Z",
+			"createdBy": {
+				"$Resource": "{{ROOT}}/apps/swt_addressBook/records/{{person-id}}"
+			},
+			"modified": "2015-11-16T08:45:21.000Z",
+			"modifiedBy": {
+				"$Resource": "{{ROOT}}/apps/swt_addressBook/records/{{person-id}}"
+			},
+			"publishing": {
+				"active": "2015-11-16T07:00:00.000Z",
+				"archive": null
+			}
+		},
+		"data": {
+			"title": "An awesome download",
+			"file": {
+				"name": "https://example.digitalxe.com/awesome.pdf",
+				"type": "application/pdf",
+				"size": 34322
+			},
+			"parent_index": 0
+		}
+	},
+	"children": {
+		"parent": {
+			"$Resource": "{{ROOT}}/apps/{{KEY}}_courses/records/{{record-id}}"
+		},
+		"groups": {
+			"$Resource": "{{RECORD}}/groups"
+		},
+		"related": {
+			"$Resource": "{{RECORD}}/related"
+		}
+	},
+	"$type": [ "Resource", "RecordLikeObject", "AppRecord" ]
+}
+```
+
+An download on a course in the LMS.
+
+### Location
+
+Canonical URL:
+
+``{{ROOT}}/apps/{{KEY}}_coursesDownloads/records/{{record-id}}``
+
+### Fields
+
+In addition to those specified by [``AppRecord``](#record-apprecord), a download includes:
+
+Name | Type | Description
+---- | ---- | -----------
+``data.title`` | String | The title of the download
+``data.file`` | File | The file to download
+``data.parent_index`` | Number | The order of this comment on it's parent course
+
+### Children
+
+Name | URL | Description | Type
+---- | ------------- | ----------- | ----
+parent | ``{{ROOT}}/apps/{{KEY}}_courses/records/{{record-id}}`` | The parent course for this download | [``AppRecord``](#record-apprecord) of type [Course](#courses)
+
+## Course Grading
+
+```json
+{
+	"id": "{{RECORD}}",
+	"data": {
+		"meta": {
+			"active": true,
+			"created": "2015-11-16T08:45:21.000Z",
+			"createdBy": {
+				"$Resource": "{{ROOT}}/apps/swt_addressBook/records/{{person-id}}"
+			},
+			"modified": "2015-11-16T08:45:21.000Z",
+			"modifiedBy": {
+				"$Resource": "{{ROOT}}/apps/swt_addressBook/records/{{person-id}}"
+			},
+			"publishing": {
+				"active": "2015-11-16T07:00:00.000Z",
+				"archive": null
+			}
+		},
+		"data": {
+			"name": "A+",
+			"minimum": 97,
+			"maximum": 100,
+			"thisIsAPassingGrade": true,
+			"parent_index": 0
+		}
+	},
+	"children": {
+		"parent": {
+			"$Resource": "{{ROOT}}/apps/{{KEY}}_courses/records/{{record-id}}"
+		},
+		"groups": {
+			"$Resource": "{{RECORD}}/groups"
+		},
+		"related": {
+			"$Resource": "{{RECORD}}/related"
+		}
+	},
+	"$type": [ "Resource", "RecordLikeObject", "AppRecord" ]
+}
+```
+
+A grade on a course in the LMS.
+
+### Location
+
+Canonical URL:
+
+``{{ROOT}}/apps/{{KEY}}_coursesGrading/records/{{record-id}}``
+
+### Fields
+
+In addition to those specified by [``AppRecord``](#record-apprecord), a grade includes:
+
+Name | Type | Description
+---- | ---- | -----------
+``data.name`` | String | The name of this grade
+``data.minimum`` | Number | The minimum score (percentage) to have earned this grade
+``data.maximum`` | Number | The maximum score (percentage) to have earned this grade
+``data.thisIsAPassingGrade`` | Boolean | Whether this grade constitutes a "pass" or not
+``data.parent_index`` | Number | The order of this grade on it's parent course
+
+The grading scale for a course should not contain overlapping entries, and the grading scale will be extended to fill the entire span
+between 0 and 100%.
+
+* At the top end of the grading scale: the highest entry will have it's range extended to 100%.
+* At the bottom end of the grading scale: If the lowest entry is a passing grade, then an entry for the bottom portion of the scale will be
+  treated as existing with ``name`` being 'Fail', ``minimum`` being 0, ``maximum`` being 1 smaller than the lowest grade given, and ``thisIsAPassingGrade``
+  being considered ``false``; if the lowest entry is a failing grade, then it's ``minimum`` value will be treated as 0.  
+
+Scores are inclusive (the example entry covers all scores from 97% to 100%); all scores are rounded to the nearest
+percentage value.
+
+### Children
+
+Name | URL | Description | Type
+---- | ------------- | ----------- | ----
+parent | ``{{ROOT}}/apps/{{KEY}}_courses/records/{{record-id}}`` | The parent course for this grade | [``AppRecord``](#record-apprecord) of type [Course](#courses)
+
+## Course Instructor
+
+```json
+{
+	"id": "{{RECORD}}",
+	"data": {
+		"meta": {
+			"active": true,
+			"created": "2015-11-16T08:45:21.000Z",
+			"createdBy": {
+				"$Resource": "{{ROOT}}/apps/swt_addressBook/records/{{person-id}}"
+			},
+			"modified": "2015-11-16T08:45:21.000Z",
+			"modifiedBy": {
+				"$Resource": "{{ROOT}}/apps/swt_addressBook/records/{{person-id}}"
+			},
+			"publishing": {
+				"active": "2015-11-16T07:00:00.000Z",
+				"archive": null
+			}
+		},
+		"data": {
+			"parent_index": 0
+		}
+	},
+	"children": {
+		"instructor": {
+			"$Resource": "{{ROOT}}/apps/{{KEY}}_accounts/records/{{record-id}}"
+		},
+		"parent": {
+			"$Resource": "{{ROOT}}/apps/{{KEY}}_courses/records/{{record-id}}"
+		},
+		"groups": {
+			"$Resource": "{{RECORD}}/groups"
+		},
+		"related": {
+			"$Resource": "{{RECORD}}/related"
+		}
+	},
+	"$type": [ "Resource", "RecordLikeObject", "AppRecord" ]
+}
+```
+
+An instructor on a course in the LMS.
+
+### Location
+
+Canonical URL:
+
+``{{ROOT}}/apps/{{KEY}}_coursesInstructors/records/{{record-id}}``
+
+### Fields
+
+In addition to those specified by [``AppRecord``](#record-apprecord), an instructor record includes:
+
+Name | Type | Description
+---- | ---- | -----------
+``data.parent_index`` | Number | The order of this instructor on it's parent course
+
+The instructor record itself can be found in the Children section. The lead instructor is the one on this course that has the smallest value
+in the ``parent_index`` field.
+
+### Children
+
+Name | URL | Description | Type
+---- | ------------- | ----------- | ----
+instructor | ``{{ROOT}}/apps/{{KEY}}_accounts/records/{{record-id}}`` | The instructor for this course | [``AppRecord``](#record-apprecord) of type [Account](#accounts)
+parent | ``{{ROOT}}/apps/{{KEY}}_courses/records/{{record-id}}`` | The parent course for this instructor entry | [``AppRecord``](#record-apprecord) of type [Course](#courses)
+
+## Course Prerequisites
+
+```json
+{
+	"id": "{{RECORD}}",
+	"data": {
+		"meta": {
+			"active": true,
+			"created": "2015-11-16T08:45:21.000Z",
+			"createdBy": {
+				"$Resource": "{{ROOT}}/apps/swt_addressBook/records/{{person-id}}"
+			},
+			"modified": "2015-11-16T08:45:21.000Z",
+			"modifiedBy": {
+				"$Resource": "{{ROOT}}/apps/swt_addressBook/records/{{person-id}}"
+			},
+			"publishing": {
+				"active": "2015-11-16T07:00:00.000Z",
+				"archive": null
+			}
+		},
+		"data": {
+			"parent_index": 0
+		}
+	},
+	"children": {
+		"parent": {
+			"$Resource": "{{ROOT}}/apps/{{KEY}}_courses/records/{{record-id}}"
+		},
+		"groups": {
+			"$Resource": "{{RECORD}}/groups"
+		},
+		"related": {
+			"$Resource": "{{RECORD}}/related"
+		}
+	},
+	"$type": [ "Resource", "RecordLikeObject", "AppRecord" ]
+}
+```
+
+An prerequisite list on a course in the LMS.
+
+### Location
+
+Canonical URL:
+
+``{{ROOT}}/apps/{{KEY}}_coursesPrerequisites/records/{{record-id}}``
+
+### Fields
+
+In addition to those specified by [``AppRecord``](#record-apprecord), a prerequisite record includes:
+
+Name | Type | Description
+---- | ---- | -----------
+``data.parent_index`` | Number | The order of this prerequisite on it's parent course
+
+The actual prerequisite courses are stored in the ``courses`` relationship on this record.
+
+### Children
+
+Name | URL | Description | Type
+---- | ------------- | ----------- | ----
+parent | ``{{ROOT}}/apps/{{KEY}}_courses/records/{{record-id}}`` | The parent course for this prerequisite entry | [``AppRecord``](#record-apprecord) of type [Course](#courses)
+
+### Relationships
+
+Name | URL | Description | Item Type
+---- | --- | ----------- | ---------
+courses | ``{{RECORD}}/related/courses`` | The list of prerequisite courses | [``AppRecordList``](#collection-types) with [Course](#courses) objects
+
+## Sponsors
+
+```json
+{
+	"id": "{{RECORD}}",
+	"data": {
+		"meta": {
+			"active": true,
+			"created": "2015-11-16T08:45:21.000Z",
+			"createdBy": {
+				"$Resource": "{{ROOT}}/apps/swt_addressBook/records/{{person-id}}"
+			},
+			"modified": "2015-11-16T08:45:21.000Z",
+			"modifiedBy": {
+				"$Resource": "{{ROOT}}/apps/swt_addressBook/records/{{person-id}}"
+			},
+			"publishing": {
+				"active": "2015-11-16T07:00:00.000Z",
+				"archive": null
+			}
+		},
+		"data": {
+			"title": "Awesome Sponsor",
+			"logo": {
+				"file": "https://example.digitalxe.com/sponsors/awesome-logo.gif",
+				"size": 1234,
+				"type": "image/gif"
+			},
+			"link": "http://awesome.example.com/",
+			"openInNewWindow": true
+		}
+	},
+	"children": {
+		"groups": {
+			"$Resource": "{{RECORD}}/groups"
+		},
+		"related": {
+			"$Resource": "{{RECORD}}/related"
+		}
+	},
+	"$type": [ "Resource", "RecordLikeObject", "AppRecord" ]
+}
+```
+
+A sponsor in the LMS.
+
+### Location
+
+Canonical URL:
+
+``{{ROOT}}/apps/{{KEY}}_sponsors/records/{{record-id}}``
+
+### Fields
+
+In addition to those specified by [``AppRecord``](#record-apprecord), a sponsor includes:
+
+Name | Type | Description
+---- | ---- | -----------
+``data.title`` | String | The name of the sponsor
+``data.logo`` | File | The sponsor's logo
+``data.link`` | String | The URL of the sponsor's website (where the link should go when this sponsor is displayed)
+``data.openInNewWindow`` | Boolean | Whether to open the link in the same window or a new window
+
+### Relationships
+
+Name | URL | Description | Item Type
+---- | --- | ----------- | ---------
+courses | ``{{RECORD}}/related/courses`` | The courses that this sponsor is attached to. | [``AppRecordList``](#collection-types) with [Course](#courses) objects
+
+## Accounts
+
+```json
+{
+	"id": "{{RECORD}}",
+	"data": {
+		"meta": {
+			"active": true,
+			"created": "2015-11-16T08:45:21.000Z",
+			"createdBy": {
+				"$Resource": "{{ROOT}}/apps/swt_addressBook/records/{{person-id}}"
+			},
+			"modified": "2015-11-16T08:45:21.000Z",
+			"modifiedBy": {
+				"$Resource": "{{ROOT}}/apps/swt_addressBook/records/{{person-id}}"
+			},
+			"publishing": {
+				"active": "2015-11-16T07:00:00.000Z",
+				"archive": null
+			}
+		},
+		"SEO": {
+			"url": "Person-Name",
+			"title": "Person Name",
+			"description": null,
+			"keywords": null
+		},
+		"data": {
+			"First Name": "Person",
+			"Last Name": "Name",
+			"{{KEY}}_instructor": false,
+			"Prefix": "",
+			"Suffix": "",
+			"Nickname": "",
+			"Title": "",
+			"Photo": "",
+			"Bio": "",
+			"{{KEY}}_notificationMethod": "Email",
+			"{{KET}}_EmailAddress": "person.name@example.com"
+		}
+	},
+	"children": {
+		"groups": {
+			"$Resource": "{{RECORD}}/groups"
+		},
+		"related": {
+			"$Resource": "{{RECORD}}/related"
+		}
+	},
+	"$type": [ "Resource", "RecordLikeObject", "AppRecord" ]
+}
+```
+
+An account in the LMS.
+
+### Location
+
+Canonical URL:
+
+``{{ROOT}}/apps/{{KEY}}_accounts/records/{{record-id}}``
+
+### Fields
+
+In addition to those specified by [``AppRecord``](#record-apprecord), an account includes:
+
+Name | Type | Description
+---- | ---- | -----------
+``data["First Name"]`` | String | The first name of the person
+``data["Last Name"]`` | String | The last name of the person
+``data.{{KEY}}_instructor`` | Boolean | Whether the person is an instructor. (This only makes them appear in our backend for instructor selection)
+``data.Prefix`` | String | The prefix for the person's name ('Mr.', 'Ms.', etc)
+``data.Suffix`` | String | A suffix for the person's name ('Jr.', 'Sr.', etc)
+``data.Nickname`` | String | A nickname for the person (displayed in preference to First and Last Name)
+``data.Title`` | String | The person's business title ('Director', 'CEO', etc)
+``data.Photo`` | File | The person's photo
+``data.Bio`` | Text | The person's bio (HTML)
+``data.{{KEY}}_notificationMethod`` | Enumeration | How the user wants to get notifications ('None', 'Email')
+``data.{{KEY}}_EmailAddress`` | String | The email address of the user if they aren't a local user in our system. Required if notificationMethod is 'Email' and they aren't a local user.
+    
+### Relationships
+
+Name | URL | Description | Item Type
+---- | --- | ----------- | ---------
+courses | ``{{RECORD}}/related/courses`` | Courses that this user is considered to have purchased, for the purposes of the "thisCourseRequiresOffsitePurchase" flag on a Course. | [``AppRecordList``](#collection-types) with [Course](#courses) objects
 
 # Miscellaneous API methods
 
