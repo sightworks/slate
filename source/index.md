@@ -21,7 +21,7 @@ includes:
   - objects/group
   - objects/record
   - objects/root
-  - objects/collection
+  - objects/collections
   - objects/misc
   - apps/header
   - apps/courses
