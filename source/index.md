@@ -1,11 +1,11 @@
 ---
-title: API Reference
+title: DigitalXE / BrandLX API Ver. 1
 
 language_tabs:
   - json
 
 toc_footers:
-  - <a href='http://github.com/tripit/slate'>Documentation Powered by Slate</a>
+  - <!-- <a href='http://github.com/tripit/slate'>Documentation Powered by Slate</a>--> &copy;2015 SightWorks
 
 includes:
   - intro
