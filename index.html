@@ -156,7 +156,7 @@ Content-Type: application/json
 <p>In the future, this API may return other token types (possibly an OAuth token for the app using the &#39;OAuth&rsquo; mechanism for HTTP Auth).</p>
 
 <h2 id="use-the-bearer-token-in-a-request">Use the Bearer token in a request</h2>
-<pre class="highlight plaintext"><code>GET {{ROOT}}/channels
+<pre class="highlight plaintext"><code>GET {{ROOT}}/channels HTTP/1.1
 Authorization: Bearer eyJ0b2tlbiI6ImtleSIsImtleSI6InRva2VuIn0=
 
 HTTP/1.1 200 OK
@@ -187,6 +187,15 @@ Content-Type: application/json
 </code></pre>
 
 <p>The JSON example code to the right provides a basic example of using the token.</p>
+
+<h2 id="alternative-use-the-bearer-token-in-the-query-string">Alternative: Use the Bearer token in the query string</h2>
+<pre class="highlight plaintext"><code>GET {{ROOT}}/channels?access_token=eyJ0b2tlbiI6ImtleSIsImtleSI6InRva2VuIn0%3D HTTP/1.1
+</code></pre>
+
+<p>Use the <code class="prettyprint">access_token</code> query string parameter on any request to pass in the access token.</p>
+
+<aside class='warning'>If this method is used on a request to [&ldquo;&hellip;/multi&rdquo;](#post-multiple-request-endpoint), the &ldquo;access_token&rdquo; parameter must be passed in both
+the query string and &ldquo;requests[N].query.access_token&rdquo;.</aside>
 
 <h2 id="invalidate-the-bearer-token">Invalidate the Bearer token</h2>
 <pre class="highlight plaintext"><code>POST /oauth2/invalidate_token
