@@ -14,6 +14,7 @@ includes:
   - basic
   - objects/header
   - objects/resource
+  - objects/writableresource
   - objects/channel
   - objects/app
   - objects/appmeta

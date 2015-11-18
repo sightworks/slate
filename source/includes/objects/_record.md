@@ -35,7 +35,7 @@
 			"$Resource": "{{RECORD}}/related"
 		}
 	},
-	"$type": [ "Resource", "RecordLikeObject", "AppRecord" ]
+	"$type": [ "Resource", "WritableResource", "RecordLikeObject", "AppRecord" ]
 }
 ```
 

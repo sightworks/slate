@@ -28,7 +28,7 @@
 		"data": {}
 	},
 	"children": {},
-	"$type": [ "Resource", "RecordLikeObject" ]
+	"$type": [ "Resource", "WritableResource", "RecordLikeObject" ]
 }
 ```
 
@@ -60,4 +60,14 @@ Name | Type | Description
 The children of a record-like object are determined dynamically by the type of record being displayed. 
 
 See the Children sections in [``AppRecord``](#record-apprecord) and [``AppGroup``](#group-appgroup) for others that are always here.
+
+### PUT Method
+
+When updating these resources, you are required to specify the full body of the resource (as returned in the resource's ``data`` property). If you don't, then
+you will get back an error response of ``400 Bad Request`` with a code ``INVALID_BODY``.
+
+In the ``meta`` property, ``created``, ``createdBy``, ``modified``, and ``modifiedBy`` are used when updating the record. If they do not have the same values as the
+system currently recognizes, you will get a ``409 Conflict`` error, with a code ``CONFLICT`` and ``error.detail.conflictField`` indicating the field which has a different
+value.
+
 

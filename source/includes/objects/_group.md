@@ -49,7 +49,7 @@
 			"$Resource": "{{GROUP}}/records"
 		}
 	},
-	"$type": [ "Resource", "RecordLikeObject", "AppGroup" ]
+	"$type": [ "Resource", "WritableResource", "RecordLikeObject", "AppGroup" ]
 }
 ```
 
@@ -105,3 +105,10 @@ records | ``{{GROUP}}/records`` | Records contained within this group | [``AppRe
 The group identified by ``{{APP}}/root`` does not have a child node called ``parent`` as it is the top of the tree.
 
 <span class='info'>Apps may also define their own children here, if the group has pointers to other objects in the system.</span>
+
+### PUT Method
+
+The group identified by ``{{APP}}/root`` is also technically a valid target for PUT, any attempts to update it will result in a ``400 Bad Request`` error being
+returned.
+
+
