@@ -86,8 +86,8 @@ GET {{ROOT}}/channels?access_token=eyJ0b2tlbiI6ImtleSIsImtleSI6InRva2VuIn0%3D HT
 
 Use the ``access_token`` query string parameter on any request to pass in the access token.
 
-<aside class='warning'>If this method is used on a request to [``.../multi``](#post-multiple-request-endpoint), the ``access_token`` parameter must be passed in both
-the query string and ``requests[N].query.access_token``.</aside>
+If this method is used on a request to [``.../multi``](#post-multiple-request-endpoint), the ``access_token`` parameter must be passed in both
+the query string and ``requests[N].query.access_token``.
 
 ## Invalidate the Bearer token
 
