@@ -351,6 +351,44 @@ Content-Type: application/json
 
 <p>Since <code class="prettyprint">Resource</code> is the base type of all resources, it doesn&rsquo;t define any children. See the other object types for details about their child objects.</p>
 
+          <h2 id="writable-resource-writableresource">Writable Resource (<code class="prettyprint">WritableResource</code>)</h2>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"$type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"Resource"</span><span class="p">,</span><span class="w"> </span><span class="s2">"WritableResource"</span><span class="w"> </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RESOURCE}}"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/* The contents of the resource goes here */"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"children"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"{{name}}"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RESOURCE}}/{{name}}"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>A writable resource is a resource that can be modified through the API.</p>
+
+<h3 id="fields">Fields</h3>
+
+<p>The fields for a writable resource are the same as those for a normal resource.</p>
+
+<h3 id="query-parameters-for-resources">Query Parameters for Resources</h3>
+
+<p>The query parameters for a writable resource are the same as those for a normal resource.</p>
+
+<h3 id="children">Children</h3>
+
+<p>Since <code class="prettyprint">Resource</code> is the base type of all resources, it doesn&rsquo;t define any children. See the other object types for details about their child objects.</p>
+
+<h3 id="put-resource">PUT <code class="prettyprint">{{RESOURCE}}</code></h3>
+<pre class="highlight plaintext"><code>PUT {{RESOURCE}} HTTP/1.1
+Content-Type: application/json
+
+/* The full representation of the resource's "data" property here, updated as necessary */
+</code></pre>
+
+<p>Invoking this method will update the representation of the resource.</p>
+
+<p>See <a href="#errors">Errors</a> below for details of errors that might come back.</p>
+
           <h2 id="channel-channelresource">Channel (<code class="prettyprint">ChannelResource</code>)</h2>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
     </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{CHANNEL}}"</span><span class="p">,</span><span class="w">
@@ -613,7 +651,7 @@ Content-Type: application/json
         </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="nt">"children"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
-    </span><span class="nt">"$type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"Resource"</span><span class="p">,</span><span class="w"> </span><span class="s2">"RecordLikeObject"</span><span class="w"> </span><span class="p">]</span><span class="w">
+    </span><span class="nt">"$type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"Resource"</span><span class="p">,</span><span class="w"> </span><span class="s2">"WritableResource"</span><span class="p">,</span><span class="w"> </span><span class="s2">"RecordLikeObject"</span><span class="w"> </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
@@ -696,6 +734,15 @@ are found in various places; see their documentation for details.</p>
 
 <p>See the Children sections in <a href="#record-apprecord"><code class="prettyprint">AppRecord</code></a> and <a href="#group-appgroup"><code class="prettyprint">AppGroup</code></a> for others that are always here.</p>
 
+<h3 id="put-method">PUT Method</h3>
+
+<p>When updating these resources, you are required to specify the full body of the resource (as returned in the resource&rsquo;s <code class="prettyprint">data</code> property). If you don&rsquo;t, then
+you will get back an error response of <code class="prettyprint">400 Bad Request</code> with a code <code class="prettyprint">INVALID_BODY</code>.</p>
+
+<p>In the <code class="prettyprint">meta</code> property, <code class="prettyprint">created</code>, <code class="prettyprint">createdBy</code>, <code class="prettyprint">modified</code>, and <code class="prettyprint">modifiedBy</code> are used when updating the record. If they do not have the same values as the
+system currently recognizes, you will get a <code class="prettyprint">409 Conflict</code> error, with a code <code class="prettyprint">CONFLICT</code> and <code class="prettyprint">error.detail.conflictField</code> indicating the field which has a different
+value.</p>
+
           <h2 id="group-appgroup">Group (<code class="prettyprint">AppGroup</code>)</h2>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
     </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{GROUP}}"</span><span class="p">,</span><span class="w">
@@ -745,7 +792,7 @@ are found in various places; see their documentation for details.</p>
             </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{GROUP}}/records"</span><span class="w">
         </span><span class="p">}</span><span class="w">
     </span><span class="p">},</span><span class="w">
-    </span><span class="nt">"$type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"Resource"</span><span class="p">,</span><span class="w"> </span><span class="s2">"RecordLikeObject"</span><span class="p">,</span><span class="w"> </span><span class="s2">"AppGroup"</span><span class="w"> </span><span class="p">]</span><span class="w">
+    </span><span class="nt">"$type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"Resource"</span><span class="p">,</span><span class="w"> </span><span class="s2">"WritableResource"</span><span class="p">,</span><span class="w"> </span><span class="s2">"RecordLikeObject"</span><span class="p">,</span><span class="w"> </span><span class="s2">"AppGroup"</span><span class="w"> </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
@@ -856,6 +903,11 @@ are found in various places; see their documentation for details.</p>
 
 <p><span class='info'>Apps may also define their own children here, if the group has pointers to other objects in the system.</span></p>
 
+<h3 id="put-method">PUT Method</h3>
+
+<p>The group identified by <code class="prettyprint">{{APP}}/root</code> is also technically a valid target for PUT, any attempts to update it will result in a <code class="prettyprint">400 Bad Request</code> error being
+returned.</p>
+
           <h2 id="record-apprecord">Record (<code class="prettyprint">AppRecord</code>)</h2>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
     </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}"</span><span class="p">,</span><span class="w">
@@ -891,7 +943,7 @@ are found in various places; see their documentation for details.</p>
             </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}/related"</span><span class="w">
         </span><span class="p">}</span><span class="w">
     </span><span class="p">},</span><span class="w">
-    </span><span class="nt">"$type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"Resource"</span><span class="p">,</span><span class="w"> </span><span class="s2">"RecordLikeObject"</span><span class="p">,</span><span class="w"> </span><span class="s2">"AppRecord"</span><span class="w"> </span><span class="p">]</span><span class="w">
+    </span><span class="nt">"$type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"Resource"</span><span class="p">,</span><span class="w"> </span><span class="s2">"WritableResource"</span><span class="p">,</span><span class="w"> </span><span class="s2">"RecordLikeObject"</span><span class="p">,</span><span class="w"> </span><span class="s2">"AppRecord"</span><span class="w"> </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
