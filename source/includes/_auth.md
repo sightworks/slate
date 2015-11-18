@@ -10,7 +10,7 @@ Your Sightworks support representative will provide you with the required unique
 
 ```
 POST /oauth2/token
-Authorization: Basic a2V5OnRva2Vu
+Authorization: Basic BASE64-AUTH-INFO
 Content-Type: application/x-www-form-urlencoded
 
 grant_type=client_credentials
@@ -18,9 +18,14 @@ grant_type=client_credentials
 
 Given your set of API credentials, make a request to /oauth2/token on your platform's instance. 
 
-- Authorization: Basic *token* 
-  The HTTP Auth header. The username and password for this are the API credentials you got above.
-- The content body: ``grant_type=client_credentials``
+- Authorization: Basic *token*<br>
+  The HTTP Auth header. The username and password for this are the API credentials you got above.<br>
+  The ``BASE64-AUTH-INFO`` value is formatted by taking the API Key and App Secret provided, combining them with a ``:``, and then Base64 encoding the resulting value.<br>
+  API Key: ``your-api-key``<br>
+  App Secret: ``your-secret``<br>
+  Value to encode: ``your-api-key:your-secret``<br>
+  Value to send in the header: ``eW91ci1hcGkta2V5OnlvdXItc2VjcmV0``  
+- The content body: ``grant_type=client_credentials``<br>
   This specifies the type of token to retrieve. The access tokens provided here are application access tokens - all changes
   will show that they were done by the application, not by any specific user.
 
@@ -32,7 +37,7 @@ Content-Type: application/json
 
 {
 	"token_type": "bearer",
-	"access_token": "eyJ0b2tlbiI6ImtleSIsImtleSI6InRva2VuIn0="
+	"access_token": "YOUR-ACCESS-TOKEN-HERE"
 }
 ```
 
@@ -47,7 +52,7 @@ In the future, this API may return other token types (possibly an OAuth token fo
 
 ```
 GET {{ROOT}}/channels HTTP/1.1
-Authorization: Bearer eyJ0b2tlbiI6ImtleSIsImtleSI6InRva2VuIn0=
+Authorization: Bearer YOUR-ACCESS-TOKEN-HERE
 
 HTTP/1.1 200 OK
 Content-Type: application/json
@@ -81,7 +86,7 @@ The JSON example code to the right provides a basic example of using the token.
 ## Alternative: Use the Bearer token in the query string
 
 ```
-GET {{ROOT}}/channels?access_token=eyJ0b2tlbiI6ImtleSIsImtleSI6InRva2VuIn0%3D HTTP/1.1
+GET {{ROOT}}/channels?access_token=YOUR-ACCESS-TOKEN-HERE HTTP/1.1
 ```
 
 Use the ``access_token`` query string parameter on any request to pass in the access token.
