@@ -905,8 +905,8 @@ value.</p>
 
 <h3 id="put-method">PUT Method</h3>
 
-<p>The group identified by <code class="prettyprint">{{APP}}/root</code> is also technically a valid target for PUT, any attempts to update it will result in a <code class="prettyprint">400 Bad Request</code> error being
-returned.</p>
+<p>The group identified by <code class="prettyprint">{{APP}}/root</code> is also technically a valid target for PUT, but any attempts to update it will result in a <code class="prettyprint">400 Bad Request</code> error being
+returned. This is because the group identified here is not really a Group object in the strictest sense, but it is represented as such.</p>
 
           <h2 id="record-apprecord">Record (<code class="prettyprint">AppRecord</code>)</h2>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
