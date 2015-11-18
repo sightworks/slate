@@ -120,7 +120,7 @@ which are used primarily for exposition of the rest of the API, do not have this
 
 <h3 id="request">Request</h3>
 <pre class="highlight plaintext"><code>POST /oauth2/token
-Authorization: Basic a2V5OnRva2Vu
+Authorization: Basic BASE64-AUTH-INFO
 Content-Type: application/x-www-form-urlencoded
 
 grant_type=client_credentials
@@ -129,9 +129,14 @@ grant_type=client_credentials
 <p>Given your set of API credentials, make a request to /oauth2/token on your platform&rsquo;s instance. </p>
 
 <ul>
-<li>Authorization: Basic <em>token</em> 
-The HTTP Auth header. The username and password for this are the API credentials you got above.</li>
-<li>The content body: <code class="prettyprint">grant_type=client_credentials</code>
+<li>Authorization: Basic <em>token</em><br>
+The HTTP Auth header. The username and password for this are the API credentials you got above.<br>
+The <code class="prettyprint">BASE64-AUTH-INFO</code> value is formatted by taking the API Key and App Secret provided, combining them with a <code class="prettyprint">:</code>, and then Base64 encoding the resulting value.<br>
+API Key: <code class="prettyprint">your-api-key</code><br>
+App Secret: <code class="prettyprint">your-secret</code><br>
+Value to encode: <code class="prettyprint">your-api-key:your-secret</code><br>
+Value to send in the header: <code class="prettyprint">eW91ci1hcGkta2V5OnlvdXItc2VjcmV0</code><br></li>
+<li>The content body: <code class="prettyprint">grant_type=client_credentials</code><br>
 This specifies the type of token to retrieve. The access tokens provided here are application access tokens - all changes
 will show that they were done by the application, not by any specific user.</li>
 </ul>
@@ -142,7 +147,7 @@ Content-Type: application/json
 
 {
     "token_type": "bearer",
-    "access_token": "eyJ0b2tlbiI6ImtleSIsImtleSI6InRva2VuIn0="
+    "access_token": "YOUR-ACCESS-TOKEN-HERE"
 }
 </code></pre>
 
@@ -157,7 +162,7 @@ Content-Type: application/json
 
 <h2 id="use-the-bearer-token-in-a-request">Use the Bearer token in a request</h2>
 <pre class="highlight plaintext"><code>GET {{ROOT}}/channels HTTP/1.1
-Authorization: Bearer eyJ0b2tlbiI6ImtleSIsImtleSI6InRva2VuIn0=
+Authorization: Bearer YOUR-ACCESS-TOKEN-HERE
 
 HTTP/1.1 200 OK
 Content-Type: application/json
@@ -189,7 +194,7 @@ Content-Type: application/json
 <p>The JSON example code to the right provides a basic example of using the token.</p>
 
 <h2 id="alternative-use-the-bearer-token-in-the-query-string">Alternative: Use the Bearer token in the query string</h2>
-<pre class="highlight plaintext"><code>GET {{ROOT}}/channels?access_token=eyJ0b2tlbiI6ImtleSIsImtleSI6InRva2VuIn0%3D HTTP/1.1
+<pre class="highlight plaintext"><code>GET {{ROOT}}/channels?access_token=YOUR-ACCESS-TOKEN-HERE HTTP/1.1
 </code></pre>
 
 <p>Use the <code class="prettyprint">access_token</code> query string parameter on any request to pass in the access token.</p>
