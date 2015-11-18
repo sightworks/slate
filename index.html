@@ -194,8 +194,8 @@ Content-Type: application/json
 
 <p>Use the <code class="prettyprint">access_token</code> query string parameter on any request to pass in the access token.</p>
 
-<aside class='warning'>If this method is used on a request to [&ldquo;&hellip;/multi&rdquo;](#post-multiple-request-endpoint), the &ldquo;access_token&rdquo; parameter must be passed in both
-the query string and &ldquo;requests[N].query.access_token&rdquo;.</aside>
+<p>If this method is used on a request to <a href="#post-multiple-request-endpoint"><code class="prettyprint">.../multi</code></a>, the <code class="prettyprint">access_token</code> parameter must be passed in both
+the query string and <code class="prettyprint">requests[N].query.access_token</code>.</p>
 
 <h2 id="invalidate-the-bearer-token">Invalidate the Bearer token</h2>
 <pre class="highlight plaintext"><code>POST /oauth2/invalidate_token
