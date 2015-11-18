@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>API Reference</title>
+    <title>DigitalXE / BrandLX API Ver. 1</title>
 
     <link href="stylesheets/screen.css" rel="stylesheet" type="text/css" media="screen" />
     <link href="stylesheets/print.css" rel="stylesheet" type="text/css" media="print" />
@@ -37,7 +37,7 @@
       <div id="toc">
       </div>
         <ul class="toc-footer">
-            <li><a href='http://github.com/tripit/slate'>Documentation Powered by Slate</a></li>
+            <li><!-- <a href='http://github.com/tripit/slate'>Documentation Powered by Slate</a>--> &copy; 2015 SightWorks</li>
         </ul>
     </div>
     <div class="page-wrapper">
@@ -46,7 +46,7 @@
         
           <h1 id="introduction">Introduction</h1>
 
-<p>Sightworks platform API doc header here</p>
+<p>Welcome to the SightWorks&rsquo; DigitalXE / BrandLX API Ver. 1 site. This site provides the official documentation for the API version 1.0. For more information or questions aboout the API or this documentations, please contact your SightWorks support representative at (503) 223-4184 Mon. - Fri. 9:00 AM to 5:00 PM Pacific Time or <a href="mailto:support@sightworks.com">support@sightworks.com</a>. For after-hours and weekend support, please vist our support site at <a href="http://support.sightworks.com" traget="_blank">support.sightworks.com</a>.</p>
 
           <h1 id="conventions">Conventions</h1>
 
@@ -114,7 +114,7 @@ which are used primarily for exposition of the rest of the API, do not have this
 
 <h2 id="get-api-credentials">Get API credentials</h2>
 
-<p>TODO</p>
+<p>Your Sightworks support representative will provide you with the required unique API credentials. If you have not yet received your credentials, lost your credentials or feel that they might have been compromised, please contact your SightWorks support representative at (503) 223-4184 Mon. - Fri. 9:00 AM to 5:00 PM Pacific Time or <a href="mailto:support@sightworks.com">support@sightworks.com</a>. </p>
 
 <h2 id="get-a-bearer-token">Get a Bearer token</h2>
 
@@ -186,7 +186,7 @@ Content-Type: application/json
 }
 </code></pre>
 
-<p>This is just an example of using the token.</p>
+<p>The JSON example code to the right provides a basic example of using the token.</p>
 
 <h2 id="invalidate-the-bearer-token">Invalidate the Bearer token</h2>
 <pre class="highlight plaintext"><code>POST /oauth2/invalidate_token
@@ -2624,9 +2624,7 @@ rather just performs each request.</p>
 
           <h1 id="errors">Errors</h1>
 
-<aside class="notice">This error section is stored in a separate file in `includes/_errors.md`. Slate allows you to optionally separate out your docs into many files&hellip;just save them to the `includes` folder and add them to the top of your `index.md`&rsquo;s frontmatter. Files are included in the order listed.</aside>
-
-<p>The Kittn API uses the following error codes:</p>
+<p>This API uses the following error codes:</p>
 
 <table><thead>
 <tr>
@@ -2636,7 +2634,7 @@ rather just performs each request.</p>
 </thead><tbody>
 <tr>
 <td>400</td>
-<td>Bad Request &ndash; Your request sucks</td>
+<td>Bad Request</td>
 </tr>
 <tr>
 <td>401</td>
@@ -2644,31 +2642,27 @@ rather just performs each request.</p>
 </tr>
 <tr>
 <td>403</td>
-<td>Forbidden &ndash; The kitten requested is hidden for administrators only</td>
+<td>Forbidden</td>
 </tr>
 <tr>
 <td>404</td>
-<td>Not Found &ndash; The specified kitten could not be found</td>
+<td>Not Found</td>
 </tr>
 <tr>
 <td>405</td>
-<td>Method Not Allowed &ndash; You tried to access a kitten with an invalid method</td>
+<td>Method Not Allowed</td>
 </tr>
 <tr>
 <td>406</td>
-<td>Not Acceptable &ndash; You requested a format that isn&rsquo;t json</td>
+<td>Not Acceptable</td>
 </tr>
 <tr>
 <td>410</td>
-<td>Gone &ndash; The kitten requested has been removed from our servers</td>
-</tr>
-<tr>
-<td>418</td>
-<td>I&rsquo;m a teapot</td>
+<td>Gone</td>
 </tr>
 <tr>
 <td>429</td>
-<td>Too Many Requests &ndash; You&rsquo;re requesting too many kittens! Slow down!</td>
+<td>Too Many Requests</td>
 </tr>
 <tr>
 <td>500</td>
