@@ -108,7 +108,8 @@ The group identified by ``{{APP}}/root`` does not have a child node called ``par
 
 ### PUT Method
 
-The group identified by ``{{APP}}/root`` is also technically a valid target for PUT, any attempts to update it will result in a ``400 Bad Request`` error being
-returned.
+The group identified by ``{{APP}}/root`` is also technically a valid target for PUT, but any attempts to update it will result in a ``400 Bad Request`` error being
+returned. This is because the group identified here is not really a Group object in the strictest sense, but it is represented as such.
+
 
 
