@@ -46,7 +46,7 @@ In the future, this API may return other token types (possibly an OAuth token fo
 ## Use the Bearer token in a request
 
 ```
-GET {{ROOT}}/channels
+GET {{ROOT}}/channels HTTP/1.1
 Authorization: Bearer eyJ0b2tlbiI6ImtleSIsImtleSI6InRva2VuIn0=
 
 HTTP/1.1 200 OK
@@ -77,6 +77,17 @@ Content-Type: application/json
 ```
 
 The JSON example code to the right provides a basic example of using the token.
+
+## Alternative: Use the Bearer token in the query string
+
+```
+GET {{ROOT}}/channels?access_token=eyJ0b2tlbiI6ImtleSIsImtleSI6InRva2VuIn0%3D HTTP/1.1
+```
+
+Use the ``access_token`` query string parameter on any request to pass in the access token.
+
+<aside class='warning'>If this method is used on a request to [``.../multi``](#post-multiple-request-endpoint), the ``access_token`` parameter must be passed in both
+the query string and ``requests[N].query.access_token``.</aside>
 
 ## Invalidate the Bearer token
 
