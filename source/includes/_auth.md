@@ -2,7 +2,7 @@
 
 ## Get API credentials
 
-TODO
+Your Sightworks support representative will provide you with unique API credentials.
 
 ## Get a Bearer token
 
