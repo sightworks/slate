@@ -2,7 +2,7 @@
 
 ## Get API credentials
 
-Your Sightworks support representative will provide you with unique API credentials.
+Your Sightworks support representative will provide you with the required unique API credentials. If you have not yet received your credentials, lost your credentials or feel that they might have been compromised, please contact your SightWorks support representative at (503) 223-4184 Mon. - Fri. 9:00 AM to 5:00 PM Pacific Time or <a href="mailto:support@sightworks.com">support@sightworks.com</a>. 
 
 ## Get a Bearer token
 
