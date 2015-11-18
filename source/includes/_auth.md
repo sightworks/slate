@@ -76,7 +76,7 @@ Content-Type: application/json
 }
 ```
 
-This is just an example of using the token.
+The JSON example code to the right provides a basic example of using the token.
 
 ## Invalidate the Bearer token
 
