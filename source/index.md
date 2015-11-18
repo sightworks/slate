@@ -5,7 +5,7 @@ language_tabs:
   - json
 
 toc_footers:
-  - <!-- <a href='http://github.com/tripit/slate'>Documentation Powered by Slate</a>--> &copy;2015 SightWorks
+  - <!-- <a href='http://github.com/tripit/slate'>Documentation Powered by Slate</a>--> &copy; 2015 SightWorks
 
 includes:
   - intro
