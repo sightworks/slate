@@ -231,7 +231,7 @@ Content-Type: application/json
 Name | Type | Description
 ---- | ---- | -----------
 object | Object | The description of the resource to add.
-position.at | Enumeration | Where to move the item to in the collection. One of ``before``, ``after``, ``start``, ``end``.
+position.at | Enumeration | Where to place the item to in the collection. One of ``before``, ``after``, ``start``, ``end``.
 position.ref | [Resource Pointer](#resource-pointer) | When ``position.at`` is ``before`` or ``after``, the item that is to be the next or previous item in the collection.
 
 This is equivalent to adding an object to the collection (as in [Writable Collection](#writable-collection-writablecollection)), and then positioning it where you want it, except that if positioning fails, the record is not created.
