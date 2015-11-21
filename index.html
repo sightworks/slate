@@ -389,6 +389,139 @@ Content-Type: application/json
 
 <p>See <a href="#errors">Errors</a> below for details of errors that might come back.</p>
 
+          <h2 id="link-target-linktarget">Link Target (<code class="prettyprint">LinkTarget</code>)</h2>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RESOURCE}}"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"$type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"Resource"</span><span class="p">,</span><span class="w"> </span><span class="s2">"AppRecord"</span><span class="p">,</span><span class="w"> </span><span class="s2">"LinkTarget"</span><span class="w"> </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"$linkTypes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"AppRecord:lms_courses"</span><span class="w"> </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
+    </span><span class="nt">"children"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>A link target is an object that can be added to collections or otherwise set as a child of an object declared as a <a href="#link-source-linksource">Link Source</a>.</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">$linkTypes</code></td>
+<td>Array of Strings</td>
+<td>Tags that describe where this object can be used.</td>
+</tr>
+</tbody></table>
+
+<h2 id="link-source-linksource">Link Source (<code class="prettyprint">LinkSource</code>)</h2>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RESOURCE}}"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"$type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"Resource"</span><span class="p">,</span><span class="w"> </span><span class="s2">"AppRecord"</span><span class="p">,</span><span class="w"> </span><span class="s2">"LinkSource"</span><span class="w"> </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
+    </span><span class="nt">"children"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RESOURCE}}/links"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>A link source is an object that can have, as children, objects declared as <a href="#link-target-linktarget">Link Targets</a>.</p>
+
+<h3 id="children">Children</h3>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>URL</th>
+<th>Description</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>links</td>
+<td><code class="prettyprint">{{RESOURCE}}/links</code></td>
+<td>A set of the various properties that can be linked on this object.</td>
+<td><a href="#link-resource-linkresource">Link Resource</a></td>
+</tr>
+</tbody></table>
+
+<h2 id="link-resource-linkresource">Link Resource (<code class="prettyprint">LinkResource</code>)</h2>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RESOURCE}}"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"$type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"Resource"</span><span class="p">,</span><span class="w"> </span><span class="s2">"WritableResource"</span><span class="p">,</span><span class="w"> </span><span class="s2">"LinkResource"</span><span class="w"> </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"children"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
+    </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"{{NAME}}"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"LinkType"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"target"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RESOURCE2}}"</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>A link resource object describes the possible connections that a <a href="#link-source-linksource">Link Source</a> object can make.</p>
+
+<p>It&rsquo;s <code class="prettyprint">data</code> property might contain multiple links, in which case there will be multiple <code class="prettyprint">{{NAME}}</code> entries there.</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">data.{{NAME}}.type</code></td>
+<td>String</td>
+<td>A link target type (a value that should appear in the <code class="prettyprint">$linkTypes</code> field of a <a href="#link-target-linktarget">Link Target</a>.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.{{NAME}}.target</code></td>
+<td><a href="#resource-pointer">Resource Pointer</a> or <code class="prettyprint">null</code></td>
+<td>The resource currently being pointed at by this link, or <code class="prettyprint">null</code> if it doesn&rsquo;t point at one.</td>
+</tr>
+</tbody></table>
+
+<h3 id="update-links">Update Links</h3>
+
+<p>FIXME: This is not yet implemented.</p>
+
+<h4 id="request">Request</h4>
+<pre class="highlight plaintext"><code>PUT {{RESOURCE}} HTTP/1.1
+Content-Type: application/json
+
+{
+    "{{NAME}}": {
+        "target": {
+            "$Resource": "{{RESOURCE2}}"
+        }
+    }
+}
+</code></pre>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>{{NAME}}.target</td>
+<td><a href="#resource-pointer">Resource Pointer</a> or <code class="prettyprint">null</code></td>
+<td>The resource to change the link called <code class="prettyprint">{{NAME}}</code> to point at.</td>
+</tr>
+</tbody></table>
+
+<h4 id="response">Response</h4>
+
+<p>NOT IMPLEMENTED</p>
+
           <h2 id="channel-channelresource">Channel (<code class="prettyprint">ChannelResource</code>)</h2>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
     </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{CHANNEL}}"</span><span class="p">,</span><span class="w">
@@ -1292,6 +1425,425 @@ returned. This is because the group identified here is not really a Group object
 <td><a href="#collection-types"><code class="prettyprint">AppRecordList</code></a></td>
 </tr>
 </tbody></table>
+
+          <h2 id="writable-collection-writablecollection">Writable Collection (<code class="prettyprint">WritableCollection</code>)</h2>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"$type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"Resource"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Collection"</span><span class="p">,</span><span class="w"> </span><span class="s2">"WritableCollection"</span><span class="w"> </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RESOURCE}}"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"collection"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"length"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="p">{</span><span class="w"> </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RESOURCE}}/{{id}}"</span><span class="w"> </span><span class="p">}</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>A collection that can have new objects added to it. There are no particular differences in the appearance of this collection to a base <a href="#collections-collection">Collection</a>.</p>
+
+<h3 id="add-object-to-the-collection">Add object to the collection</h3>
+
+<h4 id="request">Request</h4>
+<pre class="highlight plaintext"><code>POST {{RESOURCE}} HTTP/1.1
+Content-Type: application/json
+
+{
+    "object": {}
+}
+</code></pre>
+
+<p>Posting an object will result in a new object being created and added to the collection. The contents of the <code class="prettyprint">object</code> property should be the
+of the same structure as the <code class="prettyprint">data</code> property on a resource of the same type, and will be validated according to the same rules. For more details,
+see the sections on the relevant object types.</p>
+
+<h4 id="response">Response</h4>
+<pre class="highlight plaintext"><code>HTTP/1.1 201 Created
+Location: {{RESOURCE}}
+
+{
+    "created": "{{RESOURCE}}",
+    "collection": {{RESOURCE2}}",
+    "resources": {
+        "{{RESOURCE}}": {
+            /* The resource you created */
+        },
+        "{{RESOURCE2}}": {
+            /* The collection object with the new item in it */
+        }
+    }
+}
+</code></pre>
+
+<p>The response body for an object creation request will be a JSON object with the following properties:</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">created</code></td>
+<td>Resource ID</td>
+<td>The URL to the resource that was created. This will be the same value as is in the Location header on the response.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">collection</code></td>
+<td>Resource ID</td>
+<td>The URL of the collection that you requested the resource to be added to.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">resources.{{RESOURCE}}</code></td>
+<td><a href="#resource-resource">Resource</a></td>
+<td>The resource that was created.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">resources.{{RESOURCE2}}</code></td>
+<td><a href="#collections-collection">Collection</a></td>
+<td>The collection that you requested the resource be added to.</td>
+</tr>
+</tbody></table>
+
+<h4 id="errors">Errors</h4>
+
+<ul>
+<li><a href="#invalid-body">INVALID_BODY</a> when:
+
+<ul>
+<li>No properties exist in the outermost object.</li>
+<li>Unexpected properties exist in the outermost object. (The only property that should exist to add an object is <code class="prettyprint">object</code>.)</li>
+<li>The object being created is not well formed. (See the validation rules on the relevant object types for details.)</li>
+</ul></li>
+<li><a href="#unknown-error">UNKNOWN_ERROR</a> when:
+
+<ul>
+<li>Another error is encountered on the server.</li>
+</ul></li>
+</ul>
+
+<h2 id="changeable-collection-changeablecollection">Changeable Collection (<code class="prettyprint">ChangeableCollection</code>)</h2>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"$type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"Resource"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Collection"</span><span class="p">,</span><span class="w"> </span><span class="s2">"WritableCollection"</span><span class="p">,</span><span class="w"> </span><span class="s2">"ChangeableCollection"</span><span class="w"> </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RESOURCE}}"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"collection"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"length"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"types"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"Type:subtype"</span><span class="p">,</span><span class="w"> </span><span class="err">...</span><span class="w"> </span><span class="p">],</span><span class="w">
+        </span><span class="nt">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="p">{</span><span class="w"> </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RESOURCE}}/{{id}}"</span><span class="w"> </span><span class="p">}</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>This is much the same as a <a href="#writable-collection-writablecollection">Writable Collection</a>, with the addition of <code class="prettyprint">collection.types</code>, 
+which describes objects that can be <a href="#link-target-linktarget">linked</a> here.</p>
+
+<h3 id="change-the-list-of-objects-in-the-collection">Change the list of objects in the collection</h3>
+
+<h4 id="request">Request</h4>
+<pre class="highlight plaintext"><code>POST {{RESOURCE}} HTTP/1.1
+Content-Type: application/json
+
+{
+    "append": [
+        {
+            "$Resource": "{{RESOURCE2}}"
+        }
+    ],
+    "remove": [
+        {
+            "$Resource": "{{RESOURCE3}}"
+        }
+    }
+}
+</code></pre>
+
+<p>Fields in the request:</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>append</td>
+<td>Array of <a href="#resource-pointer">Resource Pointer</a></td>
+<td>A list of resources to add to this collection</td>
+</tr>
+<tr>
+<td>remove</td>
+<td>Array of <a href="#resource-pointer">Resource Pointer</a></td>
+<td>A list of resources to remove from this collection</td>
+</tr>
+</tbody></table>
+
+<p>For the various fields:</p>
+
+<ul>
+<li><code class="prettyprint">append</code>:<br>
+The object list to append must be all objects that do not exist as part of this collection.<br>
+The objects must have a <code class="prettyprint">type</code> of <a href="#link-target-linktarget"><code class="prettyprint">LinkTarget</code></a>.<br>
+The objects must have one of the types in the <code class="prettyprint">types</code> property on the collection in it&rsquo;s <code class="prettyprint">$linkTypes</code> property.<br>
+Each object in this list will be added to the collection.</li>
+<li><code class="prettyprint">remove</code>:<br>
+The object list to remove must be all objects that are in this collection, and not provided in the same update by <code class="prettyprint">append</code>.<br>
+Each object in this list will be removed from the collection.</li>
+</ul>
+
+<p>One or both of <code class="prettyprint">append</code> and <code class="prettyprint">remove</code> can be provided.</p>
+
+<h4 id="response">Response</h4>
+
+<p>On success, the response is the same as retrieving the collection, with all of the changes specified applied.</p>
+
+<h4 id="errors">Errors</h4>
+
+<ul>
+<li><a href="#invalid-body">INVALID_BODY</a> when:
+
+<ul>
+<li>No properties exist in the outermost object.</li>
+<li>Unexpected properties exist in the outermost object. (Only &lsquo;append&rsquo; and &#39;remove&rsquo; should appear here.)</li>
+<li>If <code class="prettyprint">append</code> or <code class="prettyprint">remove</code> is not an array, does not contain <a href="#resource-pointer">Resource Pointer</a> objects, or those resource pointers do not resolve to <a href="#resources-resource">Resource</a> objects.</li>
+<li>If both <code class="prettyprint">append</code> and <code class="prettyprint">remove</code> are specified, if any items in <code class="prettyprint">append</code> also appear in <code class="prettyprint">remove</code>.</li>
+<li>If any of the objects being added using <code class="prettyprint">append</code> are already in this collection.</li>
+<li>If any of the objects being added using <code class="prettyprint">append</code> are not of a suitable type.</li>
+<li>If any of the objects being removed using <code class="prettyprint">remove</code> are not in this collection.</li>
+</ul></li>
+<li><a href="#unknown-error">UNKNOWN_ERROR</a> when:
+
+<ul>
+<li>Another error is encountered on the server.</li>
+</ul></li>
+</ul>
+
+<h2 id="sortable-collection-sortablecollection">Sortable Collection (<code class="prettyprint">SortableCollection</code>)</h2>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"$type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"Resource"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Collection"</span><span class="p">,</span><span class="w"> </span><span class="s2">"WritableCollection"</span><span class="p">,</span><span class="w"> </span><span class="s2">"ChangeableCollection"</span><span class="p">,</span><span class="w"> </span><span class="s2">"SortableCollection"</span><span class="w"> </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RESOURCE}}"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"collection"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"length"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"types"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"Type:subtype"</span><span class="p">,</span><span class="w"> </span><span class="err">...</span><span class="w"> </span><span class="p">],</span><span class="w">
+        </span><span class="nt">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="p">{</span><span class="w"> </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RESOURCE}}/{{id}}"</span><span class="w"> </span><span class="p">}</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>A sortable collection appears the same as a <a href="#changeable-collection-changeablecollection">Changeable Collection</a>.</p>
+
+<h3 id="change-the-position-of-an-object-in-the-collection">Change the position of an object in the collection</h3>
+
+<h4 id="request">Request</h4>
+<pre class="highlight plaintext"><code>POST {{RESOURCE}} HTTP/1.1
+Content-Type: application/json
+
+{
+    "position": {
+        "node": {
+            "$Resource": "{{RESOURCE2}}"
+        },
+        "at": "before",
+        "ref": {
+            "$Resource": "{{RESOURCE3}}"
+        }
+    }
+}
+</code></pre>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>position.node</td>
+<td><a href="#resource-pointer">Resource Pointer</a></td>
+<td>The item in the collection being moved.</td>
+</tr>
+<tr>
+<td>position.at</td>
+<td>Enumeration</td>
+<td>Where to move the item to in the collection. One of <code class="prettyprint">before</code>, <code class="prettyprint">after</code>, <code class="prettyprint">start</code>, <code class="prettyprint">end</code>.</td>
+</tr>
+<tr>
+<td>position.ref</td>
+<td><a href="#resource-pointer">Resource Pointer</a></td>
+<td>When <code class="prettyprint">position.at</code> is <code class="prettyprint">before</code> or <code class="prettyprint">after</code>, the item that is to be the next or previous item in the collection.</td>
+</tr>
+</tbody></table>
+
+<h4 id="response">Response</h4>
+
+<p>On success, the response is the same as retrieving the collection, with the node specified by <code class="prettyprint">position.node</code> in it&rsquo;s new location.</p>
+
+<h4 id="errors">Errors</h4>
+
+<ul>
+<li><a href="#invalid-body">INVALID_BODY</a> when:
+
+<ul>
+<li>No properties exist in the outermost object.</li>
+<li>Unexpected properties exist in the outermost object. (Only <code class="prettyprint">position</code> should appear here.)</li>
+<li><code class="prettyprint">position.node</code> is not a valid resource pointer.</li>
+<li><code class="prettyprint">position.ref</code> is not a valid resource pointer, if <code class="prettyprint">position.at</code> is <code class="prettyprint">before</code> or <code class="prettyprint">after</code>.</li>
+<li><code class="prettyprint">position.at</code> is not one of <code class="prettyprint">before</code>, <code class="prettyprint">after</code>, <code class="prettyprint">start</code>, <code class="prettyprint">end</code>.</li>
+<li>The resources specified by <code class="prettyprint">position.node</code> or <code class="prettyprint">position.ref</code> (if specified) are not part of this collection.</li>
+</ul></li>
+<li><a href="#unknown-error">UNKNOWN_ERROR</a> when:
+
+<ul>
+<li>Another error is encountered on the server.</li>
+</ul></li>
+</ul>
+
+<h3 id="add-an-object-at-a-specified-location-within-the-collection">Add an object at a specified location within the collection</h3>
+
+<h4 id="request">Request</h4>
+<pre class="highlight plaintext"><code>POST {{RESOURCE}} HTTP/1.1
+Content-Type: application/json
+
+{
+    "object": {},
+    "position": {
+        "at": "before",
+        "ref": {
+            "$Resource": "{{RESOURCE2}}"
+        }
+    }
+}
+</code></pre>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>object</td>
+<td>Object</td>
+<td>The description of the resource to add.</td>
+</tr>
+<tr>
+<td>position.at</td>
+<td>Enumeration</td>
+<td>Where to move the item to in the collection. One of <code class="prettyprint">before</code>, <code class="prettyprint">after</code>, <code class="prettyprint">start</code>, <code class="prettyprint">end</code>.</td>
+</tr>
+<tr>
+<td>position.ref</td>
+<td><a href="#resource-pointer">Resource Pointer</a></td>
+<td>When <code class="prettyprint">position.at</code> is <code class="prettyprint">before</code> or <code class="prettyprint">after</code>, the item that is to be the next or previous item in the collection.</td>
+</tr>
+</tbody></table>
+
+<p>This is equivalent to adding an object to the collection (as in <a href="#writable-collection-writablecollection">Writable Collection</a>), and then positioning it where you want it, except that if positioning fails, the record is not created.</p>
+
+<h4 id="response">Response</h4>
+
+<p>The response body is the same for adding an object to a collection by <a href="#writable-collection-writablecollection">Writable Collection</a>&rsquo;s method to add an object.</p>
+
+<h4 id="errors">Errors</h4>
+
+<ul>
+<li><a href="#invalid-body">INVALID_BODY</a> when:
+
+<ul>
+<li>No properties exist in the outermost object.</li>
+<li>Unexpected properties exist in the outermost object. (Only <code class="prettyprint">position</code> and <code class="prettyprint">object</code> should appear here.)</li>
+<li><code class="prettyprint">position.node</code> is specified.</li>
+<li><code class="prettyprint">position.ref</code> is not a valid resource pointer, if <code class="prettyprint">position.at</code> is <code class="prettyprint">before</code> or <code class="prettyprint">after</code>.</li>
+<li><code class="prettyprint">position.at</code> is not one of <code class="prettyprint">before</code>, <code class="prettyprint">after</code>, <code class="prettyprint">start</code>, <code class="prettyprint">end</code>.</li>
+<li>The resource specified by<code class="prettyprint">position.ref</code> is not part of this collection.</li>
+<li>The object being created is not well formed. (See the validation rules on the relevant object types for details.)</li>
+</ul></li>
+<li><a href="#unknown-error">UNKNOWN_ERROR</a> when:
+
+<ul>
+<li>Another error is encountered on the server.</li>
+</ul></li>
+</ul>
+
+<h3 id="directly-order-the-collection">Directly order the collection</h3>
+
+<h4 id="request">Request</h4>
+<pre class="highlight plaintext"><code>POST {{RESOURCE}} HTTP/1.1
+Content-Type: application/json
+
+{
+    "order": [
+        { "$Resource": "{{RESOURCE1}}" }
+    ],
+    "append": [
+        { "$Resource": "{{RESOURCE2}}" }
+    ],
+    "remove": [
+        { "$Resource": "{{RESOURCE2}}" }
+    ]
+}
+</code></pre>
+
+<p>Set the order of the items in this collection, potentially adding and removing items at the same time.</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>order</td>
+<td>Array of <a href="#resource-pointer">Resource Pointers</a></td>
+<td>The new order to be applied to the collection.</td>
+</tr>
+<tr>
+<td>append</td>
+<td>Optional array of <a href="#resource-pointer">Resource Pointers</a></td>
+<td>Items to add to the collection</td>
+</tr>
+<tr>
+<td>remove</td>
+<td>Optional array of <a href="#resource-pointer">Resource Pointers</a></td>
+<td>Items to remove from the collection</td>
+</tr>
+</tbody></table>
+
+<p>The items in <code class="prettyprint">remove</code> must be items currently in the collection; those in <code class="prettyprint">append</code> must be items not in the collection.</p>
+
+<p>The items in <code class="prettyprint">order</code> must be all of the items that will be in the final collection after processing <code class="prettyprint">append</code> and <code class="prettyprint">remove</code>.</p>
+
+<h4 id="response">Response</h4>
+
+<p>The response is the same as that from <a href="#writable-collection-writablecollection">Writable Collection</a>&rsquo;s method to add and remove objects from a collection.</p>
+
+<h4 id="errors">Errors</h4>
+
+<ul>
+<li><a href="#invalid-body">INVALID_BODY</a> when:
+
+<ul>
+<li>Unexpected properties exist in the outermost object. (Only &#39;order&rsquo;, append&rsquo; and &#39;remove&rsquo; should appear here.)</li>
+<li>For <code class="prettyprint">order</code>, <code class="prettyprint">append</code> and <code class="prettyprint">remove</code>: if they are not an array, do not contain <a href="#resource-pointer">Resource Pointer</a> objects, or those resource pointers do not resolve to <a href="#resources-resource">Resource</a> objects.</li>
+<li>If both <code class="prettyprint">append</code> and <code class="prettyprint">remove</code> are specified, if any items in <code class="prettyprint">append</code> also appear in <code class="prettyprint">remove</code>.</li>
+<li>If any of the objects being added using <code class="prettyprint">append</code> are already in this collection.</li>
+<li>If any of the objects being added using <code class="prettyprint">append</code> are not of a suitable type.</li>
+<li>If any of the objects being removed using <code class="prettyprint">remove</code> are not in this collection.</li>
+<li>If <code class="prettyprint">order</code> contains items that are not in the collection after <code class="prettyprint">append</code> and <code class="prettyprint">remove</code> have been processed.</li>
+</ul></li>
+<li><a href="#unknown-error">UNKNOWN_ERROR</a> when:
+
+<ul>
+<li>Another error is encountered on the server.</li>
+</ul></li>
+</ul>
 
           <h2 id="file">File</h2>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
