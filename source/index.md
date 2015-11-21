@@ -15,6 +15,7 @@ includes:
   - objects/header
   - objects/resource
   - objects/writableresource
+  - objects/linkable
   - objects/channel
   - objects/app
   - objects/appmeta
@@ -23,6 +24,7 @@ includes:
   - objects/record
   - objects/root
   - objects/collections
+  - objects/writablecollection
   - objects/misc
   - apps/header
   - apps/courses
