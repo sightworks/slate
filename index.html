@@ -489,8 +489,6 @@ Content-Type: application/json
 
 <h3 id="update-links">Update Links</h3>
 
-<p>FIXME: This is not yet implemented.</p>
-
 <h4 id="request">Request</h4>
 <pre class="highlight plaintext"><code>PUT {{RESOURCE}} HTTP/1.1
 Content-Type: application/json
@@ -518,9 +516,29 @@ Content-Type: application/json
 </tr>
 </tbody></table>
 
+<p>All links provided in the GET request for this resource must be present here.</p>
+
 <h4 id="response">Response</h4>
 
-<p>NOT IMPLEMENTED</p>
+<p>This returns a response equivalent to the GET of the same resource, with the new links in place.</p>
+
+<h4 id="errors">Errors</h4>
+
+<ul>
+<li><a href="#invalid-body">INVALID_BODY</a> when:
+
+<ul>
+<li>Not all links are specified on PUT.</li>
+<li>The object provided for any link does not have a <code class="prettyprint">target</code> property.</li>
+<li><code class="prettyprint">{{NAME}}.target</code> is not a <a href="#resource-pointer">Resource Pointer</a> or <code class="prettyprint">null</code>.</li>
+<li><code class="prettyprint">{{NAME}}.target</code> does not resolve to a resource or to the the correct type of resource.</li>
+</ul></li>
+<li><a href="#unknown-error">UNKNOWN_ERROR</a> when
+
+<ul>
+<li>There is an implementation error.</li>
+</ul></li>
+</ul>
 
           <h2 id="channel-channelresource">Channel (<code class="prettyprint">ChannelResource</code>)</h2>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
