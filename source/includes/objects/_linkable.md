@@ -68,8 +68,6 @@ Name | Type | Description
 
 ### Update Links
 
-FIXME: This is not yet implemented.
-
 #### Request
 
 ```
@@ -89,6 +87,19 @@ Name | Type | Description
 --- | --- | ---
 {{NAME}}.target | [Resource Pointer](#resource-pointer) or ``null`` | The resource to change the link called ``{{NAME}}`` to point at.
 
+All links provided in the GET request for this resource must be present here.
+
 #### Response
 
-NOT IMPLEMENTED
+This returns a response equivalent to the GET of the same resource, with the new links in place.
+
+#### Errors
+
+- [INVALID_BODY](#invalid-body) when:
+  - Not all links are specified on PUT.
+  - The object provided for any link does not have a ``target`` property.
+  - ``{{NAME}}.target`` is not a [Resource Pointer](#resource-pointer) or ``null``.
+  - ``{{NAME}}.target`` does not resolve to a resource or to the the correct type of resource.
+- [UNKNOWN_ERROR](#unknown-error) when
+  - There is an implementation error.
+ 
