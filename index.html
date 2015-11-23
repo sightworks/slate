@@ -3231,55 +3231,224 @@ rather just performs each request.</p>
 </tr>
 </tbody></table>
 
-          <h1 id="errors">Errors</h1>
+          <h1 id="oauth-api-errors">OAuth API Errors</h1>
 
-<p>This API uses the following error codes:</p>
+<p>TODO</p>
+
+<h1 id="platform-errors">Platform Errors</h1>
+<pre class="highlight plaintext"><code>HTTP/1.1 500 Internal Server Error
+Content-Type: application/json
+
+{
+    "type": [ "Error" ],
+    "error": {
+        "code": "UNKNOWN_ERROR",
+        "message": "An unknown error has occurred."
+    },
+    "debug": {
+        "Debug": "Info Here"
+    }
+}
+</code></pre>
+
+<p>When the API needs to report an error, you will get back an Error object as the response.</p>
+
+<h2 id="properties-of-an-error-object">Properties of an Error object</h2>
 
 <table><thead>
 <tr>
-<th>Error Code</th>
-<th>Meaning</th>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
-<td>400</td>
-<td>Bad Request</td>
+<td><code class="prettyprint">error.code</code></td>
+<td>String</td>
+<td>The error code.</td>
 </tr>
 <tr>
-<td>401</td>
-<td>Unauthorized &ndash; Your API key is wrong</td>
+<td><code class="prettyprint">error.message</code></td>
+<td>String</td>
+<td>A human-readable string describing the error.</td>
 </tr>
 <tr>
-<td>403</td>
-<td>Forbidden</td>
+<td><code class="prettyprint">debug</code></td>
+<td>Object</td>
+<td>Debugging information that may be useful if the error is to be reported to us.</td>
+</tr>
+</tbody></table>
+
+<p>Errors are also reported with appropriate HTTP response codes. If using the <a href="#post-multiple-request-endpoint"><code class="prettyprint">multi</code></a> endpoint, then the HTTP error code will be
+returned as the <code class="prettyprint">responseCode</code> property on the relevant portion of the response.</p>
+
+<h2 id="unknown-errors-unknown_error">Unknown Errors (<code class="prettyprint">UNKNOWN_ERROR</code>)</h2>
+
+<p>This is the error that is used when no other is appropriate. It uses HTTP error code 500 (<code class="prettyprint">Internal Server Error</code>) indicating that the problem is likely on
+our side of the connection.</p>
+
+<h2 id="invalid-request-method-invalid_request_method_error">Invalid Request Method (<code class="prettyprint">INVALID_REQUEST_METHOD_ERROR</code>)</h2>
+<pre class="highlight plaintext"><code>HTTP/1.1 405 Method Not Allowed
+Allow: GET POST
+Content-Type: application/json
+
+{
+    "type": [ "Error" ],
+    "error": {
+        "code": "INVALID_REQUEST_METHOD",
+        "message": "Invalid request method PUT."
+        "detail": {
+            "allowedMethods": [ "GET", "POST" ]
+        }
+    },
+    "debug": {}
+}
+</code></pre>
+
+<p>You will get this object back when you attempt to perform a disallowed operation via an HTTP method - for example, trying to PUT a <a href="#collections-collection">Collection</a>.</p>
+
+<p>Properties:</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">error.detail.allowedMethods</code></td>
+<td>Array of Strings</td>
+<td>The HTTP request methods that are allowed. This mirrors the contents of the <code class="prettyprint">Allow</code> header in the response.</td>
+</tr>
+</tbody></table>
+
+<h2 id="invalid-request-invalid_request_error">Invalid Request (<code class="prettyprint">INVALID_REQUEST_ERROR</code>)</h2>
+<pre class="highlight plaintext"><code>HTTP/1.1 400 Bad Request
+Content-Type: application/json
+
+{
+    "type": [ "Error" ],
+    "error": {
+        "code": "INVALID_REQUEST",
+        "message": "Invalid request."
+    },
+    "debug": {}
+}
+</code></pre>
+
+<p>This can occur at any time that the request itself doesn&rsquo;t make sense.</p>
+
+<h2 id="forbiden-forbidden">Forbiden (<code class="prettyprint">FORBIDDEN</code>)</h2>
+<pre class="highlight plaintext"><code>HTTP/1.1 403 Forbidden
+Content-Type: application/json
+
+{
+    "type": [ "Error" ],
+    "error": {
+        "code": "FORBIDDEN",
+        "message": "You cannot do that."
+    },
+    "debug": {}
+}
+</code></pre>
+
+<p>This is returned when you are not allowed to perform the specified operation.</p>
+
+<p>This is currently used when attempting to delete an AppGroup object with children, or delete the top-level AppGroup object
+in an app.</p>
+
+<h2 id="invalid-parameter-value-invalid_parameter_value">Invalid Parameter Value (<code class="prettyprint">INVALID_PARAMETER_VALUE</code>)</h2>
+<pre class="highlight plaintext"><code>HTTP/1.1 400 Bad Request
+Content-Type: application/json
+
+{
+    "type": [ "Error" ],
+    "error": {
+        "code": "INVALID_PARAMETER_VALUE",
+        "message": "Invalid parameter value for depth."
+    },
+    "debug": {}
+}
+</code></pre>
+
+<p>This happens when using a query parameter whose value does not make sense for the parameter:
+- Specifying a negative <code class="prettyprint">depth</code>
+- Specifying a <code class="prettyprint">limit</code> of 0 or a negative value</p>
+
+<h2 id="invalid-request-body-invalid_body">Invalid Request Body (<code class="prettyprint">INVALID_BODY</code>)</h2>
+<pre class="highlight plaintext"><code>HTTP/1.1 400 Bad Request
+Content-Type: application/json
+
+{
+    "type": [ "Error" ],
+    "error": {
+        "code": "INVALID_BODY",
+        "message": "Invalid body content.",
+        "detail": {
+            "path": "data.meta"
+        }
+    }
+}
+</code></pre>
+
+<p>This happens when the request body is syntactically well-formed but the server refuses to handle it because it fails validation.</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">error.detail.path</code></td>
+<td>String</td>
+<td>A string that represents the approximate path to the error in the request body.</td>
+</tr>
+</tbody></table>
+
+<h2 id="conflict-conflict">Conflict (<code class="prettyprint">CONFLICT</code>)</h2>
+<pre class="highlight plaintext"><code>HTTP/1.1 409 Conflict
+Content-Type: application/json
+
+{
+    "type": [ "Error" ],
+    "error": {
+        "code": "CONFLICT",
+        "message": "Update conflict. Resolve the conflict and try again.",
+        "detail": {
+            "conflictField": "meta.updated",
+            "originalValue": "2015-11-21T12:34:45Z",
+            "newValue": "2015-11-21T12:45:56Z"
+        }
+    }
+}
+</code></pre>
+
+<p>This happens when an update has happened to an object since you last retrieved it, to prevent two users from clobbering each other&rsquo;s work.</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">error.detail.conflictField</code></td>
+<td>String</td>
+<td>The path to the field that triggered the error.</td>
 </tr>
 <tr>
-<td>404</td>
-<td>Not Found</td>
+<td><code class="prettyprint">error.detail.originalValue</code></td>
+<td>String</td>
+<td>The value in the currently stored record.</td>
 </tr>
 <tr>
-<td>405</td>
-<td>Method Not Allowed</td>
-</tr>
-<tr>
-<td>406</td>
-<td>Not Acceptable</td>
-</tr>
-<tr>
-<td>410</td>
-<td>Gone</td>
-</tr>
-<tr>
-<td>429</td>
-<td>Too Many Requests</td>
-</tr>
-<tr>
-<td>500</td>
-<td>Internal Server Error &ndash; We had a problem with our server. Try again later.</td>
-</tr>
-<tr>
-<td>503</td>
-<td>Service Unavailable &ndash; We&rsquo;re temporarially offline for maintanance. Please try again later.</td>
+<td><code class="prettyprint">error.detail.newValue</code></td>
+<td>String</td>
+<td>The value in the record you are trying to store.</td>
 </tr>
 </tbody></table>
 
