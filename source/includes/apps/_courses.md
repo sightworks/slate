@@ -141,3 +141,4 @@ coursesPrerequisites | ``{{RECORD}}/coursesPrerequisites`` | Prerequisite lists 
 Name | URL | Description | Item Type
 ---- | --- | ----------- | ---------
 sponsors | ``{{RECORD}}/related/sponsors`` | Sponsors for this course | [``AppRecordList``](#collection-types) with [Sponsor](#sponsors) objects
+tags | ``{{RECORD}}/related/tags`` | Tags for this course | [``AppRecordList``](#collection-types) with [Tag](#tags) objects

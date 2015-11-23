@@ -36,6 +36,7 @@ includes:
   - apps/coursePrerequisite
   - apps/sponsors
   - apps/accounts
+  - apps/tags
   - multi
   - errors
 
