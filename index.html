@@ -2181,6 +2181,12 @@ Content-Type: application/json
 <td>Sponsors for this course</td>
 <td><a href="#collection-types"><code class="prettyprint">AppRecordList</code></a> with <a href="#sponsors">Sponsor</a> objects</td>
 </tr>
+<tr>
+<td>tags</td>
+<td><code class="prettyprint">{{RECORD}}/related/tags</code></td>
+<td>Tags for this course</td>
+<td><a href="#collection-types"><code class="prettyprint">AppRecordList</code></a> with <a href="#tags">Tag</a> objects</td>
+</tr>
 </tbody></table>
 
           <h2 id="course-announcements">Course Announcements</h2>
@@ -3038,6 +3044,85 @@ in the <code class="prettyprint">parent_index</code> field.</p>
 <td>courses</td>
 <td><code class="prettyprint">{{RECORD}}/related/courses</code></td>
 <td>Courses that this user is considered to have purchased, for the purposes of the &ldquo;thisCourseRequiresOffsitePurchase&rdquo; flag on a Course.</td>
+<td><a href="#collection-types"><code class="prettyprint">AppRecordList</code></a> with <a href="#courses">Course</a> objects</td>
+</tr>
+</tbody></table>
+
+          <h2 id="tags">Tags</h2>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"active"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-16T08:45:21.000Z"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"createdBy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{ROOT}}/apps/swt_addressBook/records/{{person-id}}"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nt">"modified"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-16T08:45:21.000Z"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"modifiedBy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{ROOT}}/apps/swt_addressBook/records/{{person-id}}"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nt">"publishing"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"active"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-16T07:00:00.000Z"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"archive"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Tag"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"children"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"groups"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}/groups"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"related"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}/related"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"$type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"Resource"</span><span class="p">,</span><span class="w"> </span><span class="s2">"RecordLikeObject"</span><span class="p">,</span><span class="w"> </span><span class="s2">"AppRecord"</span><span class="w"> </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>A tag in the LMS.</p>
+
+<h3 id="location">Location</h3>
+
+<p>Canonical URL:</p>
+
+<p><code class="prettyprint">{{ROOT}}/apps/{{KEY}}_tags/records/{{record-id}}</code></p>
+
+<h3 id="fields">Fields</h3>
+
+<p>In addition to those specified by <a href="#record-apprecord"><code class="prettyprint">AppRecord</code></a>, a tag includes:</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">data.tag</code></td>
+<td>String</td>
+<td>The label associated with the tag.</td>
+</tr>
+</tbody></table>
+
+<h3 id="relationships">Relationships</h3>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>URL</th>
+<th>Description</th>
+<th>Item Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>courses</td>
+<td><code class="prettyprint">{{RECORD}}/related/courses</code></td>
+<td>The courses that this tag is attached to.</td>
 <td><a href="#collection-types"><code class="prettyprint">AppRecordList</code></a> with <a href="#courses">Course</a> objects</td>
 </tr>
 </tbody></table>
