@@ -17,6 +17,10 @@ A collection that can have new objects added to it. There are no particular diff
 
 ### Add object to the collection
 
+When the collection is not also a ``PutCollection`` object, then add resources to the collection using this method.
+
+If the collection is a ``PutCollection`` object, see the details [below](#put-collection-putcollection).
+
 #### Request
 ```
 POST {{RESOURCE}} HTTP/1.1
@@ -65,6 +69,67 @@ Name | Type | Description
 - [INVALID_BODY](#invalid-body) when:
   - No properties exist in the outermost object.
   - Unexpected properties exist in the outermost object. (The only property that should exist to add an object is ``object``.)
+  - The object being created is not well formed. (See the validation rules on the relevant object types for details.)
+- [UNKNOWN_ERROR](#unknown-error) when:
+  - Another error is encountered on the server.
+
+## Put Collection (``PutCollection``)
+
+```json
+{
+	"$type": [ "Resource", "Collection", "WritableCollection", "PutCollection" ],
+	"id": "{{RESOURCE}}",
+	"collection": {
+		"length": 1,
+		"items": [
+			{ "$Resource": "{{RESOURCE}}/{{id}}" }
+		]
+	}
+}
+```
+
+A collection that accepts new items by having them directly added to their target location instead of being sent to the collection. This is essentially the same as a ``WritableCollection``, except that you must know the ID of the target object before sending it over.
+
+### Add an object to the collection
+
+#### Request
+```
+PUT {{RESOURCE}} HTTP/1.1
+Content-Type: application/json
+
+{
+}
+```
+
+The contents to be added to the collection are the direct body of the request.
+
+#### Response
+
+```
+HTTP/1.1 201 Created
+Location: {{RESOURCE}}
+
+{
+	"created": "{{RESOURCE}}",
+	"collection": {{RESOURCE2}}",
+	"resources": {
+		"{{RESOURCE}}": {
+			/* The resource you created */
+		}
+	}
+}
+```
+
+The response body for an object creation request will be a JSON object with the following properties:
+
+Name | Type | Description
+---- | ---- | -----------
+``created`` | Resource ID | The URL to the resource that was created. This will be the same value as is in the Location header on the response.
+``resources.{{RESOURCE}}`` | [Resource](#resource-resource) | The resource that was created.
+
+#### Errors
+
+- [INVALID_BODY](#invalid-body) when:
   - The object being created is not well formed. (See the validation rules on the relevant object types for details.)
 - [UNKNOWN_ERROR](#unknown-error) when:
   - Another error is encountered on the server.

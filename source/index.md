@@ -22,6 +22,9 @@ includes:
   - objects/baserecord
   - objects/group
   - objects/record
+  - objects/role
+  - objects/authtype
+  - objects/person
   - objects/root
   - objects/collections
   - objects/writablecollection

@@ -41,3 +41,8 @@ Name | Description | Content Type
 ``AppRecordList`` | A list of records within an app | [``AppRecord``](#record-apprecord)
 ``AppGroupList`` | A list of groups within an app | [``AppGroup``](#group-appgroup)
 ``AppRelatedList`` | A list of apps which have related records for a given record | [``AppRecordList``](#collection-types)
+``RoleCollection`` | A list of the roles available in the system. | [``Role``](#role-role)
+``AuthTypeCollection`` | A list of the authentication types in the system. | [``AuthType``](#authentication-type-authtype)
+``PeopleRecordList`` | A list of ``PeopleRecord`` objects within an app. This is a specialization of ``AppRecordList``. | [ ``PeopleRecord``](#person-peoplerecord)
+``PersonViewCollection`` | A list of equivalent ``PeopleRecord`` objects for the current object. Each object represents the same person but presents a possibly different field list and roles. | [``PeopleRecord``](#person-peoplerecord)
+``PersonAuthCollection`` | A list of the authentication types available for the current user. | [``PersonAuth``](#person-authentication-personauth)

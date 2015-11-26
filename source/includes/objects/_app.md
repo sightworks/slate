@@ -19,6 +19,9 @@
 		},
 		"meta": {
 			"$Resource": "{{APP}}/meta"
+		},
+		"role": {
+			"$Resource": "{{APP}}/role"
 		}
 	},
 	"$type": [
@@ -56,7 +59,7 @@ Name | Type | Description
 Name | URL | Description | Type
 ---- | ------------- | ----------- | ----
 root | ``{{APP}}/root`` | The group in this app that holds 'ungrouped' records and top-level groups. | ``AppGroup``
-records | ``{{APP}}/records`` | The collection of all records in this app. | ``AppRecordList``
+records | ``{{APP}}/records`` | The collection of all records in this app. | ``AppRecordList``, or ``PepoleRecordList`` if this app holds people.
 groups | ``{{APP}}/groups`` | The collection of all groups in this app, excluding 'ungrouped'. | ``AppGroupList``
 meta | ``{{APP}}/meta`` | The app metadata container. | ``AppMetaData``
-
+role | ``{{ROOT}}/roles/{{roleId}}`` | If this app holds people, the user type associated with them. ``{{roleId}}`` is the ID of the role itself. | ``Role``
