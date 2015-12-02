@@ -3915,7 +3915,167 @@ rather just performs each request.</p>
 </tr>
 </tbody></table>
 
-          
+          <h1 id="filter-expressions">Filter Expressions</h1>
+
+<p>Any collection supports being filtered: returning a subset of the results based on some input parameters.</p>
+
+<p>Our filtering language is based on a heavily restricted JavaScript syntax. </p>
+
+<h2 id="syntax">Syntax</h2>
+
+<p>Allowed operators, functioning the same as those in JavaScript, and having the same precedence rules:
+* <code class="prettyprint">V1 &amp;&amp; V2</code>
+* <code class="prettyprint">V1 || V2</code>
+* <code class="prettyprint">V1 ? V2 : V3</code>
+* <code class="prettyprint">!V1</code>
+* <code class="prettyprint">~V1</code>
+* <code class="prettyprint">+V1</code>
+* <code class="prettyprint">-V1</code>
+* <code class="prettyprint">V1 &gt; V2</code>
+* <code class="prettyprint">V1 &lt; V2</code>
+* <code class="prettyprint">V1 &gt;= V2</code>
+* <code class="prettyprint">V1 &lt;= V2</code>
+* <code class="prettyprint">V1 == V2</code>
+* <code class="prettyprint">V1 === V2</code>
+* <code class="prettyprint">V1 != V2</code>
+* <code class="prettyprint">V1 !== V2</code>
+* <code class="prettyprint">V1 + V2</code>
+* <code class="prettyprint">V1 - V2</code>
+* <code class="prettyprint">V1 * V2</code>
+* <code class="prettyprint">V1 / V2</code>
+* <code class="prettyprint">V1 % V2</code>
+* <code class="prettyprint">V1 | V2</code>
+* <code class="prettyprint">V1 ^ V2</code>
+* <code class="prettyprint">V1 &amp; V2</code></p>
+
+<p>Parenthesized expressions are allowed.</p>
+
+<p>Objects and Arrays cannot be specified in the syntax allowed. They will be parsed, but if in a part of the expression that is actually evaluated, will result
+in an error and the filter expression returning false (excluding any objects that triggered it), so:</p>
+
+<p><code class="prettyprint">true || [ 1, 2, 3 ]</code></p>
+
+<p>will not trigger an error since the left side of the expression returns successfully, the right side is never evaluated.</p>
+
+<p>(This is an implementation detail: we use (Esprima)[http://esprima.org] for parsing the expressions, which is a fully-featured JavaScript parser; the returned
+syntax tree is evaluated to handle each expression.)</p>
+
+<p>Allowed constructs from Esprima:</p>
+
+<ul>
+<li><code class="prettyprint">ExpressionStatement</code>: this is the top-level statement parsed</li>
+<li><code class="prettyprint">ConditionalExpression</code>: the ternary operator <code class="prettyprint">A ? B : C</code></li>
+<li><code class="prettyprint">LogicalExpression</code>: the <code class="prettyprint">&amp;&amp;</code> and <code class="prettyprint">||</code> operators</li>
+<li><code class="prettyprint">UnaryExpression</code>: the <code class="prettyprint">!</code>, <code class="prettyprint">~</code>, unary <code class="prettyprint">+</code>, and unary <code class="prettyprint">-</code> operators</li>
+<li><code class="prettyprint">BinaryExpression</code>: the <code class="prettyprint">&gt;</code>, <code class="prettyprint">&gt;=</code>, <code class="prettyprint">&lt;</code>, <code class="prettyprint">&lt;=</code>, <code class="prettyprint">==</code>, <code class="prettyprint">===</code>, <code class="prettyprint">!=</code>, <code class="prettyprint">!==</code>, binary <code class="prettyprint">+</code>, binary <code class="prettyprint">-</code>, <code class="prettyprint">*</code>, <code class="prettyprint">/</code>, <code class="prettyprint">%</code>, <code class="prettyprint">|</code>, <code class="prettyprint">^</code>, and <code class="prettyprint">&amp;</code> operators.</li>
+<li><code class="prettyprint">ArrowFunctionExpression</code>: Arrow functions, used for sub-queries: <code class="prettyprint">arg =&gt; Expression</code></li>
+<li><code class="prettyprint">CallExpression</code>: Function calls: <code class="prettyprint">Resource($.data.meta.createdBy)</code>, <code class="prettyprint">$.data.meta.createdBy.is($ =&gt; $.data.active)</code></li>
+<li><code class="prettyprint">Literal</code>: A JavaScript literal value: <code class="prettyprint">&quot;String&quot;</code>, <code class="prettyprint">0</code>, <code class="prettyprint">true</code>, <code class="prettyprint">null</code></li>
+<li><code class="prettyprint">MemberExpression</code>: Property lookups: <code class="prettyprint">$.foo</code>, <code class="prettyprint">a[0]</code>, <code class="prettyprint">b[&quot;c&quot;]</code></li>
+<li><code class="prettyprint">Identifier</code>: Property labels: <code class="prettyprint">foo</code>, <code class="prettyprint">$</code></li>
+</ul>
+
+<h2 id="arrow-functions">Arrow Functions</h2>
+<pre class="highlight javascript"><code><span class="nx">$</span> <span class="o">=&gt;</span> <span class="nx">$</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">meta</span><span class="p">.</span><span class="nx">active</span>
+<span class="nx">obj</span> <span class="o">=&gt;</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">meta</span><span class="p">.</span><span class="nx">active</span>
+</code></pre>
+
+<p>In the expression engine, an arrow function is used for when you need to check the value of some other object for it&rsquo;s properties for filtering purposes.</p>
+
+<h2 id="functions">Functions</h2>
+
+<h3 id="object-resource-string-resourcepointer"><code class="prettyprint">Object Resource(String | ResourcePointer)</code></h3>
+<pre class="highlight javascript"><code><span class="nx">Resource</span><span class="p">(</span><span class="s2">"https://example.digitalxe.com/api/1/apps/swt_addressBook/records/12345"</span><span class="p">)</span>
+<span class="nx">Resource</span><span class="p">(</span><span class="nx">$</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">meta</span><span class="p">.</span><span class="nx">createdBy</span><span class="p">)</span>
+</code></pre>
+
+<p>Fetch the specified resource. This is the only function available that is not called on some object property.</p>
+
+<h3 id="date-value-date"><code class="prettyprint">Date Value.date()</code></h3>
+<pre class="highlight javascript"><code><span class="nx">$</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">meta</span><span class="p">.</span><span class="nx">created</span><span class="p">.</span><span class="nx">date</span><span class="p">()</span>
+<span class="s2">"2015-12-01"</span><span class="p">.</span><span class="nx">date</span><span class="p">()</span>
+</code></pre>
+
+<p>Given a value, try converting it into a date for comparison purposes. As a date, it can be used in boolean
+comparisons to check for before / after, etc. Returns null if the value is not a date.</p>
+
+<p>The value being converted to a date should be in a form accepted by JavaScript&rsquo;s <code class="prettyprint">Date</code> object.</p>
+
+<h3 id="string-value-touppercase"><code class="prettyprint">String Value.toUpperCase()</code></h3>
+<pre class="highlight javascript"><code><span class="nx">$</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">title</span><span class="p">.</span><span class="nx">toUpperCase</span><span class="p">()</span>
+<span class="s2">"my string"</span><span class="p">.</span><span class="nx">toUpperCase</span><span class="p">()</span>
+</code></pre>
+
+<p>Given a value, try turning it into an upper case string. Returns the empty string if the value cannot
+be converted to a string.</p>
+
+<p>This uses the JavaScript rules for converting a value to upper case.</p>
+
+<h3 id="string-value-tolowercase"><code class="prettyprint">String Value.toLowerCase()</code></h3>
+<pre class="highlight javascript"><code><span class="nx">$</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">title</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">()</span>
+<span class="s2">"MY STRING"</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">()</span>
+</code></pre>
+
+<p>Given a value, try turning it into an lower case string. Returns the empty string if the value cannot
+be converted to a string.</p>
+
+<p>This uses the JavaScript rules for converting a value to lower case.</p>
+
+<h3 id="boolean-value-startswith-string"><code class="prettyprint">Boolean Value.startsWith(String)</code></h3>
+<pre class="highlight javascript"><code><span class="nx">$</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">title</span><span class="p">.</span><span class="nx">startsWith</span><span class="p">(</span><span class="s2">"Demo"</span><span class="p">)</span>
+</code></pre>
+
+<p>Given a value, check to see if it begins with the specified string, returning true if it does.</p>
+
+<h3 id="boolean-value-endswith-string"><code class="prettyprint">Boolean Value.endsWith(String)</code></h3>
+<pre class="highlight javascript"><code><span class="nx">$</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">title</span><span class="p">.</span><span class="nx">endsWith</span><span class="p">(</span><span class="s2">"Demo"</span><span class="p">)</span>
+</code></pre>
+
+<p>Given a value, check to see if it ends with the specified string, returning true if it does.</p>
+
+<h3 id="boolean-value-contains-string"><code class="prettyprint">Boolean Value.contains(String)</code></h3>
+<pre class="highlight javascript"><code><span class="nx">$</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">title</span><span class="p">.</span><span class="nx">contains</span><span class="p">(</span><span class="s2">"Demo"</span><span class="p">)</span>
+</code></pre>
+
+<p>Given a value, check to see if it contains the specified string, returning true if it does.</p>
+
+<h3 id="string-value-substring-number-start-number-end"><code class="prettyprint">String Value.substring(Number start [, Number end])</code></h3>
+<pre class="highlight javascript"><code><span class="nx">$</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">title</span><span class="p">.</span><span class="nx">substring</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="nx">$</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">title</span><span class="p">.</span><span class="nx">substring</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+</code></pre>
+
+<p>Returns the portion of the string between <code class="prettyprint">start</code> and <code class="prettyprint">end</code>.</p>
+
+<p>This functions identically to the (JavaScript <code class="prettyprint">substring</code>)[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/substring] method.</p>
+
+<h3 id="boolean-object-is-value"><code class="prettyprint">Boolean Object.is(Value)</code></h3>
+<pre class="highlight javascript"><code><span class="nx">$</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">meta</span><span class="p">.</span><span class="nx">createdBy</span><span class="p">.</span><span class="nx">is</span><span class="p">(</span><span class="nx">Resource</span><span class="p">(</span><span class="s2">"https://example.digitalxe.com/api/1/apps/swt_addressBook/records/12345"</span><span class="p">))</span>
+<span class="nx">$</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">meta</span><span class="p">.</span><span class="nx">createdBy</span><span class="p">.</span><span class="nx">is</span><span class="p">(</span><span class="nx">Resource</span><span class="p">(</span><span class="s2">"https://example.digitalxe.com/api/1/apps/lms_accounts/records/12345"</span><span class="p">))</span>
+</code></pre>
+
+<p>Checks to see if the specified objects are equal. This differs from a normal equality check in that, if the objects are resources, it checks to see if the resources
+are the same instead of just the objects.</p>
+
+<p>In the case above, the resources returned by the call to (<code class="prettyprint">Resource</code>)[#object-resource-string-resourcepointer] both point at the same underlying object (<code class="prettyprint">swt_addressBook</code>
+and <code class="prettyprint">lms_accounts</code> are both different views of people that share their underlying resources), so the equality check here returns true.</p>
+
+<h3 id="boolean-object-is-arrowfunction"><code class="prettyprint">Boolean Object.is(ArrowFunction)</code></h3>
+<pre class="highlight javascript"><code><span class="nx">$</span><span class="p">.</span><span class="nx">children</span><span class="p">.</span><span class="nx">instructor</span><span class="p">.</span><span class="nx">is</span><span class="p">(</span><span class="nx">$</span> <span class="o">=&gt;</span> <span class="nx">$</span><span class="p">.</span><span class="nx">data</span><span class="p">[</span><span class="s2">"First Name"</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"Demo"</span><span class="p">)</span>
+</code></pre>
+
+<p>Checks to see if the object matches the provided (Arrow Function)[#arrow-function].</p>
+
+<p>If the objects in the array are (Resource Pointers)[#resource-pointer], then the argument to the arrow function will be the resource pointed at, unless there was
+an error resolving the resource, in which case the original resource pointer will be passed.</p>
+
+<h3 id="boolean-array-has-value-arrowfunction"><code class="prettyprint">Boolean Array.has(Value | ArrowFunction)</code></h3>
+<pre class="highlight javascript"><code><span class="nx">$</span><span class="p">.</span><span class="nx">children</span><span class="p">.</span><span class="nx">courses</span><span class="p">.</span><span class="nx">has</span><span class="p">(</span><span class="nx">Resource</span><span class="p">(</span><span class="s2">"https://example.digitalxe.com/api/1/apps/lms_courses/records/12345"</span><span class="p">))</span>
+<span class="nx">$</span><span class="p">.</span><span class="nx">$type</span><span class="p">.</span><span class="nx">has</span><span class="p">(</span><span class="s2">"AppRecord"</span><span class="p">)</span>
+<span class="nx">$</span><span class="p">.</span><span class="nx">children</span><span class="p">.</span><span class="nx">courses</span><span class="p">.</span><span class="nx">has</span><span class="p">(</span><span class="nx">$</span> <span class="o">=&gt;</span> <span class="nx">$</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">active</span> <span class="o">==</span> <span class="kc">true</span><span class="p">)</span>
+</code></pre>
+
+<p>Loops over the array and checks to see if the provided argument matches in the same method as (<code class="prettyprint">Object.is(Value)</code>)[#boolean-object-is-value] or (<code class="prettyprint">Object.is(ArrowFunction)</code>)[#boolean-object-is-arrowfunction] would check.</p>
+
           <h1 id="oauth-api-errors">OAuth API Errors</h1>
 
 <p>TODO</p>
