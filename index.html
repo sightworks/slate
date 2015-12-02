@@ -3635,6 +3635,182 @@ in the <code class="prettyprint">parent_index</code> field.</p>
 </tr>
 </tbody></table>
 
+          <h2 id="products">Products</h2>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"active"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-16T08:45:21.000Z"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"createdBy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{ROOT}}/apps/swt_addressBook/records/{{person-id}}"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nt">"modified"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-16T08:45:21.000Z"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"modifiedBy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{ROOT}}/apps/swt_addressBook/records/{{person-id}}"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nt">"publishing"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"active"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-16T07:00:00.000Z"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"archive"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Product Name"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"children"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"groups"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}/groups"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"productsItems"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}/productsItems"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"$type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"Resource"</span><span class="p">,</span><span class="w"> </span><span class="s2">"RecordLikeObject"</span><span class="p">,</span><span class="w"> </span><span class="s2">"AppRecord"</span><span class="w"> </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>A product in the LMS.</p>
+
+<h3 id="location">Location</h3>
+
+<p>Canonical URL:</p>
+
+<p><code class="prettyprint">{{ROOT}}/apps/{{KEY}}_products/records/{{record-id}}</code></p>
+
+<h3 id="fields">Fields</h3>
+
+<p>In addition to those specified by <a href="#record-apprecord"><code class="prettyprint">AppRecord</code></a>, a product includes:</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">data.title</code></td>
+<td>String</td>
+<td>The name of the product</td>
+</tr>
+</tbody></table>
+
+<h3 id="children">Children</h3>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>URL</th>
+<th>Description</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>productsItems</td>
+<td><code class="prettyprint">{{RECORD}}/productsItems</code></td>
+<td>The items that make up this product.</td>
+<td><a href="#collection-types"><code class="prettyprint">AppRecordList</code></a> with <a href="#product-item">Product Item</a> objects</td>
+</tr>
+</tbody></table>
+
+<h2 id="product-items">Product Items</h2>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"active"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-16T08:45:21.000Z"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"createdBy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{ROOT}}/apps/swt_addressBook/records/{{person-id}}"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nt">"modified"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-16T08:45:21.000Z"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"modifiedBy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{ROOT}}/apps/swt_addressBook/records/{{person-id}}"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nt">"publishing"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"active"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-16T07:00:00.000Z"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"archive"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CourseRecord"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"parent_index"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"children"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"groups"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}/groups"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"parent"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{ROOT}}/apps/{{KEY}}_products/records/{{ID}}"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"course"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{ROOT}}/apps/{{KEY}}_courses/records/{{ID}}"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h3 id="location">Location</h3>
+
+<p>Canonical URL:</p>
+
+<p><code class="prettyprint">{{ROOT}}/apps/{{KEY}}_productsItems/records/{{record-id}}</code></p>
+
+<h3 id="fields">Fields</h3>
+
+<p>In addition to those specified by <a href="#record-apprecord"><code class="prettyprint">AppRecord</code></a>, a product item includes:</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">data.type</code></td>
+<td>Enumeration</td>
+<td>The type of entry. One of &ldquo;AllCourses&rdquo;, &ldquo;CourseGroup&rdquo;, &ldquo;CourseRecord&rdquo;</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.parent_index</code></td>
+<td>Number</td>
+<td>The order of this item in the set of items attached to the product.</td>
+</tr>
+</tbody></table>
+
+<h3 id="children">Children</h3>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>URL</th>
+<th>Description</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>course</td>
+<td><code class="prettyprint">{{ROOT}}/apps/{{KEY}}_courses/records/{{ID}}</code></td>
+<td>The course that is attached to this product item, when <code class="prettyprint">data.type</code> is &lsquo;CourseRecord&rsquo;.</td>
+<td><a href="#record-apprecord"><code class="prettyprint">AppRecord</code></a> from <a href="#courses">Courses</a></td>
+</tr>
+<tr>
+<td>courseGroup</td>
+<td><code class="prettyprint">{{ROOT}}/apps/{{KEY}}_courses/groups/{{ID}}</code></td>
+<td>The group of courses that is attached to this product item, when <code class="prettyprint">data.type</code> is &#39;CourseGroup&rsquo;</td>
+<td><a href="#group-appgroup"><code class="prettyprint">AppGroup</code></a> from <a href="#courses">Courses</a></td>
+</tr>
+<tr>
+<td>parent</td>
+<td><code class="prettyprint">{{ROOT}}/apps/{{KEY}}_products/records/{{ID}}</code></td>
+<td>The product that this item is attached to.</td>
+<td><a href="#record-apprecord"><code class="prettyprint">AppRecord</code></a> from <a href="#products">Products</a></td>
+</tr>
+</tbody></table>
+
           <h1 id="miscellaneous-api-methods">Miscellaneous API methods</h1>
 
 <h2 id="post-multiple-request-endpoint">POST Multiple Request Endpoint</h2>
@@ -3739,6 +3915,7 @@ rather just performs each request.</p>
 </tr>
 </tbody></table>
 
+          
           <h1 id="oauth-api-errors">OAuth API Errors</h1>
 
 <p>TODO</p>
