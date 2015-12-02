@@ -7,6 +7,7 @@ Our filtering language is based on a heavily restricted JavaScript syntax.
 ## Syntax
 
 Allowed operators, functioning the same as those in JavaScript, and having the same precedence rules:
+
 * ``V1 && V2``
 * ``V1 || V2``
 * ``V1 ? V2 : V3``
