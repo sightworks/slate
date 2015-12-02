@@ -40,7 +40,9 @@ includes:
   - apps/sponsors
   - apps/accounts
   - apps/tags
+  - apps/products
   - multi
+  - filter
   - errors
 
 search: true
