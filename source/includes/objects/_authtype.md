@@ -59,6 +59,6 @@ The various flags under ``data.info.operations`` control operations on a [``Pers
 - ``changeInformation``: Allows the ``PUT`` method to be invoked at ``{{RECORD}}/authTypes/{{authTypeId}}`` when a ``GET`` request would return success.
 - ``remove``: Allows the ``DELETE`` method to be invoked at ``{{RECORD}}/authTypes/{{authTypeId}}``.
 
-In all cases above, ``{{RECORD}} is a [``PeopleRecord``](#person-peoplerecord) object in an app that has the ``role`` endpoint exposed.
+In all cases above, ``{{RECORD}}`` is a [``PeopleRecord``](#person-peoplerecord) object in an app that has the ``role`` endpoint exposed.
 
 The fields under ``data.fields`` are the readable contents of the authentication info. If the ``type`` property of one of the fields is ``email``, then the content passed in needs to be a well-formed email address, otherwise it can be any string. No property can be specified as ``null``.

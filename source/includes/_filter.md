@@ -1,8 +1,10 @@
-# Filter Expressions
+# Expressions
 
-Any collection supports being filtered: returning a subset of the results based on some input parameters.
+Expressions are used in multiple places, the primary being filtering a [Collection](#collections-collection) object and
+[making multiple requests at the same time](#post-multiple-request-endpoint) when those requests are dependent on one
+another.
 
-Our filtering language is based on a heavily restricted JavaScript syntax. 
+Our expression syntax is a heavily restricted JavaScript syntax.
 
 ## Syntax
 
@@ -41,7 +43,7 @@ in an error and the filter expression returning false (excluding any objects tha
 
 will not trigger an error since the left side of the expression returns successfully, the right side is never evaluated.
 
-(This is an implementation detail: we use (Esprima)[http://esprima.org] for parsing the expressions, which is a fully-featured JavaScript parser; the returned
+(This is an implementation detail: we use [Esprima](http://esprima.org) for parsing the expressions, which is a fully-featured JavaScript parser; the returned
 syntax tree is evaluated to handle each expression.)
 
 Allowed constructs from Esprima:
@@ -146,7 +148,7 @@ $.data.data.title.substring(0, 6)
 
 Returns the portion of the string between ``start`` and ``end``.
 
-This functions identically to the (JavaScript ``substring``)[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/substring] method.
+This functions identically to the [JavaScript ``substring``](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/substring) method.
 
 ### ``Boolean Object.is(Value)``
 
@@ -158,7 +160,7 @@ $.data.meta.createdBy.is(Resource("https://example.digitalxe.com/api/1/apps/lms_
 Checks to see if the specified objects are equal. This differs from a normal equality check in that, if the objects are resources, it checks to see if the resources
 are the same instead of just the objects.
 
-In the case above, the resources returned by the call to (``Resource``)[#object-resource-string-resourcepointer] both point at the same underlying object (``swt_addressBook``
+In the case above, the resources returned by the call to [``Resource``](#object-resource-string-resourcepointer) both point at the same underlying object (``swt_addressBook``
 and ``lms_accounts`` are both different views of people that share their underlying resources), so the equality check here returns true.
 
 ### ``Boolean Object.is(ArrowFunction)``
@@ -167,9 +169,9 @@ and ``lms_accounts`` are both different views of people that share their underly
 $.children.instructor.is($ => $.data["First Name"] == "Demo")
 ```
 
-Checks to see if the object matches the provided (Arrow Function)[#arrow-function].
+Checks to see if the object matches the provided [Arrow Function](#arrow-function).
 
-If the objects in the array are (Resource Pointers)[#resource-pointer], then the argument to the arrow function will be the resource pointed at, unless there was
+If the objects in the array are [Resource Pointers](#resource-pointer), then the argument to the arrow function will be the resource pointed at, unless there was
 an error resolving the resource, in which case the original resource pointer will be passed.
 
 ### ``Boolean Array.has(Value | ArrowFunction)``
@@ -180,5 +182,5 @@ $.$type.has("AppRecord")
 $.children.courses.has($ => $.data.active == true)
 ```
 
-Loops over the array and checks to see if the provided argument matches in the same method as (``Object.is(Value)``)[#boolean-object-is-value] or (``Object.is(ArrowFunction)``)[#boolean-object-is-arrowfunction] would check.
+Loops over the array and checks to see if the provided argument matches in the same method as [``Object.is(Value)``](#boolean-object-is-value) or [``Object.is(ArrowFunction)``](#boolean-object-is-arrowfunction) would check.
 
