@@ -41,6 +41,9 @@ includes:
   - apps/accounts
   - apps/tags
   - apps/products
+  - apps/video
+  - apps/audio
+  - apps/document
   - multi
   - filter
   - errors

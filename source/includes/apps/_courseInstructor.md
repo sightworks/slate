@@ -20,7 +20,6 @@
 			}
 		},
 		"data": {
-			"parent_index": 0
 		}
 	},
 	"children": {
@@ -51,14 +50,12 @@ Canonical URL:
 
 ### Fields
 
-In addition to those specified by [``AppRecord``](#record-apprecord), an instructor record includes:
+An instructor record has no fields other than those specified by [``AppRecord``](#record-apprecord).
 
-Name | Type | Description
----- | ---- | -----------
-``data.parent_index`` | Number | The order of this instructor on it's parent course
+The person that is the instructor is listed as a child of this object (in the ``instructor`` field). The "lead instructor" on any course is the first entry in
+the course's "courseInstructors" child collection.
 
-The instructor record itself can be found in the Children section. The lead instructor is the one on this course that has the smallest value
-in the ``parent_index`` field.
+If you need to create this object, specify an empty object for ``data``.
 
 ### Children
 

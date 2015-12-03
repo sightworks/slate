@@ -25,8 +25,7 @@
 				"name": "https://example.digitalxe.com/awesome.pdf",
 				"type": "application/pdf",
 				"size": 34322
-			},
-			"parent_index": 0
+			}
 		}
 	},
 	"children": {
@@ -60,7 +59,6 @@ Name | Type | Description
 ---- | ---- | -----------
 ``data.title`` | String | The title of the download
 ``data.file`` | File | The file to download
-``data.parent_index`` | Number | The order of this comment on it's parent course
 
 ### Children
 

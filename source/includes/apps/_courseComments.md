@@ -21,8 +21,7 @@
 		},
 		"data": {
 			"time": "2015-11-16T08:45:21.000Z",
-			"comment": "This is awesome!",
-			"parent_index": 0
+			"comment": "This is awesome!"
 		}
 	},
 	"children": {
@@ -62,7 +61,6 @@ Name | Type | Description
 ---- | ---- | -----------
 ``data.time`` | Timestamp | The time of the comment
 ``data.comment`` | Text | The text of the comment
-``data.parent_index`` | Number | The order of this comment on it's parent course
 
 ### Children
 

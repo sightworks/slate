@@ -23,8 +23,7 @@
 			"name": "A+",
 			"minimum": 97,
 			"maximum": 100,
-			"thisIsAPassingGrade": true,
-			"parent_index": 0
+			"thisIsAPassingGrade": true
 		}
 	},
 	"children": {
@@ -60,7 +59,6 @@ Name | Type | Description
 ``data.minimum`` | Number | The minimum score (percentage) to have earned this grade
 ``data.maximum`` | Number | The maximum score (percentage) to have earned this grade
 ``data.thisIsAPassingGrade`` | Boolean | Whether this grade constitutes a "pass" or not
-``data.parent_index`` | Number | The order of this grade on it's parent course
 
 The grading scale for a course should not contain overlapping entries, and the grading scale will be extended to fill the entire span
 between 0 and 100%.

@@ -20,7 +20,6 @@
 			}
 		},
 		"data": {
-			"parent_index": 0
 		}
 	},
 	"children": {
@@ -48,13 +47,11 @@ Canonical URL:
 
 ### Fields
 
-In addition to those specified by [``AppRecord``](#record-apprecord), a prerequisite record includes:
-
-Name | Type | Description
----- | ---- | -----------
-``data.parent_index`` | Number | The order of this prerequisite on it's parent course
+A prerequisite record has no fields other than those specified by [``AppRecord``](#record-apprecord).
 
 The actual prerequisite courses are stored in the ``courses`` relationship on this record.
+
+To create a new prerequisite list, specify an empty object for the ``data`` property.
 
 ### Children
 

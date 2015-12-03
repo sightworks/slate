@@ -133,7 +133,7 @@ coursesAnnouncements | ``{{RECORD}}/coursesAnnouncements`` | Announcements made 
 coursesComments | ``{{RECORD}}/coursesComments`` | Comments made on this course | [``AppRecordList``](#collection-types) with [Course Comment](#course-comments) objects
 coursesDownloads | ``{{RECORD}}/coursesDownloads`` | Downloads made availble on this course | [``AppRecordList``](#collection-types) with [Course Download](#course-downloads) objects
 coursesGrading | ``{{RECORD}}/coursesGrading`` | Grading scale for this course | [``AppRecordList``](#collection-types) with [Course Grade](#course-grading) objects
-coursesInstructors | ``{{RECORD}}/coursesInstructors`` | Instructors for this course | [``AppRecordList``](#collection-types) with [Course Instructor](#course-instructors) objects. The first item in the set (with the smallest value for ``parent_index``) is considered the "lead" instructor.
+coursesInstructors | ``{{RECORD}}/coursesInstructors`` | Instructors for this course | [``AppRecordList``](#collection-types) with [Course Instructor](#course-instructors) objects. The first item in the set is considered the "lead" instructor.
 coursesPrerequisites | ``{{RECORD}}/coursesPrerequisites`` | Prerequisite lists for this course | [``AppRecordList``](#collection-types) with [Course Prerequisite](#course-prerequisites) objects.
 
 ### Relationships

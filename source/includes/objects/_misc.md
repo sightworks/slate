@@ -18,6 +18,36 @@ Name | Type | Description
 ``type`` | String | The MIME type of the file
 ``size`` | Number | The size of the file
 
+## Media File
+
+```json
+{
+	"name": "https://example.digitalxe.com/path/to/a/file",
+	"type": "audio/mp3",
+	"size": 4455,
+	"start": {
+		"unit": "second",
+		"count": 10
+	},
+	"end": {
+		"unit": "second",
+		"count": 40
+	}
+}
+```
+
+An object that describes a media file, with possible start and end points.
+
+### Fields
+
+Name | Type | Description
+---- | ---- | -----------
+``name`` | String | The URL to the file
+``type`` | String | The MIME type of the file
+``size`` | Number | The size of the file
+``start`` | [Interval](#interval) | The start point of the file; leaving this null means the beginning of the file
+``end`` | [Interval](#interval) | The end point of the file; leaving this null means the end of the file
+
 ## Interval
 
 ```json

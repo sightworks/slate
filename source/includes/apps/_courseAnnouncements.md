@@ -20,8 +20,7 @@
 			}
 		},
 		"data": {
-			"announcement": "",
-			"parent_index": 0
+			"announcement": ""
 		}
 	},
 	"children": {
@@ -54,7 +53,6 @@ In addition to those specified by [``AppRecord``](#record-apprecord), an announc
 Name | Type | Description
 ---- | ---- | -----------
 ``data.announcment`` | Text | The text of the announcement
-``data.parent_index`` | Number | The order of this announcement on it's parent course
 
 ### Children
 
