@@ -2313,6 +2313,60 @@ Content-Type: application/json
 </tr>
 </tbody></table>
 
+<h2 id="media-file">Media File</h2>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://example.digitalxe.com/path/to/a/file"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"audio/mp3"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">4455</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"start"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"second"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"end"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"second"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">40</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>An object that describes a media file, with possible start and end points.</p>
+
+<h3 id="fields">Fields</h3>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">name</code></td>
+<td>String</td>
+<td>The URL to the file</td>
+</tr>
+<tr>
+<td><code class="prettyprint">type</code></td>
+<td>String</td>
+<td>The MIME type of the file</td>
+</tr>
+<tr>
+<td><code class="prettyprint">size</code></td>
+<td>Number</td>
+<td>The size of the file</td>
+</tr>
+<tr>
+<td><code class="prettyprint">start</code></td>
+<td><a href="#interval">Interval</a></td>
+<td>The start point of the file; leaving this null means the beginning of the file</td>
+</tr>
+<tr>
+<td><code class="prettyprint">end</code></td>
+<td><a href="#interval">Interval</a></td>
+<td>The end point of the file; leaving this null means the end of the file</td>
+</tr>
+</tbody></table>
+
 <h2 id="interval">Interval</h2>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
     </span><span class="nt">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
@@ -2681,7 +2735,7 @@ Content-Type: application/json
 <td>coursesInstructors</td>
 <td><code class="prettyprint">{{RECORD}}/coursesInstructors</code></td>
 <td>Instructors for this course</td>
-<td><a href="#collection-types"><code class="prettyprint">AppRecordList</code></a> with <a href="#course-instructors">Course Instructor</a> objects. The first item in the set (with the smallest value for <code class="prettyprint">parent_index</code>) is considered the &ldquo;lead&rdquo; instructor.</td>
+<td><a href="#collection-types"><code class="prettyprint">AppRecordList</code></a> with <a href="#course-instructors">Course Instructor</a> objects. The first item in the set is considered the &ldquo;lead&rdquo; instructor.</td>
 </tr>
 <tr>
 <td>coursesPrerequisites</td>
@@ -2735,8 +2789,7 @@ Content-Type: application/json
             </span><span class="p">}</span><span class="w">
         </span><span class="p">},</span><span class="w">
         </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-            </span><span class="nt">"announcement"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-            </span><span class="nt">"parent_index"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+            </span><span class="nt">"announcement"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
         </span><span class="p">}</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="nt">"children"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -2777,11 +2830,6 @@ Content-Type: application/json
 <td><code class="prettyprint">data.announcment</code></td>
 <td>Text</td>
 <td>The text of the announcement</td>
-</tr>
-<tr>
-<td><code class="prettyprint">data.parent_index</code></td>
-<td>Number</td>
-<td>The order of this announcement on it&rsquo;s parent course</td>
 </tr>
 </tbody></table>
 
@@ -2824,8 +2872,7 @@ Content-Type: application/json
         </span><span class="p">},</span><span class="w">
         </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
             </span><span class="nt">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-16T08:45:21.000Z"</span><span class="p">,</span><span class="w">
-            </span><span class="nt">"comment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"This is awesome!"</span><span class="p">,</span><span class="w">
-            </span><span class="nt">"parent_index"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+            </span><span class="nt">"comment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"This is awesome!"</span><span class="w">
         </span><span class="p">}</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="nt">"children"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -2877,11 +2924,6 @@ Content-Type: application/json
 <td><code class="prettyprint">data.comment</code></td>
 <td>Text</td>
 <td>The text of the comment</td>
-</tr>
-<tr>
-<td><code class="prettyprint">data.parent_index</code></td>
-<td>Number</td>
-<td>The order of this comment on it&rsquo;s parent course</td>
 </tr>
 </tbody></table>
 
@@ -2940,8 +2982,7 @@ Content-Type: application/json
                 </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://example.digitalxe.com/awesome.pdf"</span><span class="p">,</span><span class="w">
                 </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"application/pdf"</span><span class="p">,</span><span class="w">
                 </span><span class="nt">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">34322</span><span class="w">
-            </span><span class="p">},</span><span class="w">
-            </span><span class="nt">"parent_index"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+            </span><span class="p">}</span><span class="w">
         </span><span class="p">}</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="nt">"children"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -2988,11 +3029,6 @@ Content-Type: application/json
 <td>File</td>
 <td>The file to download</td>
 </tr>
-<tr>
-<td><code class="prettyprint">data.parent_index</code></td>
-<td>Number</td>
-<td>The order of this comment on it&rsquo;s parent course</td>
-</tr>
 </tbody></table>
 
 <h3 id="children">Children</h3>
@@ -3036,8 +3072,7 @@ Content-Type: application/json
             </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"A+"</span><span class="p">,</span><span class="w">
             </span><span class="nt">"minimum"</span><span class="p">:</span><span class="w"> </span><span class="mi">97</span><span class="p">,</span><span class="w">
             </span><span class="nt">"maximum"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
-            </span><span class="nt">"thisIsAPassingGrade"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-            </span><span class="nt">"parent_index"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+            </span><span class="nt">"thisIsAPassingGrade"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
         </span><span class="p">}</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="nt">"children"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -3094,11 +3129,6 @@ Content-Type: application/json
 <td>Boolean</td>
 <td>Whether this grade constitutes a &ldquo;pass&rdquo; or not</td>
 </tr>
-<tr>
-<td><code class="prettyprint">data.parent_index</code></td>
-<td>Number</td>
-<td>The order of this grade on it&rsquo;s parent course</td>
-</tr>
 </tbody></table>
 
 <p>The grading scale for a course should not contain overlapping entries, and the grading scale will be extended to fill the entire span
@@ -3152,7 +3182,6 @@ percentage value.</p>
             </span><span class="p">}</span><span class="w">
         </span><span class="p">},</span><span class="w">
         </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-            </span><span class="nt">"parent_index"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
         </span><span class="p">}</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="nt">"children"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -3183,24 +3212,12 @@ percentage value.</p>
 
 <h3 id="fields">Fields</h3>
 
-<p>In addition to those specified by <a href="#record-apprecord"><code class="prettyprint">AppRecord</code></a>, an instructor record includes:</p>
+<p>An instructor record has no fields other than those specified by <a href="#record-apprecord"><code class="prettyprint">AppRecord</code></a>.</p>
 
-<table><thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><code class="prettyprint">data.parent_index</code></td>
-<td>Number</td>
-<td>The order of this instructor on it&rsquo;s parent course</td>
-</tr>
-</tbody></table>
+<p>The person that is the instructor is listed as a child of this object (in the <code class="prettyprint">instructor</code> field). The &ldquo;lead instructor&rdquo; on any course is the first entry in
+the course&rsquo;s &ldquo;courseInstructors&rdquo; child collection.</p>
 
-<p>The instructor record itself can be found in the Children section. The lead instructor is the one on this course that has the smallest value
-in the <code class="prettyprint">parent_index</code> field.</p>
+<p>If you need to create this object, specify an empty object for <code class="prettyprint">data</code>.</p>
 
 <h3 id="children">Children</h3>
 
@@ -3246,7 +3263,6 @@ in the <code class="prettyprint">parent_index</code> field.</p>
             </span><span class="p">}</span><span class="w">
         </span><span class="p">},</span><span class="w">
         </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-            </span><span class="nt">"parent_index"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
         </span><span class="p">}</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="nt">"children"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -3274,23 +3290,11 @@ in the <code class="prettyprint">parent_index</code> field.</p>
 
 <h3 id="fields">Fields</h3>
 
-<p>In addition to those specified by <a href="#record-apprecord"><code class="prettyprint">AppRecord</code></a>, a prerequisite record includes:</p>
-
-<table><thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><code class="prettyprint">data.parent_index</code></td>
-<td>Number</td>
-<td>The order of this prerequisite on it&rsquo;s parent course</td>
-</tr>
-</tbody></table>
+<p>A prerequisite record has no fields other than those specified by <a href="#record-apprecord"><code class="prettyprint">AppRecord</code></a>.</p>
 
 <p>The actual prerequisite courses are stored in the <code class="prettyprint">courses</code> relationship on this record.</p>
+
+<p>To create a new prerequisite list, specify an empty object for the <code class="prettyprint">data</code> property.</p>
 
 <h3 id="children">Children</h3>
 
@@ -3752,8 +3756,7 @@ in the <code class="prettyprint">parent_index</code> field.</p>
             </span><span class="p">}</span><span class="w">
         </span><span class="p">},</span><span class="w">
         </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CourseRecord"</span><span class="p">,</span><span class="w">
-            </span><span class="nt">"parent_index"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CourseRecord"</span><span class="w">
         </span><span class="p">}</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="nt">"children"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -3790,12 +3793,7 @@ in the <code class="prettyprint">parent_index</code> field.</p>
 <tr>
 <td><code class="prettyprint">data.type</code></td>
 <td>Enumeration</td>
-<td>The type of entry. One of &ldquo;AllCourses&rdquo;, &ldquo;CourseGroup&rdquo;, &ldquo;CourseRecord&rdquo;</td>
-</tr>
-<tr>
-<td><code class="prettyprint">data.parent_index</code></td>
-<td>Number</td>
-<td>The order of this item in the set of items attached to the product.</td>
+<td>The type of entry. One of &ldquo;AllCourses&rdquo;, &ldquo;CourseGroup&rdquo;, &ldquo;CourseRecord&rdquo;, &ldquo;AllVideos&rdquo;, &ldquo;VideoGroup&rdquo;, &ldquo;VideoRecord&rdquo;, &ldquo;AllAudio&rdquo;, &ldquo;AudioGroup&rdquo;, &ldquo;AudioRecord&rdquo;, &ldquo;AllDocuments&rdquo;, &ldquo;DocumentGroup&rdquo;, &ldquo;DocumentRecord&rdquo;.</td>
 </tr>
 </tbody></table>
 
@@ -3822,10 +3820,475 @@ in the <code class="prettyprint">parent_index</code> field.</p>
 <td><a href="#group-appgroup"><code class="prettyprint">AppGroup</code></a> from <a href="#courses">Courses</a></td>
 </tr>
 <tr>
+<td>audio</td>
+<td><code class="prettyprint">{{ROOT}}/apps/{{KEY}}_audio/records/{{ID}}</code></td>
+<td>The audio file that is attached to this product item, when <code class="prettyprint">data.type</code> is &#39;AudioRecord&rsquo;.</td>
+<td><a href="#record-apprecord"><code class="prettyprint">AppRecord</code></a> from <a href="#audio-files">Audio Files</a></td>
+</tr>
+<tr>
+<td>audioGroup</td>
+<td><code class="prettyprint">{{ROOT}}/apps/{{KEY}}_audio/groups/{{ID}}</code></td>
+<td>The group of audio files that is attached to this product item, when <code class="prettyprint">data.type</code> is &#39;AudioGroup&rsquo;</td>
+<td><a href="#group-appgroup"><code class="prettyprint">AppGroup</code></a> from <a href="#audio-files">Audio Files</a></td>
+</tr>
+<tr>
+<td>video</td>
+<td><code class="prettyprint">{{ROOT}}/apps/{{KEY}}_videos/records/{{ID}}</code></td>
+<td>The video that is attached to this product item, when <code class="prettyprint">data.type</code> is &#39;VideoRecord&rsquo;.</td>
+<td><a href="#record-apprecord"><code class="prettyprint">AppRecord</code></a> from <a href="#videos">Videos</a></td>
+</tr>
+<tr>
+<td>videoGroup</td>
+<td><code class="prettyprint">{{ROOT}}/apps/{{KEY}}_videos/groups/{{ID}}</code></td>
+<td>The group of videos that is attached to this product item, when <code class="prettyprint">data.type</code> is &#39;VideoGroup&rsquo;</td>
+<td><a href="#group-appgroup"><code class="prettyprint">AppGroup</code></a> from <a href="#videos">Videos</a></td>
+</tr>
+<tr>
+<td>document</td>
+<td><code class="prettyprint">{{ROOT}}/apps/{{KEY}}_documents/records/{{ID}}</code></td>
+<td>The document that is attached to this product item, when <code class="prettyprint">data.type</code> is &#39;DocumentRecord&rsquo;.</td>
+<td><a href="#record-apprecord"><code class="prettyprint">AppRecord</code></a> from <a href="#documents">Documents</a></td>
+</tr>
+<tr>
+<td>documentGroup</td>
+<td><code class="prettyprint">{{ROOT}}/apps/{{KEY}}_documents/groups/{{ID}}</code></td>
+<td>The group of documents that is attached to this product item, when <code class="prettyprint">data.type</code> is &#39;DocumentGroup&rsquo;</td>
+<td><a href="#group-appgroup"><code class="prettyprint">AppGroup</code></a> from <a href="#documents">Documents</a></td>
+</tr>
+<tr>
 <td>parent</td>
 <td><code class="prettyprint">{{ROOT}}/apps/{{KEY}}_products/records/{{ID}}</code></td>
 <td>The product that this item is attached to.</td>
 <td><a href="#record-apprecord"><code class="prettyprint">AppRecord</code></a> from <a href="#products">Products</a></td>
+</tr>
+</tbody></table>
+
+          <h2 id="videos">Videos</h2>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"active"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-12-03T23:23:50.000Z"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"createdBy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{ROOT}}/apps/swt_addressBook/records/{{person-id}}"</span><span class="p">,</span><span class="w">
+            </span><span class="err">}</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"modified"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-12-03T23:23:50.000Z"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"modifiedBy"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"publishing"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"active"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"archive"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Video Test"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"summary"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Summary"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;p&gt;Hello world&lt;/p&gt;"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"image"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"transcript"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;P&gt;Foo&lt;/p&gt;"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"file"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://url.to.file/path.mov"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"video/quicktime"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">12345</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"start"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="nt">"unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"second"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="nt">"end"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="nt">"unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"second"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">35</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nt">"startBumperFile"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"endBumperFile"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"previewTranscript"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"previewFile"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"previewStartBumperFile"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"previewEndBumperFile"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"explicitContent"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"children"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"groups"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}/groups"</span><span class="p">,</span><span class="w">
+        </span><span class="err">}</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"related"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}/related"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}/meta"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}/links"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"$linkTypes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"AppRecord:{{KEY}}_video"</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"$type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"Resource"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"WritableResource"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"RecordLikeObject"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"LinkSource"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"LinkTarget"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"AppRecord"</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>A video file in the LMS.</p>
+
+<h3 id="location">Location</h3>
+
+<p>Canonical URL:</p>
+
+<p><code class="prettyprint">{{ROOT}}/apps/{{KEY}_videos/records/{{record-id}}</code></p>
+
+<h3 id="fields">Fields</h3>
+
+<p>In addition to those specified by <a href="#record-apprecord"><code class="prettyprint">AppRecord</code></a>, a video includes:</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">data.title</code></td>
+<td>String</td>
+<td>The video title</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.summary</code></td>
+<td>Text</td>
+<td>The video summary (plaintext)</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.description</code></td>
+<td>Text</td>
+<td>The video description (HTML)</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.image</code></td>
+<td>File</td>
+<td>The video image (for list modes)</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.file</code></td>
+<td><a href="#media-file">Media File</a></td>
+<td>The video&rsquo;s file and start/end points</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.transcript</code></td>
+<td>Text</td>
+<td>The video transcript (HTML)</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.startBumperFile</code></td>
+<td><a href="#media-file">Media File</a></td>
+<td>The video to play immediately before the primary video</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.endBumperFile</code></td>
+<td><a href="#media-file">Media File</a></td>
+<td>The video to play immediately after the primary video</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.previewFile</code></td>
+<td><a href="#media-file">Media File</a></td>
+<td>The video&rsquo;s file and start/end points, for the preview video</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.previewTranscript</code></td>
+<td>Text</td>
+<td>The video transcript for the preview video (HTML)</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.previewStartBumperFile</code></td>
+<td><a href="#media-file">Media File</a></td>
+<td>The video to play immediately before the preview video</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.previewEndBumperFile</code></td>
+<td><a href="#media-file">Media File</a></td>
+<td>The video to play immediately after the preview video</td>
+</tr>
+</tbody></table>
+
+          <h2 id="audio-files">Audio Files</h2>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"active"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-12-03T23:23:50.000Z"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"createdBy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{ROOT}}/apps/swt_addressBook/records/{{person-id}}"</span><span class="p">,</span><span class="w">
+            </span><span class="err">}</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"modified"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-12-03T23:23:50.000Z"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"modifiedBy"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"publishing"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"active"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"archive"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Audio Test"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"summary"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Summary"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;p&gt;Hello world&lt;/p&gt;"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"image"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"transcript"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;P&gt;Foo&lt;/p&gt;"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"file"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://url.to.file/path.mp3"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"audio/mp3"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">12345</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"start"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="nt">"unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"second"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="nt">"end"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="nt">"unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"second"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">35</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nt">"startBumperFile"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"endBumperFile"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"previewTranscript"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"previewFile"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"previewStartBumperFile"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"previewEndBumperFile"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"explicitContent"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"children"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"groups"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}/groups"</span><span class="p">,</span><span class="w">
+        </span><span class="err">}</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"related"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}/related"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}/meta"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}/links"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"$linkTypes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"AppRecord:{{KEY}}_audio"</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"$type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"Resource"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"WritableResource"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"RecordLikeObject"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"LinkSource"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"LinkTarget"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"AppRecord"</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>An audio file in the LMS.</p>
+
+<h3 id="location">Location</h3>
+
+<p>Canonical URL:</p>
+
+<p><code class="prettyprint">{{ROOT}}/apps/{{KEY}_audio/records/{{record-id}}</code></p>
+
+<h3 id="fields">Fields</h3>
+
+<p>In addition to those specified by <a href="#record-apprecord"><code class="prettyprint">AppRecord</code></a>, an audio file includes:</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">data.title</code></td>
+<td>String</td>
+<td>The audio file title</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.summary</code></td>
+<td>Text</td>
+<td>The audio file summary (plaintext)</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.description</code></td>
+<td>Text</td>
+<td>The audio file description (HTML)</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.image</code></td>
+<td>File</td>
+<td>The audio file image (for list modes)</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.file</code></td>
+<td><a href="#media-file">Media File</a></td>
+<td>The audio file and start/end points</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.transcript</code></td>
+<td>Text</td>
+<td>The audio file transcript (HTML)</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.startBumperFile</code></td>
+<td><a href="#media-file">Media File</a></td>
+<td>The audio file to play immediately before the primary audio file</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.endBumperFile</code></td>
+<td><a href="#media-file">Media File</a></td>
+<td>The audio file to play immediately after the primary audio file</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.previewFile</code></td>
+<td><a href="#media-file">Media File</a></td>
+<td>The audio file and start/end points, for the preview audio file</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.previewTranscript</code></td>
+<td>Text</td>
+<td>The audio file transcript for the preview audio file (HTML)</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.previewStartBumperFile</code></td>
+<td><a href="#media-file">Media File</a></td>
+<td>The audio file to play immediately before the preview audio file</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.previewEndBumperFile</code></td>
+<td><a href="#media-file">Media File</a></td>
+<td>The audio file to play immediately after the preview audio file</td>
+</tr>
+</tbody></table>
+
+          <h2 id="documents">Documents</h2>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"active"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-12-03T23:23:50.000Z"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"createdBy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{ROOT}}/apps/swt_addressBook/records/{{person-id}}"</span><span class="p">,</span><span class="w">
+            </span><span class="err">}</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"modified"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-12-03T23:23:50.000Z"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"modifiedBy"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"publishing"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"active"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"archive"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Document Test"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"summary"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Summary"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;p&gt;Hello world&lt;/p&gt;"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"image"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"file"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://url.to.file/path.pdf"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"application/pdf"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">12345</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nt">"body"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"previewFile"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"previewBody"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"children"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"groups"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}/groups"</span><span class="p">,</span><span class="w">
+        </span><span class="err">}</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"related"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}/related"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}/meta"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}/links"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"$linkTypes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"AppRecord:{{KEY}}_documents"</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"$type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"Resource"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"WritableResource"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"RecordLikeObject"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"LinkSource"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"LinkTarget"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"AppRecord"</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>An document in the LMS.</p>
+
+<h3 id="location">Location</h3>
+
+<p>Canonical URL:</p>
+
+<p><code class="prettyprint">{{ROOT}}/apps/{{KEY}_documents/records/{{record-id}}</code></p>
+
+<h3 id="fields">Fields</h3>
+
+<p>In addition to those specified by <a href="#record-apprecord"><code class="prettyprint">AppRecord</code></a>, a document includes:</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">data.title</code></td>
+<td>String</td>
+<td>The document title</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.summary</code></td>
+<td>Text</td>
+<td>The document summary (plaintext)</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.description</code></td>
+<td>Text</td>
+<td>The document description (HTML)</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.image</code></td>
+<td>File</td>
+<td>The document image (for list modes)</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.file</code></td>
+<td>File</td>
+<td>A downloadable representation of the document</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.body</code></td>
+<td>Text</td>
+<td>The document body, as HTML</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.previewFile</code></td>
+<td>File</td>
+<td>A downloadable representation of the document preview</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.previewBody</code></td>
+<td>Text</td>
+<td>The document preview, as HTML</td>
 </tr>
 </tbody></table>
 
