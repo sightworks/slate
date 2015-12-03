@@ -1334,7 +1334,7 @@ returned. This is because the group identified here is not really a Group object
 <li><code class="prettyprint">remove</code>: Allows the <code class="prettyprint">DELETE</code> method to be invoked at <code class="prettyprint">{{RECORD}}/authTypes/{{authTypeId}}</code>.</li>
 </ul>
 
-<p>In all cases above, <code class="prettyprint">{{RECORD}} is a [</code>PeopleRecord<code class="prettyprint">](#person-peoplerecord) object in an app that has the</code>role`` endpoint exposed.</p>
+<p>In all cases above, <code class="prettyprint">{{RECORD}}</code> is a <a href="#person-peoplerecord"><code class="prettyprint">PeopleRecord</code></a> object in an app that has the <code class="prettyprint">role</code> endpoint exposed.</p>
 
 <p>The fields under <code class="prettyprint">data.fields</code> are the readable contents of the authentication info. If the <code class="prettyprint">type</code> property of one of the fields is <code class="prettyprint">email</code>, then the content passed in needs to be a well-formed email address, otherwise it can be any string. No property can be specified as <code class="prettyprint">null</code>.</p>
 
@@ -1692,10 +1692,28 @@ returned. This is because the group identified here is not really a Group object
 <tr>
 <td>filter</td>
 <td>String</td>
-<td><code class="prettyprint">null</code></td>
-<td>A filter to be applied to the collection&rsquo;s result. (FIXME: Document this).</td>
+<td><code class="prettyprint">true</code></td>
+<td>A <a href="#expressions">filter expression</a> to be applied to the collection&rsquo;s result.</td>
 </tr>
 </tbody></table>
+
+<p>The filter expression is an expression that, when invoked against a resource, returns a value that can be coerced to a boolean (<code class="prettyprint">true</code> or <code class="prettyprint">false</code>); only objects
+in the collection for which the expression returns something that becomes <code class="prettyprint">true</code> are included in the output.</p>
+
+<p>Filter examples:</p>
+
+<ul>
+<li><code class="prettyprint">$.data.meta.active</code><br>
+In an <code class="prettyprint">AppGroupList</code> or <code class="prettyprint">AppRecordList</code>, retrieve only the objects which are active.</li>
+<li><code class="prettyprint">$.children.instructor.is(Resource(&quot;https://example.digitalxe.com/api/1/apps/swt_addressBook/records/12345&quot;))</code><br>
+In an <code class="prettyprint">AppRecordList</code> from the <a href="#course-instructor">Course Instructor</a> app, retrieve only those records whose
+person object is the specified one.</li>
+<li><code class="prettyprint">Resource($.children.related).children.courses.has(Resource(&quot;https://example.digitalxe.com/api/1/apps/lms_courses/records/12345&quot;)) &amp;&amp; $.data.meta.created.date() &gt; &quot;2015-11-01&quot;.date()</code><br>
+Find all objects that have a related course with ID <code class="prettyprint">https://example.digitalxe.com/api/1/apps/lms_courses/records/12345</code> and were created after November 1, 2015.</li>
+<li><code class="prettyprint">($.children.member.is(Resource(&quot;https://example.digitalxe.com/api/1/apps/swt_addressBook/records/12345&quot;)) || $.children.member.is(Resource(&quot;https://example.digitalxe.com/api/1/apps/swt_addressBook/records/12346&quot;))) &amp;&amp; $.data.meta.created.date() &gt; &quot;2015-11-01&quot;.date()</code><br>
+Find all objects that have a <code class="prettyprint">member</code> resource that is either <code class="prettyprint">https://example.digitalxe.com/api/1/apps/swt_addressBook/records/12345</code> or
+<code class="prettyprint">https://example.digitalxe.com/api/1/apps/swt_addressBook/records/12345</code>, and that were created after November 1, 2015.</li>
+</ul>
 
 <h3 id="collection-types">Collection Types</h3>
 
@@ -3824,13 +3842,67 @@ rather just performs each request.</p>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
     </span><span class="nt">"requests"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
         </span><span class="p">{</span><span class="w">
-            </span><span class="nt">"method"</span><span class="p">:</span><span class="w"> </span><span class="s2">"HTTP-Method"</span><span class="p">,</span><span class="w">
-            </span><span class="nt">"resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Resource-URL"</span><span class="p">,</span><span class="w">
-            </span><span class="nt">"query"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-                </span><span class="nt">"Query"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Parameter"</span><span class="w">
+            </span><span class="nt">"method"</span><span class="p">:</span><span class="w"> </span><span class="s2">"POST"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://wvc.digitalxe.com/api/1/apps/lms_products/records"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"object"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="nt">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                        </span><span class="nt">"active"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"publishing"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                            </span><span class="nt">"active"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"archive"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+                        </span><span class="p">}</span><span class="w">
+                    </span><span class="p">},</span><span class="w">
+                    </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                        </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Product"</span><span class="w">
+                    </span><span class="p">}</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"method"</span><span class="p">:</span><span class="w"> </span><span class="s2">"POST"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"resourceAt"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"index"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"expression"</span><span class="p">:</span><span class="w"> </span><span class="s2">"$.result.resources[$.result.created].children.productsItems"</span><span class="w">
             </span><span class="p">},</span><span class="w">
             </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-                </span><span class="nt">"POST"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Data goes here"</span><span class="w">
+                </span><span class="nt">"object"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="nt">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                        </span><span class="nt">"active"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"publishing"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                            </span><span class="nt">"active"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"archive"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+                        </span><span class="p">}</span><span class="w">
+                    </span><span class="p">},</span><span class="w">
+                    </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                        </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CourseRecord"</span><span class="w">
+                    </span><span class="p">}</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"method"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PUT"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"resourceAt"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"index"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"expression"</span><span class="p">:</span><span class="w"> </span><span class="s2">"$.result.resources[$.result.created].children.links"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"course"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="nt">"target"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                        </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://wvc.digitalxe.com/api/1/apps/lms_courses/records/1456e26cc564eeff0700a2d9e5d0e2d5"</span><span class="w">
+                    </span><span class="p">}</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="nt">"courseGroup"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="nt">"target"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="nt">"parent"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="nt">"target"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                        </span><span class="nt">"$Expression"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                            </span><span class="nt">"index"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"expression"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Resource($.result.created)"</span><span class="w">
+                        </span><span class="p">}</span><span class="w">
+                    </span><span class="p">}</span><span class="w">
+                </span><span class="p">}</span><span class="w">
             </span><span class="p">}</span><span class="w">
         </span><span class="p">}</span><span class="w">
     </span><span class="p">]</span><span class="w">
@@ -3860,6 +3932,11 @@ rather just performs each request.</p>
 <td>The full URI to the resource that the request is for. This should be relative to the API base URL (in this documentation, <code class="prettyprint">https://example.digitalxe.com/api/1</code>.)</td>
 </tr>
 <tr>
+<td><code class="prettyprint">requests[N].resourceAt</code></td>
+<td>Expression Descriptor</td>
+<td>An expression to be evaluated to retrieve the resource URL</td>
+</tr>
+<tr>
 <td><code class="prettyprint">requests[N].query</code></td>
 <td>String Map</td>
 <td>The query parameters to append.</td>
@@ -3871,12 +3948,202 @@ rather just performs each request.</p>
 </tr>
 </tbody></table>
 
+<p>An expression descriptor:</p>
+
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">expression</code></td>
+<td>String</td>
+<td>An <a href="#expressions">expression</a> that selects the value to be used.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">index</code></td>
+<td>Number</td>
+<td>The position in the result set to use as the &rsquo;$&rsquo; object for evaluating the expression</td>
+</tr>
+</tbody></table>
+
+<p>Only one of <code class="prettyprint">resource</code> and <code class="prettyprint">resourceAt</code> can be specified for each request. If <code class="prettyprint">resourceAt</code> is specified, the expression provided
+in the <code class="prettyprint">resourceAt.expression</code> property needs to result in one of a String (being a resource URL), a Resource, or a Resource Pointer being
+returned.</p>
+
+<p>The <code class="prettyprint">data</code> property can also have, within it&rsquo;s content, expressions to be evaluated. These are specified using an object with a single
+property <code class="prettyprint">$Expression</code> containing an expression descriptor.</p>
+
 <h3 id="response-body">Response Body</h3>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
     </span><span class="nt">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
         </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"responseCode"</span><span class="p">:</span><span class="w"> </span><span class="mi">201</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"headers"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"Location"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://wvc.digitalxe.com/api/1/apps/lms_products/records/95c2f5ce60653ce9b72086112f5835a6"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nt">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://wvc.digitalxe.com/api/1/apps/lms_products/records/95c2f5ce60653ce9b72086112f5835a6"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"collection"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://wvc.digitalxe.com/api/1/apps/lms_products/records"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"resources"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="nt">"https://wvc.digitalxe.com/api/1/apps/lms_products/records/95c2f5ce60653ce9b72086112f5835a6"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://wvc.digitalxe.com/api/1/apps/lms_products/records/95c2f5ce60653ce9b72086112f5835a6"</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                            </span><span class="nt">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                </span><span class="nt">"active"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+                                </span><span class="nt">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-12-02T23:03:18.000Z"</span><span class="p">,</span><span class="w">
+                                </span><span class="nt">"createdBy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                    </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://wvc.digitalxe.com/api/1/apps/swt_addressBook/records/57d1531fda6e4213b57482096efad00c"</span><span class="w">
+                                </span><span class="p">},</span><span class="w">
+                                </span><span class="nt">"modified"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-12-02T23:03:19.000Z"</span><span class="p">,</span><span class="w">
+                                </span><span class="nt">"modifiedBy"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                                </span><span class="nt">"publishing"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                    </span><span class="nt">"active"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                                    </span><span class="nt">"archive"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+                                </span><span class="p">}</span><span class="w">
+                            </span><span class="p">},</span><span class="w">
+                            </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Product"</span><span class="w">
+                            </span><span class="p">}</span><span class="w">
+                        </span><span class="p">},</span><span class="w">
+                        </span><span class="nt">"children"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                            </span><span class="nt">"groups"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://wvc.digitalxe.com/api/1/apps/lms_products/records/95c2f5ce60653ce9b72086112f5835a6/groups"</span><span class="w">
+                            </span><span class="p">},</span><span class="w">
+                            </span><span class="nt">"related"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://wvc.digitalxe.com/api/1/apps/lms_products/records/95c2f5ce60653ce9b72086112f5835a6/related"</span><span class="w">
+                            </span><span class="p">},</span><span class="w">
+                            </span><span class="nt">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://wvc.digitalxe.com/api/1/apps/lms_products/records/95c2f5ce60653ce9b72086112f5835a6/meta"</span><span class="w">
+                            </span><span class="p">},</span><span class="w">
+                            </span><span class="nt">"productsItems"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://wvc.digitalxe.com/api/1/apps/lms_products/records/95c2f5ce60653ce9b72086112f5835a6/productsItems"</span><span class="w">
+                            </span><span class="p">},</span><span class="w">
+                            </span><span class="nt">"links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://wvc.digitalxe.com/api/1/apps/lms_products/records/95c2f5ce60653ce9b72086112f5835a6/links"</span><span class="w">
+                            </span><span class="p">}</span><span class="w">
+                        </span><span class="p">},</span><span class="w">
+                        </span><span class="nt">"$linkTypes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                            </span><span class="s2">"AppRecord:lms_products"</span><span class="w">
+                        </span><span class="p">]</span><span class="w">
+                    </span><span class="p">},</span><span class="w">
+                    </span><span class="nt">"https://wvc.digitalxe.com/api/1/apps/lms_products/records"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://wvc.digitalxe.com/api/1/apps/lms_products/records"</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"collection"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                            </span><span class="nt">"length"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                                </span><span class="p">{</span><span class="w">
+                                    </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://wvc.digitalxe.com/api/1/apps/lms_products/records/95c2f5ce60653ce9b72086112f5835a6"</span><span class="w">
+                                </span><span class="p">}</span><span class="w">
+                            </span><span class="p">]</span><span class="w">
+                        </span><span class="p">}</span><span class="w">
+                    </span><span class="p">}</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"responseCode"</span><span class="p">:</span><span class="w"> </span><span class="mi">201</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"headers"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"Location"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://wvc.digitalxe.com/api/1/apps/lms_productsItems/records/6acdbc64517d5182b9515bbce55f880a"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nt">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://wvc.digitalxe.com/api/1/apps/lms_productsItems/records/6acdbc64517d5182b9515bbce55f880a"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"collection"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://wvc.digitalxe.com/api/1/apps/lms_products/records/95c2f5ce60653ce9b72086112f5835a6/productsItems"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"resources"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="nt">"https://wvc.digitalxe.com/api/1/apps/lms_productsItems/records/6acdbc64517d5182b9515bbce55f880a"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://wvc.digitalxe.com/api/1/apps/lms_productsItems/records/6acdbc64517d5182b9515bbce55f880a"</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                            </span><span class="nt">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                </span><span class="nt">"active"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+                                </span><span class="nt">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-12-02T23:03:19.000Z"</span><span class="p">,</span><span class="w">
+                                </span><span class="nt">"createdBy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                    </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://wvc.digitalxe.com/api/1/apps/swt_addressBook/records/57d1531fda6e4213b57482096efad00c"</span><span class="w">
+                                </span><span class="p">},</span><span class="w">
+                                </span><span class="nt">"modified"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-12-02T23:03:19.000Z"</span><span class="p">,</span><span class="w">
+                                </span><span class="nt">"modifiedBy"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                                </span><span class="nt">"publishing"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                    </span><span class="nt">"active"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                                    </span><span class="nt">"archive"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+                                </span><span class="p">}</span><span class="w">
+                            </span><span class="p">},</span><span class="w">
+                            </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CourseRecord"</span><span class="w">
+                            </span><span class="p">}</span><span class="w">
+                        </span><span class="p">},</span><span class="w">
+                        </span><span class="nt">"children"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                            </span><span class="nt">"groups"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://wvc.digitalxe.com/api/1/apps/lms_productsItems/records/6acdbc64517d5182b9515bbce55f880a/groups"</span><span class="w">
+                            </span><span class="p">},</span><span class="w">
+                            </span><span class="nt">"related"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://wvc.digitalxe.com/api/1/apps/lms_productsItems/records/6acdbc64517d5182b9515bbce55f880a/related"</span><span class="w">
+                            </span><span class="p">},</span><span class="w">
+                            </span><span class="nt">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://wvc.digitalxe.com/api/1/apps/lms_productsItems/records/6acdbc64517d5182b9515bbce55f880a/meta"</span><span class="w">
+                            </span><span class="p">},</span><span class="w">
+                            </span><span class="nt">"parent"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://wvc.digitalxe.com/api/1/apps/lms_products/records/95c2f5ce60653ce9b72086112f5835a6"</span><span class="w">
+                            </span><span class="p">},</span><span class="w">
+                            </span><span class="nt">"links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://wvc.digitalxe.com/api/1/apps/lms_productsItems/records/6acdbc64517d5182b9515bbce55f880a/links"</span><span class="w">
+                            </span><span class="p">}</span><span class="w">
+                        </span><span class="p">},</span><span class="w">
+                        </span><span class="nt">"$linkTypes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                            </span><span class="s2">"AppRecord:lms_productsItems"</span><span class="w">
+                        </span><span class="p">]</span><span class="w">
+                    </span><span class="p">},</span><span class="w">
+                    </span><span class="nt">"https://wvc.digitalxe.com/api/1/apps/lms_products/records/95c2f5ce60653ce9b72086112f5835a6/productsItems"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://wvc.digitalxe.com/api/1/apps/lms_products/records/95c2f5ce60653ce9b72086112f5835a6/productsItems"</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"collection"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                            </span><span class="nt">"length"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+                            </span><span class="nt">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                                </span><span class="p">{</span><span class="w">
+                                    </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://wvc.digitalxe.com/api/1/apps/lms_productsItems/records/6acdbc64517d5182b9515bbce55f880a"</span><span class="w">
+                                </span><span class="p">}</span><span class="w">
+                            </span><span class="p">],</span><span class="w">
+                            </span><span class="nt">"types"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                                </span><span class="s2">"AppRecord:lms_productsItems"</span><span class="w">
+                            </span><span class="p">]</span><span class="w">
+                        </span><span class="p">}</span><span class="w">
+                    </span><span class="p">}</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
             </span><span class="nt">"responseCode"</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w">
-            </span><span class="nt">"result"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Response-Body"</span><span class="w">
+            </span><span class="nt">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://wvc.digitalxe.com/api/1/apps/lms_productsItems/records/6acdbc64517d5182b9515bbce55f880a/links"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"resources"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="nt">"https://wvc.digitalxe.com/api/1/apps/lms_productsItems/records/6acdbc64517d5182b9515bbce55f880a/links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://wvc.digitalxe.com/api/1/apps/lms_productsItems/records/6acdbc64517d5182b9515bbce55f880a/links"</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                            </span><span class="nt">"courseGroup"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AppGroup:lms_courses"</span><span class="p">,</span><span class="w">
+                                </span><span class="nt">"target"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+                            </span><span class="p">},</span><span class="w">
+                            </span><span class="nt">"course"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AppRecord:lms_courses"</span><span class="p">,</span><span class="w">
+                                </span><span class="nt">"target"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                    </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://wvc.digitalxe.com/api/1/apps/lms_courses/records/1456e26cc564eeff0700a2d9e5d0e2d5"</span><span class="w">
+                                </span><span class="p">}</span><span class="w">
+                            </span><span class="p">},</span><span class="w">
+                            </span><span class="nt">"parent"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AppRecord:lms_products"</span><span class="p">,</span><span class="w">
+                                </span><span class="nt">"target"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                                    </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://wvc.digitalxe.com/api/1/apps/lms_products/records/95c2f5ce60653ce9b72086112f5835a6"</span><span class="w">
+                                </span><span class="p">}</span><span class="w">
+                            </span><span class="p">}</span><span class="w">
+                        </span><span class="p">},</span><span class="w">
+                        </span><span class="nt">"children"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
+                        </span><span class="nt">"$type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                            </span><span class="s2">"Resource"</span><span class="p">,</span><span class="w">
+                            </span><span class="s2">"WritableResource"</span><span class="p">,</span><span class="w">
+                            </span><span class="s2">"LinkResource"</span><span class="w">
+                        </span><span class="p">]</span><span class="w">
+                    </span><span class="p">}</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">}</span><span class="w">
         </span><span class="p">}</span><span class="w">
     </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
@@ -3906,7 +4173,7 @@ rather just performs each request.</p>
 <tr>
 <td><code class="prettyprint">result[N].headers</code></td>
 <td>String Map</td>
-<td>A map of HTTP headers that would have been returned, if any.</td>
+<td>A map of HTTP headers that would have been returned, if any. The property does not exist if no headers would have been returned.</td>
 </tr>
 <tr>
 <td><code class="prettyprint">result[N].result</code></td>
@@ -3915,11 +4182,13 @@ rather just performs each request.</p>
 </tr>
 </tbody></table>
 
-          <h1 id="filter-expressions">Filter Expressions</h1>
+          <h1 id="expressions">Expressions</h1>
 
-<p>Any collection supports being filtered: returning a subset of the results based on some input parameters.</p>
+<p>Expressions are used in multiple places, the primary being filtering a <a href="#collections-collection">Collection</a> object and
+<a href="#post-multiple-request-endpoint">making multiple requests at the same time</a> when those requests are dependent on one
+another.</p>
 
-<p>Our filtering language is based on a heavily restricted JavaScript syntax. </p>
+<p>Our expression syntax is a heavily restricted JavaScript syntax.</p>
 
 <h2 id="syntax">Syntax</h2>
 
@@ -3960,7 +4229,7 @@ in an error and the filter expression returning false (excluding any objects tha
 
 <p>will not trigger an error since the left side of the expression returns successfully, the right side is never evaluated.</p>
 
-<p>(This is an implementation detail: we use (Esprima)[http://esprima.org] for parsing the expressions, which is a fully-featured JavaScript parser; the returned
+<p>(This is an implementation detail: we use <a href="http://esprima.org">Esprima</a> for parsing the expressions, which is a fully-featured JavaScript parser; the returned
 syntax tree is evaluated to handle each expression.)</p>
 
 <p>Allowed constructs from Esprima:</p>
@@ -4049,7 +4318,7 @@ be converted to a string.</p>
 
 <p>Returns the portion of the string between <code class="prettyprint">start</code> and <code class="prettyprint">end</code>.</p>
 
-<p>This functions identically to the (JavaScript <code class="prettyprint">substring</code>)[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/substring] method.</p>
+<p>This functions identically to the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/substring">JavaScript <code class="prettyprint">substring</code></a> method.</p>
 
 <h3 id="boolean-object-is-value"><code class="prettyprint">Boolean Object.is(Value)</code></h3>
 <pre class="highlight javascript"><code><span class="nx">$</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">meta</span><span class="p">.</span><span class="nx">createdBy</span><span class="p">.</span><span class="nx">is</span><span class="p">(</span><span class="nx">Resource</span><span class="p">(</span><span class="s2">"https://example.digitalxe.com/api/1/apps/swt_addressBook/records/12345"</span><span class="p">))</span>
@@ -4059,16 +4328,16 @@ be converted to a string.</p>
 <p>Checks to see if the specified objects are equal. This differs from a normal equality check in that, if the objects are resources, it checks to see if the resources
 are the same instead of just the objects.</p>
 
-<p>In the case above, the resources returned by the call to (<code class="prettyprint">Resource</code>)[#object-resource-string-resourcepointer] both point at the same underlying object (<code class="prettyprint">swt_addressBook</code>
+<p>In the case above, the resources returned by the call to <a href="#object-resource-string-resourcepointer"><code class="prettyprint">Resource</code></a> both point at the same underlying object (<code class="prettyprint">swt_addressBook</code>
 and <code class="prettyprint">lms_accounts</code> are both different views of people that share their underlying resources), so the equality check here returns true.</p>
 
 <h3 id="boolean-object-is-arrowfunction"><code class="prettyprint">Boolean Object.is(ArrowFunction)</code></h3>
 <pre class="highlight javascript"><code><span class="nx">$</span><span class="p">.</span><span class="nx">children</span><span class="p">.</span><span class="nx">instructor</span><span class="p">.</span><span class="nx">is</span><span class="p">(</span><span class="nx">$</span> <span class="o">=&gt;</span> <span class="nx">$</span><span class="p">.</span><span class="nx">data</span><span class="p">[</span><span class="s2">"First Name"</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"Demo"</span><span class="p">)</span>
 </code></pre>
 
-<p>Checks to see if the object matches the provided (Arrow Function)[#arrow-function].</p>
+<p>Checks to see if the object matches the provided <a href="#arrow-function">Arrow Function</a>.</p>
 
-<p>If the objects in the array are (Resource Pointers)[#resource-pointer], then the argument to the arrow function will be the resource pointed at, unless there was
+<p>If the objects in the array are <a href="#resource-pointer">Resource Pointers</a>, then the argument to the arrow function will be the resource pointed at, unless there was
 an error resolving the resource, in which case the original resource pointer will be passed.</p>
 
 <h3 id="boolean-array-has-value-arrowfunction"><code class="prettyprint">Boolean Array.has(Value | ArrowFunction)</code></h3>
@@ -4077,7 +4346,7 @@ an error resolving the resource, in which case the original resource pointer wil
 <span class="nx">$</span><span class="p">.</span><span class="nx">children</span><span class="p">.</span><span class="nx">courses</span><span class="p">.</span><span class="nx">has</span><span class="p">(</span><span class="nx">$</span> <span class="o">=&gt;</span> <span class="nx">$</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">active</span> <span class="o">==</span> <span class="kc">true</span><span class="p">)</span>
 </code></pre>
 
-<p>Loops over the array and checks to see if the provided argument matches in the same method as (<code class="prettyprint">Object.is(Value)</code>)[#boolean-object-is-value] or (<code class="prettyprint">Object.is(ArrowFunction)</code>)[#boolean-object-is-arrowfunction] would check.</p>
+<p>Loops over the array and checks to see if the provided argument matches in the same method as <a href="#boolean-object-is-value"><code class="prettyprint">Object.is(Value)</code></a> or <a href="#boolean-object-is-arrowfunction"><code class="prettyprint">Object.is(ArrowFunction)</code></a> would check.</p>
 
           <h1 id="oauth-api-errors">OAuth API Errors</h1>
 
