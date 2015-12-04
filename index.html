@@ -781,7 +781,65 @@ Content-Type: application/json
 </tr>
 </tbody></table>
 
-<p><span class='warning'>These objects are not currently documented.</span></p>
+<h2 id="app-group-meta-data-appgroupmetadata">App Group Meta Data (<code class="prettyprint">AppGroupMetaData</code>)</h2>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{{APP}}/meta/group"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"$schema"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://json-schema.org/draft-04/schema#"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"$type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"Resource"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"MetaDataObject
+        "</span><span class="err">AppGroupMetaData"</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>This describes the structure of an <a href="#group-appgroup"><code class="prettyprint">AppGroup</code></a> object.</p>
+
+<p>The data (in the <code class="prettyprint">data</code> property) is an object in <a href="http://tools.ietf.org/html/draft-zyp-json-schema-04">JSON Schema</a> format.</p>
+
+<h3 id="location">Location</h3>
+
+<p><code class="prettyprint">AppGroupMetaData</code> objects are available as children of an <a href="#app-meta-data-appmetadata"><code class="prettyprint">AppMetaData</code></a> object; they are also available
+as children of an <a href="#group-appgroup"><code class="prettyprint">AppGroup</code></a> object.</p>
+
+<p>Canonical URL: <code class="prettyprint">{{ROOT}}/apps/{{app-id}}/meta/group</code></p>
+
+<ul>
+<li><code class="prettyprint">{{ROOT}}</code> is the API root</li>
+<li><code class="prettyprint">{{app-id}}</code> is the ID of the app.</li>
+</ul>
+
+<h2 id="app-record-meta-data-apprecordmetadata">App Record Meta Data (<code class="prettyprint">AppRecordMetaData</code>)</h2>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{{APP}}/meta/record"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"$schema"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://json-schema.org/draft-04/schema#"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"$type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"Resource"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"MetaDataObject
+        "</span><span class="err">AppRecordMetaData"</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>This describes the structure of an <a href="#group-appgroup"><code class="prettyprint">ApPRecord</code></a> object.</p>
+
+<p>The data (in the <code class="prettyprint">data</code> property) is an object in <a href="http://tools.ietf.org/html/draft-zyp-json-schema-04">JSON Schema</a> format.</p>
+
+<h3 id="location">Location</h3>
+
+<p><code class="prettyprint">AppRecordMetaData</code> objects are available as children of an <a href="#app-meta-data-appmetadata"><code class="prettyprint">AppMetaData</code></a> object; they are also available
+as children of an <a href="#group-apprecord"><code class="prettyprint">AppRecord</code></a> object.</p>
+
+<p>Canonical URL: <code class="prettyprint">{{ROOT}}/apps/{{app-id}}/meta/record</code></p>
+
+<ul>
+<li><code class="prettyprint">{{ROOT}}</code> is the API root</li>
+<li><code class="prettyprint">{{app-id}}</code> is the ID of the app.</li>
+</ul>
 
           <h2 id="groups-and-records-recordlikeobject">Groups and Records (<code class="prettyprint">RecordLikeObject</code>)</h2>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
