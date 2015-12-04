@@ -83,7 +83,7 @@ Canonical URL: ``{{ROOT}}/apps/{{app-id}}/meta/group``
 }
 ```
 
-This describes the structure of an [``ApPRecord``](#group-appgroup) object.
+This describes the structure of an [``AppRecord``](#group-appgroup) object.
 
 The data (in the ``data`` property) is an object in [JSON Schema](http://tools.ietf.org/html/draft-zyp-json-schema-04) format.
 
