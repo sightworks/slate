@@ -83,14 +83,14 @@ Canonical URL: ``{{ROOT}}/apps/{{app-id}}/meta/group``
 }
 ```
 
-This describes the structure of an [``AppRecord``](#group-appgroup) object.
+This describes the structure of an [``AppRecord``](#record-apprecord) object.
 
 The data (in the ``data`` property) is an object in [JSON Schema](http://tools.ietf.org/html/draft-zyp-json-schema-04) format.
 
 ### Location
 
 ``AppRecordMetaData`` objects are available as children of an [``AppMetaData``](#app-meta-data-appmetadata) object; they are also available
-as children of an [``AppRecord``](#group-apprecord) object.
+as children of an [``AppRecord``](#record-apprecord) object.
 
 Canonical URL: ``{{ROOT}}/apps/{{app-id}}/meta/record``
 
