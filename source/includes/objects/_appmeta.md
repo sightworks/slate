@@ -47,7 +47,7 @@ record | ``{{APP}}/meta/record`` | Description of an ``AppRecord`` object within
 	},
 	"$type": [
 		"Resource",
-		"MetaDataObject
+		"MetaDataObject",
 		"AppGroupMetaData"
 	]
 }
@@ -77,7 +77,7 @@ Canonical URL: ``{{ROOT}}/apps/{{app-id}}/meta/group``
 	},
 	"$type": [
 		"Resource",
-		"MetaDataObject
+		"MetaDataObject",
 		"AppRecordMetaData"
 	]
 }
