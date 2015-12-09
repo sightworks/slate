@@ -1008,6 +1008,9 @@ value.</p>
         </span><span class="p">},</span><span class="w">
         </span><span class="nt">"records"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
             </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{GROUP}}/records"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{GROUP}}/meta"</span><span class="w">
         </span><span class="p">}</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="nt">"$type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"Resource"</span><span class="p">,</span><span class="w"> </span><span class="s2">"WritableResource"</span><span class="p">,</span><span class="w"> </span><span class="s2">"RecordLikeObject"</span><span class="p">,</span><span class="w"> </span><span class="s2">"AppGroup"</span><span class="w"> </span><span class="p">]</span><span class="w">
@@ -1115,6 +1118,12 @@ value.</p>
 <td>Records contained within this group</td>
 <td><a href="#collection-types"><code class="prettyprint">AppRecordList</code></a></td>
 </tr>
+<tr>
+<td>meta</td>
+<td><code class="prettyprint">{{GROUP}}/meta</code></td>
+<td>Metadata about the group&rsquo;s structure</td>
+<td><a href="#app-group-meta-data-appgroupmetadata"><code class="prettyprint">AppGroupMetaData</code></a></td>
+</tr>
 </tbody></table>
 
 <p>The group identified by <code class="prettyprint">{{APP}}/root</code> does not have a child node called <code class="prettyprint">parent</code> as it is the top of the tree.</p>
@@ -1159,6 +1168,9 @@ returned. This is because the group identified here is not really a Group object
         </span><span class="p">},</span><span class="w">
         </span><span class="nt">"related"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
             </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}/related"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}/meta"</span><span class="w">
         </span><span class="p">}</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="nt">"$type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"Resource"</span><span class="p">,</span><span class="w"> </span><span class="s2">"WritableResource"</span><span class="p">,</span><span class="w"> </span><span class="s2">"RecordLikeObject"</span><span class="p">,</span><span class="w"> </span><span class="s2">"AppRecord"</span><span class="w"> </span><span class="p">]</span><span class="w">
@@ -1213,7 +1225,19 @@ returned. This is because the group identified here is not really a Group object
 <td>Apps which have related records for this record</td>
 <td><a href="#collection-types"><code class="prettyprint">AppRelatedList</code></a></td>
 </tr>
+<tr>
+<td>meta</td>
+<td><code class="prettyprint">{{RECORD}}/meta</code></td>
+<td>Metadata about the record&rsquo;s structure</td>
+<td><a href="#app-record-meta-data-apprecordmetadata"><code class="prettyprint">AppRecordMetaData</code></a></td>
+</tr>
 </tbody></table>
+
+<p>The metadata provided as a child of a record will not necessarily be equivalent to the metadata provided for a record at <code class="prettyprint">{{ROOT}}/apps/{{app-id}}/meta/record</code> - 
+if the record structure changes based on a field that can only be set at creation, the metadata provided here will be for the final form of the object as it exists here. 
+The metadata provided at <code class="prettyprint">{{ROOT}}/apps/{{app-id}}/meta/record</code> will still confirm that the record structure matches what is defined, but attempting to validate it 
+will allow you to change those fields that cannot be changed; in the metadata here, those fields will be provided as an enumeration of length 1 (meaning the only legal 
+value will be the one in the field when it is retrieved).</p>
 
 <p><span class='info'>Apps may also define their own children here, if the record has pointers to other objects in the system.</span></p>
 
@@ -4347,6 +4371,270 @@ the course&rsquo;s &ldquo;courseInstructors&rdquo; child collection.</p>
 <td><code class="prettyprint">data.previewBody</code></td>
 <td>Text</td>
 <td>The document preview, as HTML</td>
+</tr>
+</tbody></table>
+
+          <h2 id="history">History</h2>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"active"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-12-03T23:23:50.000Z"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"createdBy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{ROOT}}/apps/swt_addressBook/records/{{person-id}}"</span><span class="p">,</span><span class="w">
+            </span><span class="err">}</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"modified"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-12-03T23:23:50.000Z"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"modifiedBy"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"publishing"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"active"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"archive"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"timeOfEntry"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-12-03T23:23:50.000Z"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"autocomplete"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"statement"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Began"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"objectType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Course"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"successfulCompletion"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"scoresAvailableForThisObject"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"pointsEarned"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"pointsPossible"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"gradeDescription"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"objectDetail"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"tc_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"tc_timestamp"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"tc_agentType"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"tc_agentId"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"tc_registrationId"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"tc_stateId"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"tc_activityId"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"tc_documentType"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"rewardCount"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"rewardFile"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"eventType"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"eventValue"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"children"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"member"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{ROOT}}/apps/{{KEY}}_accounts/records/{{person-id}}"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"course"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{ROOOT}}/apps/{{KEY}}_courses/records/{{course-id}}"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"groups"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}/groups"</span><span class="p">,</span><span class="w">
+        </span><span class="err">}</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"related"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}/related"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}/meta"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}/links"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"$linkTypes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"AppRecord:{{KEY}}_history"</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"$type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"Resource"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"WritableResource"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"RecordLikeObject"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"LinkSource"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"LinkTarget"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"AppRecord"</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>A history entry in the LMS. These represent the full state of a user over time.</p>
+
+<h3 id="usage-by-the-system">Usage by the System</h3>
+
+<p>History entries are used by the system for storing all state associated with a user.</p>
+
+<p>The current state associated with a user can be determined by looking for all history entries which have their <code class="prettyprint">meta.active</code> property set to true; 
+for the most part, history entries with <code class="prettyprint">meta.active</code> being false are ignored. They are used, however, in cases such as retaking a test - if the
+test activity says that the test can only be taken 5 times, then the code will check for the previous history entries before allowing a retake of the test.</p>
+
+<h4 id="statements">Statements</h4>
+
+<p>Each of these are represented as &ldquo;{{<code class="prettyprint">statement</code>}} {{<code class="prettyprint">objectType</code>}}&rdquo;; the order is in the sequence you would typically encounter them.</p>
+
+<ul>
+<li>&ldquo;Event Other&rdquo;: Some event was recorded for the user.</li>
+<li>&ldquo;Began Course&rdquo;: The user began the specified course</li>
+<li>&ldquo;Began Activity&rdquo;: The user began the specified activity</li>
+<li>&ldquo;Progress Activity&rdquo;: The user made progress on the specified activity.</li>
+<li>&ldquo;TinCan Activity&rdquo;: A Tin Can object was stored in the user&rsquo;s history for this activity.</li>
+<li>&ldquo;Ended Activity&rdquo;: The user completed the specified activity.</li>
+<li>&ldquo;Ended Course&rdquo;: The user completed the specified course.</li>
+<li>&ldquo;Earned Reward&rdquo;: The user earned a reward.</li>
+</ul>
+
+<h4 id="organization">Organization</h4>
+
+<p>Each statement has 2 pointers to already-existing statements:</p>
+
+<ul>
+<li><code class="prettyprint">precedingEntry</code>: If this is the &lsquo;Ended&rsquo; statement from a &#39;Began&rsquo; / &#39;Ended&rsquo; pair, the statement here is the &#39;Began&rsquo; statement associated with this.</li>
+<li><code class="prettyprint">parentEntry</code>: The &ldquo;parent&rdquo; of this statement:
+
+<ul>
+<li>&ldquo;Began Activity&rdquo; and &ldquo;Ended Activity&rdquo; have a &ldquo;Began Course&rdquo; as their parent.</li>
+<li>&ldquo;Progress Activity&rdquo; and &ldquo;TinCan Activity&rdquo; have a &ldquo;Began Activity&rdquo; as their parent.</li>
+<li>&ldquo;Earned Reward&rdquo; can have any other statement as it&rsquo;s parent, depending on the reason the reward was grantd.</li>
+</ul></li>
+</ul>
+
+<h3 id="location">Location</h3>
+
+<p>Canonical URL:</p>
+
+<p><code class="prettyprint">{{ROOT}}/apps/{{KEY}_history/records/{{record-id}}</code></p>
+
+<h3 id="fields">Fields</h3>
+
+<p>In addition to those specified by <a href="#record-apprecord"><code class="prettyprint">AppRecord</code></a>, a history entry includes:</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">data.timeOfEntry</code></td>
+<td>Date</td>
+<td>The time the entry was made. This may be the same as the date of creation (but doesn&rsquo;t have to be).</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.statement</code></td>
+<td>Enumeration</td>
+<td>The statement being made. Currently: Began, Ended, Progress, Earned, Event, TinCan</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.objectType</code></td>
+<td>Enumeration</td>
+<td>The object that is the target of this item. Currently: Course, Activity, Reward, Other</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.autocomplete</code></td>
+<td>Date</td>
+<td>If this is set, and <code class="prettyprint">statement</code> is &ldquo;Began&rdquo;, the time to automatically construct the &ldquo;Ended&rdquo; record to go with this.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.successfulCompletion</code></td>
+<td>Boolean</td>
+<td>If the statement is &#39;Ended&rsquo;, whether this history entry represents a success or failure.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.scoresAvailableForThisObject</code></td>
+<td>Boolean</td>
+<td>If the statement is &#39;Ended&rsquo;, whether this history entry has scoring information available.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.pointsEarned</code></td>
+<td>Number</td>
+<td>If the statement is &#39;Ended&rsquo; and <code class="prettyprint">scoresAvailableForThisObject</code> is true, the number of points earned.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.pointsPossible</code></td>
+<td>Number</td>
+<td>If the statement is &#39;Ended&rsquo; and <code class="prettyprint">scoresAvailableForThisObject</code> is true, the number of points that could have been earned.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.gradeDescription</code></td>
+<td>String</td>
+<td>If the statement is &#39;Ended&rsquo; and <code class="prettyprint">scoresAvailableForThisObject</code> is true, the text from the <a href="#course-grading">Grade</a> <code class="prettyprint">name</code> property that represents the grade earned.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.objectDetail</code></td>
+<td>Object</td>
+<td>Details that depend on the type of statement being made. (FIXME: Document the structure of these.)</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.tc_*</code></td>
+<td>String</td>
+<td>If the statement type is &#39;TinCan&rsquo;, various pieces of data representing the makeup of any object represented in the <a href="https://tincanapi.com/">Tin Can API</a>.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.rewardCount</code></td>
+<td>Number</td>
+<td>If the object type is &ldquo;Reward&rdquo;, and the reward in <code class="prettyprint">children.reward</code> is of a type that grants multiple items (like a Points reward), the count associated.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.rewardFile</code></td>
+<td>File</td>
+<td>If the object type is &ldquo;Reward&rdquo;, and the reward in <code class="prettyprint">children.reward</code> generates a file, the file associated.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.eventType</code></td>
+<td>String</td>
+<td>If the statement is &#39;Event&rsquo;, a named event being recorded.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.eventValue</code></td>
+<td>String</td>
+<td>If the statement is &#39;Event&rsquo;, the associated value for the event.</td>
+</tr>
+</tbody></table>
+
+<h3 id="children">Children</h3>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>URL</th>
+<th>Description</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>parentEntry</td>
+<td><code class="prettyprint">{{ROOT}}/apps/{{KEY}}_history/records/{{record-id}}</code></td>
+<td>The &ldquo;parent&rdquo; history entry for the selected item.</td>
+<td><a href="#record-apprecord"><code class="prettyprint">AppRecord</code></a> of type History</td>
+</tr>
+<tr>
+<td>precedingEntry</td>
+<td><code class="prettyprint">{{ROOT}}/apps/{{KEY}}_history/records/{{record-id}}</code></td>
+<td>The &ldquo;preceding&rdquo; history entry for the selected item.</td>
+<td><a href="#record-apprecord"><code class="prettyprint">AppRecord</code></a> of type History</td>
+</tr>
+<tr>
+<td>member</td>
+<td><code class="prettyprint">{{ROOT}}/apps/{{KEY}}_accounts/records/{{record-id}}</code></td>
+<td>The member that this history entry is for.</td>
+<td><a href="#record-apprecord"><code class="prettyprint">AppRecord</code></a> of type <a href="#accounts">Account</a></td>
+</tr>
+<tr>
+<td>course</td>
+<td><code class="prettyprint">{{ROOT}}/apps/{{KEY}}_courses/records/{{record-id}}</code></td>
+<td>In a statement with an object type of &#39;Course&rsquo; or &#39;Activity&rsquo;, the course that the statement references.</td>
+<td><a href="#record-apprecord"><code class="prettyprint">AppRecord</code></a> of type <a href="#courses">Course</a></td>
+</tr>
+<tr>
+<td>activity</td>
+<td><code class="prettyprint">{{ROOT}}/apps/{{KEY}}_activities/records/{{record-id}}</code></td>
+<td>In a statement with an object type of &#39;Activity&rsquo;, the activity that the statement references.</td>
+<td><a href="#record-apprecord"><code class="prettyprint">AppRecord</code></a> of type <a href="#activities">Activity</a></td>
+</tr>
+<tr>
+<td>reward</td>
+<td><code class="prettyprint">{{ROOT}}/apps/{{KEY}}_rewards/records/{{record-id}}</code></td>
+<td>In a statement with an object type of &#39;Reward&rsquo;, the reward.</td>
+<td><a href="#record-apprecord"><code class="prettyprint">AppRecord</code></a> of type Reward</td>
+</tr>
+<tr>
+<td>rule</td>
+<td><code class="prettyprint">{{ROOT}}/apps/{{KEY}}_rewardEngine/records/{{record-id}}</code></td>
+<td>In a statement with an object of type &#39;Reward&rsquo;, the rule that describes how the reward is granted.</td>
+<td><a href="#record-apprecord"><code class="prettyprint">AppRecord</code></a> of type Rule</td>
 </tr>
 </tbody></table>
 
