@@ -149,5 +149,15 @@ activity | ``{{ROOT}}/apps/{{KEY}}_activities/records/{{record-id}}`` | In a sta
 reward | ``{{ROOT}}/apps/{{KEY}}_rewards/records/{{record-id}}`` | In a statement with an object type of 'Reward', the reward. | [``AppRecord``](#record-apprecord) of type Reward
 rule | ``{{ROOT}}/apps/{{KEY}}_rewardEngine/records/{{record-id}}`` | In a statement with an object of type 'Reward', the rule that describes how the reward is granted. | [``AppRecord``](#record-apprecord) of type Rule
 
+### Examples
 
-
+* Fetch the list of courses that a user has began and completed:<br>
+  ``{{ROOT}}/apps/{{KEY}}_history/records`` with 'depth' of 2 and 'filter':<br>
+  ``$.meta.active && ($.data.statement == "Began" || $.data.statement == "Ended") && $.data.objectType == "Course" && $.children.member.is(Resource("{{ROOT}}/apps/{{KEY}}_accounts/records/{{id}}"))``<br><br>
+  Use ``depth=2`` to ask the system for the course information so it can be referenced as well.
+  
+* Fetch the list of courses that a user has completed:<br>
+  ``{{ROOT}}/apps/{{KEY}}_history/records`` with 'depth' of 2 and 'filter':<br>
+  ``$.meta.active && $.data.statement == "Ended" && $.data.objectType == "Course" && $.children.member.is(Resource("{{ROOT}}/apps/{{KEY}}_accounts/records/{{id}}"))``<br><br>
+  Again, ``depth=2`` will cause the system to go into the history items (at depth 1) and then fetch the courses (at depth 2).<br>
+  The associated "Began Course" records will also be pulled (as they exist in the ``precedingEntry`` child pointer).
