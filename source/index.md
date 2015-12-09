@@ -44,6 +44,7 @@ includes:
   - apps/video
   - apps/audio
   - apps/document
+  - apps/history
   - multi
   - filter
   - errors

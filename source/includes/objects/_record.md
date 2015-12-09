@@ -33,6 +33,9 @@
 		},
 		"related": {
 			"$Resource": "{{RECORD}}/related"
+		},
+		"meta": {
+			"$Resource": "{{RECORD}}/meta"
 		}
 	},
 	"$type": [ "Resource", "WritableResource", "RecordLikeObject", "AppRecord" ]
@@ -69,6 +72,13 @@ Name | URL | Description | Type
 ---- | ------------- | ----------- | ----
 groups | ``{{RECORD}}/groups`` | Groups that this record is in | [``AppGroupList``](#collection-types)
 related | ``{{RECORD}}/related`` | Apps which have related records for this record | [``AppRelatedList``](#collection-types)
+meta | ``{{RECORD}}/meta`` | Metadata about the record's structure | [``AppRecordMetaData``](#app-record-meta-data-apprecordmetadata)
+
+The metadata provided as a child of a record will not necessarily be equivalent to the metadata provided for a record at ``{{ROOT}}/apps/{{app-id}}/meta/record`` - 
+if the record structure changes based on a field that can only be set at creation, the metadata provided here will be for the final form of the object as it exists here. 
+The metadata provided at ``{{ROOT}}/apps/{{app-id}}/meta/record`` will still confirm that the record structure matches what is defined, but attempting to validate it 
+will allow you to change those fields that cannot be changed; in the metadata here, those fields will be provided as an enumeration of length 1 (meaning the only legal 
+value will be the one in the field when it is retrieved).
 
 <span class='info'>Apps may also define their own children here, if the record has pointers to other objects in the system.</span>
 

@@ -47,6 +47,9 @@
 		},
 		"records": {
 			"$Resource": "{{GROUP}}/records"
+		},
+		"meta": {
+			"$Resource": "{{GROUP}}/meta"
 		}
 	},
 	"$type": [ "Resource", "WritableResource", "RecordLikeObject", "AppGroup" ]
@@ -101,6 +104,7 @@ Name | URL | Description | Type
 parent | ``{{GROUP}}`` | The parent group of this group. | [``AppGroup``](#group-appgroup)
 groups | ``{{GROUP}}/groups`` | Groups contained within this group | [``AppGroupList``](#collection-types)
 records | ``{{GROUP}}/records`` | Records contained within this group | [``AppRecordList``](#collection-types)
+meta | ``{{GROUP}}/meta`` | Metadata about the group's structure | [``AppGroupMetaData``](#app-group-meta-data-appgroupmetadata)
 
 The group identified by ``{{APP}}/root`` does not have a child node called ``parent`` as it is the top of the tree.
 
