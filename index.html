@@ -4638,6 +4638,20 @@ test activity says that the test can only be taken 5 times, then the code will c
 </tr>
 </tbody></table>
 
+<h3 id="examples">Examples</h3>
+
+<ul>
+<li><p>Fetch the list of courses that a user has began and completed:<br>
+<code class="prettyprint">{{ROOT}}/apps/{{KEY}}_history/records</code> with &#39;depth&rsquo; of 2 and &#39;filter&rsquo;:<br>
+<code class="prettyprint">$.meta.active &amp;&amp; ($.data.statement == &quot;Began&quot; || $.data.statement == &quot;Ended&quot;) &amp;&amp; $.data.objectType == &quot;Course&quot; &amp;&amp; $.children.member.is(Resource(&quot;{{ROOT}}/apps/{{KEY}}_accounts/records/{{id}}&quot;))</code><br><br>
+Use <code class="prettyprint">depth=2</code> to ask the system for the course information so it can be referenced as well.</p></li>
+<li><p>Fetch the list of courses that a user has completed:<br>
+<code class="prettyprint">{{ROOT}}/apps/{{KEY}}_history/records</code> with &#39;depth&rsquo; of 2 and &#39;filter&rsquo;:<br>
+<code class="prettyprint">$.meta.active &amp;&amp; $.data.statement == &quot;Ended&quot; &amp;&amp; $.data.objectType == &quot;Course&quot; &amp;&amp; $.children.member.is(Resource(&quot;{{ROOT}}/apps/{{KEY}}_accounts/records/{{id}}&quot;))</code><br><br>
+Again, <code class="prettyprint">depth=2</code> will cause the system to go into the history items (at depth 1) and then fetch the courses (at depth 2).<br>
+The associated &ldquo;Began Course&rdquo; records will also be pulled (as they exist in the <code class="prettyprint">precedingEntry</code> child pointer).</p></li>
+</ul>
+
           <h1 id="miscellaneous-api-methods">Miscellaneous API methods</h1>
 
 <h2 id="post-multiple-request-endpoint">POST Multiple Request Endpoint</h2>
