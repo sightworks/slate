@@ -841,6 +841,32 @@ as children of an <a href="#record-apprecord"><code class="prettyprint">AppRecor
 <li><code class="prettyprint">{{app-id}}</code> is the ID of the app.</li>
 </ul>
 
+          <h2 id="external-ids">External IDs</h2>
+
+<p><a href="#group-appgroup">Group</a> and <a href="#record-apprecord">Record</a> objects have a property <code class="prettyprint">data.meta.external</code> in their representation. This is meant to house an external identifier for the object in question.</p>
+
+<p>The external ID can be in any format that you want to use, including objects.</p>
+
+<p>An object stored as an external identifier has it&rsquo;s property names sorted alphabetically (take the list of property names, feed it to <code class="prettyprint">Array.sort()</code>), so that the object can be compared as a string if needed.</p>
+
+<h3 id="restrictions">Restrictions</h3>
+
+<p>An external ID must be less than 1024 bytes in length, as returned by taking the value in the <code class="prettyprint">external</code> property and calling <code class="prettyprint">JSON.stringify()</code> on it.</p>
+
+<p>External IDs must be unique within the system (one external ID resolves to one resource in our system).</p>
+
+<h3 id="resolve-an-external-id">Resolve an External ID</h3>
+
+<p>External IDs can be found at:</p>
+
+<p><code class="prettyprint">{{ROOT}}/external?id={{id}}</code></p>
+
+<p>Where: <code class="prettyprint">{{id}}</code> is the result of calling <code class="prettyprint">JSON.stringify()</code> on the identifier.</p>
+
+<p>If you want the resource associated with the ID:</p>
+
+<p><code class="prettyprint">{{ROOT}}/external?id={{id}}&amp;resource</code></p>
+
           <h2 id="groups-and-records-recordlikeobject">Groups and Records (<code class="prettyprint">RecordLikeObject</code>)</h2>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
     </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RESOURCE}}"</span><span class="p">,</span><span class="w">
@@ -858,7 +884,8 @@ as children of an <a href="#record-apprecord"><code class="prettyprint">AppRecor
             </span><span class="nt">"publishing"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
                 </span><span class="nt">"active"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-16T07:00:00.000Z"</span><span class="p">,</span><span class="w">
                 </span><span class="nt">"archive"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
-            </span><span class="p">}</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nt">"external"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
         </span><span class="p">},</span><span class="w">
         </span><span class="nt">"SEO"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
             </span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Fragment"</span><span class="p">,</span><span class="w">
@@ -923,6 +950,11 @@ are found in various places; see their documentation for details.</p>
 <td><code class="prettyprint">data.meta.publishing.archive</code></td>
 <td>Timestamp</td>
 <td>The timestamp that the <code class="prettyprint">data.meta.active</code> flag should be toggled to <code class="prettyprint">false</code>.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.meta.external</code></td>
+<td>Any</td>
+<td>If not null, an external identifier in whatever format you decide is appropriate. This is restricted to a maximum of 1024 bytes (as returned by <code class="prettyprint">JSON.stringify()</code>). See <a href="#external-ids">External IDs</a> for more detail.</td>
 </tr>
 <tr>
 <td><code class="prettyprint">data.SEO.url</code></td>
