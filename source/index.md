@@ -19,6 +19,7 @@ includes:
   - objects/channel
   - objects/app
   - objects/appmeta
+  - objects/external
   - objects/baserecord
   - objects/group
   - objects/record

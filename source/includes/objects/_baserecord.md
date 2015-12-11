@@ -17,7 +17,8 @@
 			"publishing": {
 				"active": "2015-11-16T07:00:00.000Z",
 				"archive": null
-			}
+			},
+			"external": null
 		},
 		"SEO": {
 			"url": "Fragment",
@@ -50,6 +51,7 @@ Name | Type | Description
 ``data.meta.modifiedBy`` | [Resource Pointer](#resource-pointer) to a [Person](#person-record) [record](#record-apprecord). | The person who last modified this record.
 ``data.meta.publishing.active`` | Timestamp | The timestamp that the ``data.meta.active`` flag should be toggled to ``true``.
 ``data.meta.publishing.archive`` | Timestamp | The timestamp that the ``data.meta.active`` flag should be toggled to ``false``.
+``data.meta.external`` | Any | If not null, an external identifier in whatever format you decide is appropriate. This is restricted to a maximum of 1024 bytes (as returned by ``JSON.stringify()``). See [External IDs](#external-ids) for more detail.
 ``data.SEO.url`` | String | If the record provides SEO data, the fragment used on the website for accessing this object.
 ``data.SEO.title`` | String | The title to use on pages that represent this record in the HTML &lt;title&gt; tag.
 ``data.SEO.keywords`` | Text | The keywords to use in the HTML &lt;meta name="keywords"&gt; tag.
