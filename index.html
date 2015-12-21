@@ -550,6 +550,9 @@ Content-Type: application/json
     </span><span class="nt">"children"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="nt">"apps"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
             </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{CHANNEL}}/apps"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"s3-storage"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{CHANNEL}}/s3-storage"</span><span class="w">
         </span><span class="p">}</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="nt">"$type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
@@ -615,7 +618,182 @@ Content-Type: application/json
 <td>The collection of apps in this channel</td>
 <td><a href="#collection-types"><code class="prettyprint">AppCollection</code></a></td>
 </tr>
+<tr>
+<td>s3-storage</td>
+<td><code class="prettyprint">{{CHANNEL}}/s3-storage</code></td>
+<td>Information about Amazon S3 storage for files in this channel</td>
+<td><code class="prettyprint">GenericResource</code></td>
+</tr>
 </tbody></table>
+
+<h3 id="storage">Storage</h3>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"buckets"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"https://s3-us-west-2.amazonaws.com/digitalxe-clients/example/video/channels/example/"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DigitalXE Videos"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"video"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"region"</span><span class="p">:</span><span class="w"> </span><span class="s2">"us-west-2"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"bucket"</span><span class="p">:</span><span class="w"> </span><span class="s2">"digitalxe-clients"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"prefix"</span><span class="p">:</span><span class="w"> </span><span class="s2">"example/video/channels/example/"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"credentials"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Platform"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"credentials"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"Platform"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"accessKeyId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ASIA012345EXAMPLE"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"secretAcccessKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ACCESSKEYEXAMPLE"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"sessionToken"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fdsfdskjhvldsEXAMPLE"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"expires"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-12-18T23:30:00Z"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>The <code class="prettyprint">s3-storage</code> child on a channel exposes information about Amazon S3 access.</p>
+
+<p>Properties:</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">buckets</code></td>
+<td>Object</td>
+<td>The list of S3 buckets that are known for this channel. This includes &ldquo;Platform&rdquo; buckets, which always exist. The object keys are full URL prefixes to each bucket.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">buckets[{{BucketURLPrefix}}]</code></td>
+<td>Object</td>
+<td>The description onf a bucket.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">buckets[{{BucketURLPrefix}}].name</code></td>
+<td>String</td>
+<td>The displayed name of this bucket.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">buckets[{{BucketURLPrefix}}].type</code></td>
+<td>Enumeration</td>
+<td>The bucket content type. One of &#39;video&rsquo;, &#39;audio&rsquo;, &#39;document&rsquo;, or &#39;all&rsquo;.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">buckets[{{BucketURLPrefix}}].region</code></td>
+<td>String</td>
+<td>The Amazon region identifier that the bucket resides in</td>
+</tr>
+<tr>
+<td><code class="prettyprint">buckets[{{BucketURLPrefix}}].bucket</code></td>
+<td>String</td>
+<td>The name of the S3 bucket</td>
+</tr>
+<tr>
+<td><code class="prettyprint">buckets[{{BucketURLPrefix}}].prefix</code></td>
+<td>String</td>
+<td>The prefix of all items in the bucket. If this has a value, it always ends with a &rsquo;/&rsquo;.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">buckets[{{BucketURLPrefix}}].credentials</code></td>
+<td>String</td>
+<td>The name of the particular credential set used to access this bucket.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">credentials</code></td>
+<td>Object</td>
+<td>The list of known credential sets. This will always have a <code class="prettyprint">Platform</code> entry, and may have a <code class="prettyprint">User</code> entry as well.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">credentials.{{Type}}.accessKeyId</code></td>
+<td>String</td>
+<td>The Amazon &ldquo;access key ID&rdquo;</td>
+</tr>
+<tr>
+<td><code class="prettyprint">credentials.{{Type}}.secretAccessKey</code></td>
+<td>String</td>
+<td>The Amazon &ldquo;secret access key&rdquo;</td>
+</tr>
+<tr>
+<td><code class="prettyprint">credentials.{{Type}}.sessionToken</code></td>
+<td>String</td>
+<td>The Amazon &ldquo;session token&rdquo;. This is only provided for temporary credentials (any generated for &#39;Platform&rsquo;), so that those credentials can be restricted.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">credentials.{{Type}}.expires</code></td>
+<td>Date</td>
+<td>The date that the credentials expire, if they are temporary credentials.</td>
+</tr>
+</tbody></table>
+<pre class="highlight javascript"><code><span class="c1">// The URL of the file that we want to use S3 to access</span>
+<span class="kd">var</span> <span class="nx">fileURL</span> <span class="o">=</span> <span class="s2">"https://s3-us-west-2.amazonaws.com/digitalxe-clients/example/documents/channels/example/file.pdf"</span><span class="p">;</span>
+
+<span class="c1">// The resource ID that the file URL came from</span>
+<span class="kd">var</span> <span class="nx">fileSource</span> <span class="o">=</span> <span class="s2">"https://example.digitalxe.com/api/1/apps/example_files/records/12345"</span><span class="p">;</span>
+
+<span class="c1">// A regular expression for extracting the app ID from the URL</span>
+<span class="kd">var</span> <span class="nx">extractAppID</span> <span class="o">=</span> <span class="sr">/^https:</span><span class="se">\/\/\w</span><span class="sr">+</span><span class="se">\.</span><span class="sr">digitalxe</span><span class="se">\.</span><span class="sr">com</span><span class="se">\/</span><span class="sr">api</span><span class="se">\/</span><span class="sr">1</span><span class="se">\/</span><span class="sr">apps</span><span class="se">\/([^\/]</span><span class="sr">+</span><span class="se">)\/</span><span class="err">;
+</span>
+<span class="kd">var</span> <span class="nx">result</span> <span class="o">=</span> <span class="nx">extractAppID</span><span class="p">.</span><span class="nx">exec</span><span class="p">(</span><span class="nx">fileSource</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">appID</span> <span class="o">=</span> <span class="nx">result</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+<span class="kd">var</span> <span class="nx">channelKey</span> <span class="o">=</span> <span class="nx">appID</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">'_'</span><span class="p">).</span><span class="nx">shift</span><span class="p">();</span> <span class="c1">// The channel key on an app is always the first segment of the app ID.</span>
+
+<span class="c1">// Fetch(Resource, callback) -&gt; Fill out this function yourself, but it fetches the URL in the 'Resource' argument</span>
+<span class="c1">// and invokes 'callback' with the result.</span>
+
+<span class="nx">Fetch</span><span class="p">(</span><span class="s2">"https://example.digitalxe.com/api/1/channels/by-key/"</span> <span class="o">+</span> <span class="nx">channelKey</span> <span class="o">+</span> <span class="s2">"/s3-storage"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">storageDetail</span><span class="p">)</span> <span class="p">{</span>
+    <span class="cm">/* 
+    storageDetail looks like:
+    var storageDetail = {
+        buckets: {
+            "https://s3-us-west-2.amazonaws.com/digitalxe-clients/example/documents/channels/example/": {
+                name: "DigitalXE Documents",
+                type: "document",
+                region: "us-west-2",
+                bucket: "digitalxe-clients",
+                prefix: "example/documents/channels/example/",
+                credentials: "Platform"
+            }
+        },
+        credentials: {
+            Platform: {
+                accessKeyId: "AKIAFOOBAREXAMPLE",
+                secretAccessKey: "fdsfsnfdvfhfwfw===EXAMPLE",
+                sessionToken: "ibsjfhsdkjfcsncjdsnlieufhwieu==EXAMPLE",
+                expires: "2015-12-22T12:34:56Z"
+            }
+        }
+    }
+    */</span>
+
+    <span class="kd">var</span> <span class="nx">whichBucket</span> <span class="o">=</span> <span class="s2">""</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="k">in</span> <span class="nx">storageDetail</span><span class="p">.</span><span class="nx">buckets</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">fileURL</span><span class="p">.</span><span class="nx">startsWith</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="nx">i</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="nx">whichBucket</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">whichBucket</span> <span class="o">=</span> <span class="nx">i</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="kd">var</span> <span class="nx">theBucket</span> <span class="o">=</span> <span class="nx">storageDetail</span><span class="p">.</span><span class="nx">buckets</span><span class="p">[</span><span class="nx">whichBucket</span><span class="p">];</span>
+    <span class="kd">var</span> <span class="nx">theEndpoint</span> <span class="o">=</span> <span class="s2">"https://s3"</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">theBucket</span><span class="p">.</span><span class="nx">region</span> <span class="o">!=</span> <span class="s1">'us-east-1'</span><span class="p">)</span> 
+        <span class="nx">theEndpoint</span> <span class="o">+=</span> <span class="s1">'-'</span> <span class="o">+</span> <span class="nx">theBucket</span><span class="p">.</span><span class="nx">region</span><span class="p">;</span>
+    <span class="nx">theEndpoint</span> <span class="o">+=</span> <span class="s2">".amazonaws.com/"</span> <span class="o">+</span> <span class="nx">theBucket</span><span class="p">.</span><span class="nx">bucket</span> <span class="o">+</span> <span class="s2">"/"</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">theItemKey</span> <span class="o">=</span> <span class="nx">whichBucket</span><span class="p">.</span><span class="nx">substring</span><span class="p">(</span><span class="nx">theEndpoint</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">theCredentials</span> <span class="o">=</span> <span class="nx">storageDetail</span><span class="p">.</span><span class="nx">credentials</span><span class="p">[</span><span class="nx">theBucket</span><span class="p">.</span><span class="nx">credentials</span><span class="p">];</span>
+
+    <span class="c1">// Now:</span>
+    <span class="c1">// - theBucket contains the details of the S3 bucket (region, bucket name)</span>
+    <span class="c1">// - theItemKey contains the key of the item in S3</span>
+    <span class="c1">// - theCredentials contains the necessary authorization information to access the named item</span>
+<span class="p">});</span>
+
+</code></pre>
+
+<p>Assuming you have a file object from the &ldquo;example_files&rdquo; app whose name was <code class="prettyprint">https://s3-us-west-2.amazonaws.com/digitalxe-clients/example/documents/channels/example/file.pdf</code>, you
+would fetch the credentials from <code class="prettyprint">{{ROOT}}/channels/by-key/example/s3-storage</code> (&ldquo;example&rdquo; is the channel key in the case of &ldquo;example_files&rdquo;); and then find the item in 
+<code class="prettyprint">buckets</code> whose URL prefix matches the file path.)</p>
+
+<p>See the code example to the right for some example code for getting this information.</p>
 
           <h2 id="app-appresource">App (<code class="prettyprint">AppResource</code>)</h2>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
@@ -2427,6 +2605,26 @@ Content-Type: application/json
 </tr>
 </tbody></table>
 
+<p>In most cases, <code class="prettyprint">name</code> will be a URL residing on your instance (beginning with &lsquo;https://<your-customer-key>.digitalxe.com/&rsquo;). If the app supports it, the file specified
+may instead reside in an Amazon S3 bucket, with a URL matching:</p>
+
+<p><code class="prettyprint">https://s3.amazonaws.com/{{bucket}}/{{key}}</code> for the region &ldquo;us-east-1&rdquo;
+<code class="prettyprint">https://s3-{{region}}.amazonaws.com/{{bucket}}/{{key}}</code> for all other region values</p>
+
+<p>This may be an item residing in the <code class="prettyprint">digitalxe-clients</code> bucket in Amazon&rsquo;s &ldquo;us-west-2&rdquo; region, in which case, the URL is something like:</p>
+
+<p><code class="prettyprint">https://s3-us-west-2.amazonaws.com/digitalxe-clients/{{customerKey}}/{{type}}/channels/{{channel}}/path/to/a/file</code></p>
+
+<p>You can store any S3 object here, but the platform will need access to the file in question, by one of the following methods:</p>
+
+<ul>
+<li>Make sure we have an access key for the specified bucket &amp; prefix in Channel Settings.</li>
+<li>Place it in the appropriate location within the <code class="prettyprint">digitalxe-clients</code> bucket.</li>
+<li>Set it&rsquo;s permissions in Amazon to be globally readable.</li>
+</ul>
+
+<p>For information about how to access this information, see the &ldquo;Storage&rdquo; section under <a href="#channel-channelresource">Channels</a>.</p>
+
 <h2 id="media-file">Media File</h2>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
     </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://example.digitalxe.com/path/to/a/file"</span><span class="p">,</span><span class="w">
@@ -2511,7 +2709,7 @@ Content-Type: application/json
 </tr>
 </tbody></table>
 
-<p><code class="prettyprint">unit</code> does not include entries for &lsquo;hour&rsquo; or &#39;week&rsquo;: to specify 1 hour, specify 60 minutes; for 1 week, specify 7 days.</p>
+<p><code class="prettyprint">unit</code> does not include entries for &#39;hour&rsquo; or &#39;week&rsquo;: to specify 1 hour, specify 60 minutes; for 1 week, specify 7 days.</p>
 
 <h2 id="resource-pointer">Resource Pointer</h2>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
