@@ -18,6 +18,24 @@ Name | Type | Description
 ``type`` | String | The MIME type of the file
 ``size`` | Number | The size of the file
 
+In most cases, ``name`` will be a URL residing on your instance (beginning with 'https://<your-customer-key>.digitalxe.com/'). If the app supports it, the file specified
+may instead reside in an Amazon S3 bucket, with a URL matching:
+
+``https://s3.amazonaws.com/{{bucket}}/{{key}}`` for the region "us-east-1"
+``https://s3-{{region}}.amazonaws.com/{{bucket}}/{{key}}`` for all other region values
+
+This may be an item residing in the ``digitalxe-clients`` bucket in Amazon's "us-west-2" region, in which case, the URL is something like:
+
+``https://s3-us-west-2.amazonaws.com/digitalxe-clients/{{customerKey}}/{{type}}/channels/{{channel}}/path/to/a/file``
+
+You can store any S3 object here, but the platform will need access to the file in question, by one of the following methods:
+
+* Make sure we have an access key for the specified bucket & prefix in Channel Settings.
+* Place it in the appropriate location within the ``digitalxe-clients`` bucket.
+* Set it's permissions in Amazon to be globally readable.
+
+For information about how to access this information, see the "Storage" section under [Channels](#channel-channelresource).
+
 ## Media File
 
 ```json
