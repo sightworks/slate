@@ -20,7 +20,17 @@
 			}
 		},
 		"data": {
-			"title": "Product Name"
+			"title": "Product Name",
+			"summary": "Product summary",
+			"image": {
+				"name": "http://example.digitalxe.com/path/to/image",
+				"size": 1823,
+				"type": "image/png"
+			},
+			"description": "Description HTML",
+			"price": "Price detail",
+			"buyButtonText": "Text for Buy Now button",
+			"buyButtonUrl": "Link for Buy Now button"
 		}
 	},
 	"children": {
@@ -50,6 +60,12 @@ In addition to those specified by [``AppRecord``](#record-apprecord), a product 
 Name | Type | Description
 ---- | ---- | -----------
 ``data.title`` | String | The name of the product
+``data.summary`` | String | The summary of the product
+``data.image`` | File | The product image
+``data.description`` | String | The product description (HTML)
+``data.price`` | String | Pricing information
+``data.buyButtonText`` | String | The text to display on the "Buy" button
+``data.buyButtonUrl`` | String | The link for the "Buy" button
 
 ### Children
 
