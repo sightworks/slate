@@ -64,7 +64,7 @@ Examples:
 
 ### Fields
 
-The fields in an ``AppRecord`` are dependent on the app they came from. Various apps within the system have their own documentation below.
+The fields in an ``AppRecord`` are dependent on the app they came from; they all include the fields described in [``RecordLikeObject``](#groups-and-records-recordlikeobject). Various apps within the system have their own documentation below.
 
 ### Children
 
