@@ -3001,6 +3001,21 @@ may instead reside in an Amazon S3 bucket, with a URL matching:</p>
 <td>String</td>
 <td>The text to display in place of the &#39;Buy a Course&rsquo; or &ldquo;Start&rdquo; buttons when the course cannot be purchased.</td>
 </tr>
+<tr>
+<td><code class="prettyprint">data.enableAccessRestriction</code></td>
+<td>Boolean</td>
+<td>Whether access restrictions are enabled on this content or not. If access restrictions are enabled, the system will either present a preview version of this object (if <code class="prettyprint">hideWhenRestricted</code> is false), or hide the object entirely (if <code class="prettyprint">hideWhenRestricted</code> is true).</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.hideWhenRestricted</code></td>
+<td>Boolean</td>
+<td>Whether to hide this content entirely if the user doesn&rsquo;t have permission to see this item (whether by purchasing it, or by being a course instructor, etc.)</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.enableAccessForInstructors</code></td>
+<td>Boolean</td>
+<td>Whether to grant permission to the instructors of certain courses to access this item. The list of courses is stored in the &#39;accessCourseInstructors&rsquo; relationship. The instructors of this course always have access to this content, regardless of the value of this flag or any other restrictions placed on this content.</td>
+</tr>
 </tbody></table>
 
 <h3 id="children">Children</h3>
@@ -3026,12 +3041,6 @@ may instead reside in an Amazon S3 bucket, with a URL matching:</p>
 <td><a href="#collection-types"><code class="prettyprint">AppRecordList</code></a> with <a href="#course-announcements">Course Announcement</a> objects</td>
 </tr>
 <tr>
-<td>coursesComments</td>
-<td><code class="prettyprint">{{RECORD}}/coursesComments</code></td>
-<td>Comments made on this course</td>
-<td><a href="#collection-types"><code class="prettyprint">AppRecordList</code></a> with <a href="#course-comments">Course Comment</a> objects</td>
-</tr>
-<tr>
 <td>coursesDownloads</td>
 <td><code class="prettyprint">{{RECORD}}/coursesDownloads</code></td>
 <td>Downloads made availble on this course</td>
@@ -3054,6 +3063,12 @@ may instead reside in an Amazon S3 bucket, with a URL matching:</p>
 <td><code class="prettyprint">{{RECORD}}/coursesPrerequisites</code></td>
 <td>Prerequisite lists for this course</td>
 <td><a href="#collection-types"><code class="prettyprint">AppRecordList</code></a> with <a href="#course-prerequisites">Course Prerequisite</a> objects.</td>
+</tr>
+<tr>
+<td>coursesContributors</td>
+<td><code class="prettyprint">{{RECORD}}/coursesContributors</code></td>
+<td>Contributors and their titles for this course</td>
+<td><a href="#collection-types"><code class="prettyprint">AppRecordList</code></a> with <a href="#contributors">Contributor</a> objects.</td>
 </tr>
 </tbody></table>
 
@@ -3078,6 +3093,36 @@ may instead reside in an Amazon S3 bucket, with a URL matching:</p>
 <td><code class="prettyprint">{{RECORD}}/related/tags</code></td>
 <td>Tags for this course</td>
 <td><a href="#collection-types"><code class="prettyprint">AppRecordList</code></a> with <a href="#tags">Tag</a> objects</td>
+</tr>
+<tr>
+<td>audio</td>
+<td><code class="prettyprint">{{RECORD}}/related/audio</code></td>
+<td>Related audio files</td>
+<td><a href="#collection-types"><code class="prettyprint">AppRecordList</code></a> with <a href="#audio-files">Audio File</a> objects.</td>
+</tr>
+<tr>
+<td>courses</td>
+<td><code class="prettyprint">{{RECORD}}/related/courses</code></td>
+<td>Related courses</td>
+<td><a href="#collection-types"><code class="prettyprint">AppRecordList</code></a> with <a href="#courses">Course</a> objects.</td>
+</tr>
+<tr>
+<td>documents</td>
+<td><code class="prettyprint">{{RECORD}}/related/documents</code></td>
+<td>Related documents</td>
+<td><a href="#collection-types"><code class="prettyprint">AppRecordList</code></a> with <a href="#documents">Document</a> objects.</td>
+</tr>
+<tr>
+<td>videos</td>
+<td><code class="prettyprint">{{RECORD}}/related/videos</code></td>
+<td>Related videos</td>
+<td><a href="#collection-types"><code class="prettyprint">AppRecordList</code></a> with <a href="#videos">Video</a> objects.</td>
+</tr>
+<tr>
+<td>accessCourseInstructors</td>
+<td><code class="prettyprint">{{RECORD}}/related/accessCourseInstructors</code></td>
+<td>Courses whose instructors have access to this object</td>
+<td><a href="#collection-types"><code class="prettyprint">AppRecordList</code></a> with <a href="#courses">Course</a> objects.</td>
 </tr>
 </tbody></table>
 
@@ -3738,10 +3783,28 @@ the course&rsquo;s &ldquo;courseInstructors&rdquo; child collection.</p>
 </tr>
 </thead><tbody>
 <tr>
+<td>audio</td>
+<td><code class="prettyprint">{{RECORD}}/related/audio</code></td>
+<td>Related audio files</td>
+<td><a href="#collection-types"><code class="prettyprint">AppRecordList</code></a> with <a href="#audio-files">Audio File</a> objects.</td>
+</tr>
+<tr>
 <td>courses</td>
 <td><code class="prettyprint">{{RECORD}}/related/courses</code></td>
-<td>The courses that this sponsor is attached to.</td>
-<td><a href="#collection-types"><code class="prettyprint">AppRecordList</code></a> with <a href="#courses">Course</a> objects</td>
+<td>Related courses</td>
+<td><a href="#collection-types"><code class="prettyprint">AppRecordList</code></a> with <a href="#courses">Course</a> objects.</td>
+</tr>
+<tr>
+<td>documents</td>
+<td><code class="prettyprint">{{RECORD}}/related/documents</code></td>
+<td>Related documents</td>
+<td><a href="#collection-types"><code class="prettyprint">AppRecordList</code></a> with <a href="#documents">Document</a> objects.</td>
+</tr>
+<tr>
+<td>videos</td>
+<td><code class="prettyprint">{{RECORD}}/related/videos</code></td>
+<td>Related videos</td>
+<td><a href="#collection-types"><code class="prettyprint">AppRecordList</code></a> with <a href="#videos">Video</a> objects.</td>
 </tr>
 </tbody></table>
 
@@ -3910,7 +3973,8 @@ the course&rsquo;s &ldquo;courseInstructors&rdquo; child collection.</p>
             </span><span class="p">}</span><span class="w">
         </span><span class="p">},</span><span class="w">
         </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-            </span><span class="nt">"tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Tag"</span><span class="w">
+            </span><span class="nt">"tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Tag"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"hiddenTag"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
         </span><span class="p">}</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="nt">"children"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -3949,6 +4013,11 @@ the course&rsquo;s &ldquo;courseInstructors&rdquo; child collection.</p>
 <td>String</td>
 <td>The label associated with the tag.</td>
 </tr>
+<tr>
+<td><code class="prettyprint">data.hiddenTag</code></td>
+<td>Boolean</td>
+<td>Whether this tag is exposed to the public or not.</td>
+</tr>
 </tbody></table>
 
 <h3 id="relationships">Relationships</h3>
@@ -3962,10 +4031,34 @@ the course&rsquo;s &ldquo;courseInstructors&rdquo; child collection.</p>
 </tr>
 </thead><tbody>
 <tr>
+<td>accounts</td>
+<td><code class="prettyprint">{{RECORD}}/related/accounts</code></td>
+<td>The people that this tag is attached to.</td>
+<td><a href="#collection-types"><code class="prettyprint">PeopleRecordList</code></a> with <a href="#accounts">Account</a> objects</td>
+</tr>
+<tr>
+<td>audio</td>
+<td><code class="prettyprint">{{RECORD}}/related/audio</code></td>
+<td>The audio files that this tag is attached to.</td>
+<td><a href="#collection-types"><code class="prettyprint">AppRecordList</code></a> with <a href="#audio">Audio File</a> objects</td>
+</tr>
+<tr>
 <td>courses</td>
 <td><code class="prettyprint">{{RECORD}}/related/courses</code></td>
 <td>The courses that this tag is attached to.</td>
 <td><a href="#collection-types"><code class="prettyprint">AppRecordList</code></a> with <a href="#courses">Course</a> objects</td>
+</tr>
+<tr>
+<td>documents</td>
+<td><code class="prettyprint">{{RECORD}}/related/documents</code></td>
+<td>The documents that this tag is attached to.</td>
+<td><a href="#collection-types"><code class="prettyprint">AppRecordList</code></a> with <a href="#documents">Document</a> objects</td>
+</tr>
+<tr>
+<td>videos</td>
+<td><code class="prettyprint">{{RECORD}}/related/videos</code></td>
+<td>The videos that this tag is attached to.</td>
+<td><a href="#collection-types"><code class="prettyprint">AppRecordList</code></a> with <a href="#videos">Video</a> objects</td>
 </tr>
 </tbody></table>
 
@@ -4249,7 +4342,8 @@ the course&rsquo;s &ldquo;courseInstructors&rdquo; child collection.</p>
                 </span><span class="nt">"end"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
                     </span><span class="nt">"unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"second"</span><span class="p">,</span><span class="w">
                     </span><span class="nt">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">35</span><span class="w">
-                </span><span class="p">}</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="nt">"thumbnail"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://url.to.file/path.png"</span><span class="w">
             </span><span class="p">},</span><span class="w">
             </span><span class="nt">"startBumperFile"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
             </span><span class="nt">"endBumperFile"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
@@ -4257,7 +4351,10 @@ the course&rsquo;s &ldquo;courseInstructors&rdquo; child collection.</p>
             </span><span class="nt">"previewFile"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
             </span><span class="nt">"previewStartBumperFile"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
             </span><span class="nt">"previewEndBumperFile"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-            </span><span class="nt">"explicitContent"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+            </span><span class="nt">"explicitContent"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"enableAccessRestriction"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"hideWhenRestricted"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"enableAccessForInstructors"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">            
         </span><span class="p">}</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="nt">"children"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -4367,6 +4464,75 @@ the course&rsquo;s &ldquo;courseInstructors&rdquo; child collection.</p>
 <td><a href="#media-file">Media File</a></td>
 <td>The video to play immediately after the preview video</td>
 </tr>
+<tr>
+<td><code class="prettyprint">data.enableAccessRestriction</code></td>
+<td>Boolean</td>
+<td>Whether access restrictions are enabled on this content or not. If access restrictions are enabled, the system will either present a preview version of this object (if <code class="prettyprint">hideWhenRestricted</code> is false), or hide the object entirely (if <code class="prettyprint">hideWhenRestricted</code> is true).</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.hideWhenRestricted</code></td>
+<td>Boolean</td>
+<td>Whether to hide this content entirely if the user doesn&rsquo;t have permission to see this item (whether by purchasing it, or by being a course instructor, etc.)</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.enableAccessForInstructors</code></td>
+<td>Boolean</td>
+<td>Whether to grant permission to the instructors of certain courses to access this item. The list of courses is stored in the &lsquo;accessCourseInstructors&rsquo; relationship.</td>
+</tr>
+</tbody></table>
+
+<h3 id="relationships">Relationships</h3>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>URL</th>
+<th>Description</th>
+<th>Item Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>tags</td>
+<td><code class="prettyprint">{{RECORD}}/related/tags</code></td>
+<td>Tags for this audio file</td>
+<td><a href="#collection-types"><code class="prettyprint">AppRecordList</code></a> with <a href="#tags">Tag</a> objects.</td>
+</tr>
+<tr>
+<td>audio</td>
+<td><code class="prettyprint">{{RECORD}}/related/audio</code></td>
+<td>Related audio files</td>
+<td><a href="#collection-types"><code class="prettyprint">AppRecordList</code></a> with <a href="#audio-files">Audio File</a> objects.</td>
+</tr>
+<tr>
+<td>courses</td>
+<td><code class="prettyprint">{{RECORD}}/related/courses</code></td>
+<td>Related courses</td>
+<td><a href="#collection-types"><code class="prettyprint">AppRecordList</code></a> with <a href="#courses">Course</a> objects.</td>
+</tr>
+<tr>
+<td>documents</td>
+<td><code class="prettyprint">{{RECORD}}/related/documents</code></td>
+<td>Related documents</td>
+<td><a href="#collection-types"><code class="prettyprint">AppRecordList</code></a> with <a href="#documents">Document</a> objects.</td>
+</tr>
+<tr>
+<td>videos</td>
+<td><code class="prettyprint">{{RECORD}}/related/videos</code></td>
+<td>Related videos</td>
+<td><a href="#collection-types"><code class="prettyprint">AppRecordList</code></a> with <a href="#videos">Video</a> objects.</td>
+</tr>
+<tr>
+<td>sponsors</td>
+<td><code class="prettyprint">{{RECORD}}/related/sponsors</code></td>
+<td>Related sponsors</td>
+<td><a href="#collection-types"><code class="prettyprint">AppRecordList</code></a> with <a href="#sponros">Sponsor</a> objects.</td>
+</tr>
+<tr>
+<td>accessCourseInstructors</td>
+<td><code class="prettyprint">{{RECORD}}/related/accessCourseInstructors</code></td>
+<td>Courses whose instructors have access to this object</td>
+<td><a href="#collection-types"><code class="prettyprint">AppRecordList</code></a> with <a href="#courses">Course</a> objects.</td>
+</tr>
 </tbody></table>
 
           <h2 id="audio-files">Audio Files</h2>
@@ -4385,6 +4551,12 @@ the course&rsquo;s &ldquo;courseInstructors&rdquo; child collection.</p>
                 </span><span class="nt">"active"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
                 </span><span class="nt">"archive"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
             </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"SEO"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"keywords"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
         </span><span class="p">},</span><span class="w">
         </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
             </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Audio Test"</span><span class="p">,</span><span class="w">
@@ -4411,7 +4583,10 @@ the course&rsquo;s &ldquo;courseInstructors&rdquo; child collection.</p>
             </span><span class="nt">"previewFile"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
             </span><span class="nt">"previewStartBumperFile"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
             </span><span class="nt">"previewEndBumperFile"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-            </span><span class="nt">"explicitContent"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+            </span><span class="nt">"explicitContent"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"enableAccessRestriction"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"hideWhenRestricted"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"enableAccessForInstructors"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
         </span><span class="p">}</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="nt">"children"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -4521,6 +4696,80 @@ the course&rsquo;s &ldquo;courseInstructors&rdquo; child collection.</p>
 <td><a href="#media-file">Media File</a></td>
 <td>The audio file to play immediately after the preview audio file</td>
 </tr>
+<tr>
+<td><code class="prettyprint">data.explicitContent</code></td>
+<td>Boolean</td>
+<td>If the audio file has explicit content.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.enableAccessRestriction</code></td>
+<td>Boolean</td>
+<td>Whether access restrictions are enabled on this content or not. If access restrictions are enabled, the system will either present a preview version of this object (if <code class="prettyprint">hideWhenRestricted</code> is false), or hide the object entirely (if <code class="prettyprint">hideWhenRestricted</code> is true).</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.hideWhenRestricted</code></td>
+<td>Boolean</td>
+<td>Whether to hide this content entirely if the user doesn&rsquo;t have permission to see this item (whether by purchasing it, or by being a course instructor, etc.)</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.enableAccessForInstructors</code></td>
+<td>Boolean</td>
+<td>Whether to grant permission to the instructors of certain courses to access this item. The list of courses is stored in the &lsquo;accessCourseInstructors&rsquo; relationship.</td>
+</tr>
+</tbody></table>
+
+<h3 id="relationships">Relationships</h3>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>URL</th>
+<th>Description</th>
+<th>Item Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>tags</td>
+<td><code class="prettyprint">{{RECORD}}/related/tags</code></td>
+<td>Tags for this audio file</td>
+<td><a href="#collection-types"><code class="prettyprint">AppRecordList</code></a> with <a href="#tags">Tag</a> objects.</td>
+</tr>
+<tr>
+<td>audio</td>
+<td><code class="prettyprint">{{RECORD}}/related/audio</code></td>
+<td>Related audio files</td>
+<td><a href="#collection-types"><code class="prettyprint">AppRecordList</code></a> with <a href="#audio-files">Audio File</a> objects.</td>
+</tr>
+<tr>
+<td>courses</td>
+<td><code class="prettyprint">{{RECORD}}/related/courses</code></td>
+<td>Related courses</td>
+<td><a href="#collection-types"><code class="prettyprint">AppRecordList</code></a> with <a href="#courses">Course</a> objects.</td>
+</tr>
+<tr>
+<td>documents</td>
+<td><code class="prettyprint">{{RECORD}}/related/documents</code></td>
+<td>Related documents</td>
+<td><a href="#collection-types"><code class="prettyprint">AppRecordList</code></a> with <a href="#documents">Document</a> objects.</td>
+</tr>
+<tr>
+<td>videos</td>
+<td><code class="prettyprint">{{RECORD}}/related/videos</code></td>
+<td>Related videos</td>
+<td><a href="#collection-types"><code class="prettyprint">AppRecordList</code></a> with <a href="#videos">Video</a> objects.</td>
+</tr>
+<tr>
+<td>sponsors</td>
+<td><code class="prettyprint">{{RECORD}}/related/sponsors</code></td>
+<td>Related sponsors</td>
+<td><a href="#collection-types"><code class="prettyprint">AppRecordList</code></a> with <a href="#sponros">Sponsor</a> objects.</td>
+</tr>
+<tr>
+<td>accessCourseInstructors</td>
+<td><code class="prettyprint">{{RECORD}}/related/accessCourseInstructors</code></td>
+<td>Courses whose instructors have access to this object</td>
+<td><a href="#collection-types"><code class="prettyprint">AppRecordList</code></a> with <a href="#courses">Course</a> objects.</td>
+</tr>
 </tbody></table>
 
           <h2 id="documents">Documents</h2>
@@ -4540,6 +4789,12 @@ the course&rsquo;s &ldquo;courseInstructors&rdquo; child collection.</p>
                 </span><span class="nt">"archive"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
             </span><span class="p">}</span><span class="w">
         </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"SEO"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"keywords"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+        </span><span class="p">},</span><span class="w">
         </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
             </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Document Test"</span><span class="p">,</span><span class="w">
             </span><span class="nt">"summary"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Summary"</span><span class="p">,</span><span class="w">
@@ -4550,9 +4805,10 @@ the course&rsquo;s &ldquo;courseInstructors&rdquo; child collection.</p>
                 </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"application/pdf"</span><span class="p">,</span><span class="w">
                 </span><span class="nt">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">12345</span><span class="w">
             </span><span class="p">},</span><span class="w">
-            </span><span class="nt">"body"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
             </span><span class="nt">"previewFile"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-            </span><span class="nt">"previewBody"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+            </span><span class="nt">"enableAccessRestriction"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"hideWhenRestricted"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"enableAccessForInstructors"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
         </span><span class="p">}</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="nt">"children"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -4641,6 +4897,75 @@ the course&rsquo;s &ldquo;courseInstructors&rdquo; child collection.</p>
 <td><code class="prettyprint">data.previewBody</code></td>
 <td>Text</td>
 <td>The document preview, as HTML</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.enableAccessRestriction</code></td>
+<td>Boolean</td>
+<td>Whether access restrictions are enabled on this content or not. If access restrictions are enabled, the system will either present a preview version of this object (if <code class="prettyprint">hideWhenRestricted</code> is false), or hide the object entirely (if <code class="prettyprint">hideWhenRestricted</code> is true).</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.hideWhenRestricted</code></td>
+<td>Boolean</td>
+<td>Whether to hide this content entirely if the user doesn&rsquo;t have permission to see this item (whether by purchasing it, or by being a course instructor, etc.)</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.enableAccessForInstructors</code></td>
+<td>Boolean</td>
+<td>Whether to grant permission to the instructors of certain courses to access this item. The list of courses is stored in the &lsquo;accessCourseInstructors&rsquo; relationship.</td>
+</tr>
+</tbody></table>
+
+<h3 id="relationships">Relationships</h3>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>URL</th>
+<th>Description</th>
+<th>Item Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>tags</td>
+<td><code class="prettyprint">{{RECORD}}/related/tags</code></td>
+<td>Tags for this audio file</td>
+<td><a href="#collection-types"><code class="prettyprint">AppRecordList</code></a> with <a href="#tags">Tag</a> objects.</td>
+</tr>
+<tr>
+<td>audio</td>
+<td><code class="prettyprint">{{RECORD}}/related/audio</code></td>
+<td>Related audio files</td>
+<td><a href="#collection-types"><code class="prettyprint">AppRecordList</code></a> with <a href="#audio-files">Audio File</a> objects.</td>
+</tr>
+<tr>
+<td>courses</td>
+<td><code class="prettyprint">{{RECORD}}/related/courses</code></td>
+<td>Related courses</td>
+<td><a href="#collection-types"><code class="prettyprint">AppRecordList</code></a> with <a href="#courses">Course</a> objects.</td>
+</tr>
+<tr>
+<td>documents</td>
+<td><code class="prettyprint">{{RECORD}}/related/documents</code></td>
+<td>Related documents</td>
+<td><a href="#collection-types"><code class="prettyprint">AppRecordList</code></a> with <a href="#documents">Document</a> objects.</td>
+</tr>
+<tr>
+<td>videos</td>
+<td><code class="prettyprint">{{RECORD}}/related/videos</code></td>
+<td>Related videos</td>
+<td><a href="#collection-types"><code class="prettyprint">AppRecordList</code></a> with <a href="#videos">Video</a> objects.</td>
+</tr>
+<tr>
+<td>sponsors</td>
+<td><code class="prettyprint">{{RECORD}}/related/sponsors</code></td>
+<td>Related sponsors</td>
+<td><a href="#collection-types"><code class="prettyprint">AppRecordList</code></a> with <a href="#sponros">Sponsor</a> objects.</td>
+</tr>
+<tr>
+<td>accessCourseInstructors</td>
+<td><code class="prettyprint">{{RECORD}}/related/accessCourseInstructors</code></td>
+<td>Courses whose instructors have access to this object</td>
+<td><a href="#collection-types"><code class="prettyprint">AppRecordList</code></a> with <a href="#courses">Course</a> objects.</td>
 </tr>
 </tbody></table>
 
