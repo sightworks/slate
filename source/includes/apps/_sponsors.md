@@ -65,5 +65,8 @@ Name | Type | Description
 
 Name | URL | Description | Item Type
 ---- | --- | ----------- | ---------
-courses | ``{{RECORD}}/related/courses`` | The courses that this sponsor is attached to. | [``AppRecordList``](#collection-types) with [Course](#courses) objects
+audio | ``{{RECORD}}/related/audio`` | Related audio files | [``AppRecordList``](#collection-types) with [Audio File](#audio-files) objects.
+courses | ``{{RECORD}}/related/courses`` | Related courses | [``AppRecordList``](#collection-types) with [Course](#courses) objects.
+documents | ``{{RECORD}}/related/documents`` | Related documents | [``AppRecordList``](#collection-types) with [Document](#documents) objects.
+videos | ``{{RECORD}}/related/videos`` | Related videos | [``AppRecordList``](#collection-types) with [Video](#videos) objects.
 

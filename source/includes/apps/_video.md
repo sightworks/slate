@@ -34,7 +34,8 @@
                 "end": {
                     "unit": "second",
                     "count": 35
-                }
+                },
+                "thumbnail": "https://url.to.file/path.png"
             },
             "startBumperFile": null,
 			"endBumperFile": null,
@@ -42,7 +43,10 @@
 			"previewFile": null,
 			"previewStartBumperFile": null,
 			"previewEndBumperFile": null,
-            "explicitContent": false
+            "explicitContent": false,
+            "enableAccessRestriction": false,
+            "hideWhenRestricted": false,
+            "enableAccessForInstructors": false            
         }
     },
     "children": {
@@ -99,4 +103,21 @@ Name | Type | Description
 ``data.previewTranscript`` | Text | The video transcript for the preview video (HTML)
 ``data.previewStartBumperFile`` | [Media File](#media-file) | The video to play immediately before the preview video
 ``data.previewEndBumperFile`` | [Media File](#media-file) | The video to play immediately after the preview video
+``data.enableAccessRestriction`` | Boolean | Whether access restrictions are enabled on this content or not. If access restrictions are enabled, the system will either present a preview version of this object (if ``hideWhenRestricted`` is false), or hide the object entirely (if ``hideWhenRestricted`` is true).
+``data.hideWhenRestricted`` | Boolean | Whether to hide this content entirely if the user doesn't have permission to see this item (whether by purchasing it, or by being a course instructor, etc.)
+``data.enableAccessForInstructors`` | Boolean | Whether to grant permission to the instructors of certain courses to access this item. The list of courses is stored in the 'accessCourseInstructors' relationship.
+
+
+### Relationships
+
+Name | URL | Description | Item Type
+--- | --- | --- | ---
+tags | ``{{RECORD}}/related/tags`` | Tags for this audio file | [``AppRecordList``](#collection-types) with [Tag](#tags) objects.
+audio | ``{{RECORD}}/related/audio`` | Related audio files | [``AppRecordList``](#collection-types) with [Audio File](#audio-files) objects.
+courses | ``{{RECORD}}/related/courses`` | Related courses | [``AppRecordList``](#collection-types) with [Course](#courses) objects.
+documents | ``{{RECORD}}/related/documents`` | Related documents | [``AppRecordList``](#collection-types) with [Document](#documents) objects.
+videos | ``{{RECORD}}/related/videos`` | Related videos | [``AppRecordList``](#collection-types) with [Video](#videos) objects.
+sponsors | ``{{RECORD}}/related/sponsors`` | Related sponsors | [``AppRecordList``](#collection-types) with [Sponsor](#sponros) objects.
+accessCourseInstructors | ``{{RECORD}}/related/accessCourseInstructors`` | Courses whose instructors have access to this object | [``AppRecordList``](#collection-types) with [Course](#courses) objects.
+
 

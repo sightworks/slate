@@ -20,7 +20,8 @@
 			}
 		},
 		"data": {
-			"tag": "Tag"
+			"tag": "Tag",
+			"hiddenTag": false
 		}
 	},
 	"children": {
@@ -50,11 +51,16 @@ In addition to those specified by [``AppRecord``](#record-apprecord), a tag incl
 Name | Type | Description
 ---- | ---- | -----------
 ``data.tag`` | String | The label associated with the tag.
+``data.hiddenTag`` | Boolean | Whether this tag is exposed to the public or not.
 
 ### Relationships
 
 Name | URL | Description | Item Type
 ---- | --- | ----------- | ---------
+accounts | ``{{RECORD}}/related/accounts`` | The people that this tag is attached to. | [``PeopleRecordList``](#collection-types) with [Account](#accounts) objects
+audio | ``{{RECORD}}/related/audio`` | The audio files that this tag is attached to. | [``AppRecordList``](#collection-types) with [Audio File](#audio) objects
 courses | ``{{RECORD}}/related/courses`` | The courses that this tag is attached to. | [``AppRecordList``](#collection-types) with [Course](#courses) objects
+documents | ``{{RECORD}}/related/documents`` | The documents that this tag is attached to. | [``AppRecordList``](#collection-types) with [Document](#documents) objects
+videos | ``{{RECORD}}/related/videos`` | The videos that this tag is attached to. | [``AppRecordList``](#collection-types) with [Video](#videos) objects
 
 
