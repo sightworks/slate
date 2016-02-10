@@ -2605,8 +2605,9 @@ Content-Type: application/json
 </tr>
 </tbody></table>
 
-<p>In most cases, <code class="prettyprint">name</code> will be a URL residing on your instance (beginning with &lsquo;https://<your-customer-key>.digitalxe.com/&rsquo;). If the app supports it, the file specified
-may instead reside in an Amazon S3 bucket, with a URL matching:</p>
+<p>In most cases, <code class="prettyprint">name</code> will be a URL residing on your instance (beginning with &lsquo;https://<your-customer-key>.digitalxe.com/&rsquo;). </p>
+
+<p>If the app supports Amazon S3, the file specified wikl instead reside in an Amazon S3 bucket, with a URL matching:</p>
 
 <p><code class="prettyprint">https://s3.amazonaws.com/{{bucket}}/{{key}}</code> for the region &ldquo;us-east-1&rdquo;
 <code class="prettyprint">https://s3-{{region}}.amazonaws.com/{{bucket}}/{{key}}</code> for all other region values</p>
@@ -2624,6 +2625,47 @@ may instead reside in an Amazon S3 bucket, with a URL matching:</p>
 </ul>
 
 <p>For information about how to access this information, see the &ldquo;Storage&rdquo; section under <a href="#channel-channelresource">Channels</a>.</p>
+
+<h3 id="uploading-a-file">Uploading a file</h3>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"body"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SGVsbG8gd29ybGQhCg=="</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"localName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Hello.txt"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"text/plain"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">12</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>If the app accepts only local files, a file can be uploaded into the app by specifying a file this way. The system will generate a URL for the file (which
+will be returned in the <code class="prettyprint">name</code> property of the resulting File object).</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">body</code></td>
+<td>String</td>
+<td>The base64-encoded contents of the file</td>
+</tr>
+<tr>
+<td><code class="prettyprint">localName</code></td>
+<td>String</td>
+<td>The name of the file. This can only consist of alphanumeric characters, dashes, and periods.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">type</code></td>
+<td>String</td>
+<td>The MIME type of the file</td>
+</tr>
+<tr>
+<td><code class="prettyprint">size</code></td>
+<td>Number</td>
+<td>The size of the file</td>
+</tr>
+</tbody></table>
 
 <h2 id="media-file">Media File</h2>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
