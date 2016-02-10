@@ -18,8 +18,9 @@ Name | Type | Description
 ``type`` | String | The MIME type of the file
 ``size`` | Number | The size of the file
 
-In most cases, ``name`` will be a URL residing on your instance (beginning with 'https://<your-customer-key>.digitalxe.com/'). If the app supports it, the file specified
-may instead reside in an Amazon S3 bucket, with a URL matching:
+In most cases, ``name`` will be a URL residing on your instance (beginning with 'https://<your-customer-key>.digitalxe.com/'). 
+
+If the app supports Amazon S3, the file specified wikl instead reside in an Amazon S3 bucket, with a URL matching:
 
 ``https://s3.amazonaws.com/{{bucket}}/{{key}}`` for the region "us-east-1"
 ``https://s3-{{region}}.amazonaws.com/{{bucket}}/{{key}}`` for all other region values
@@ -35,6 +36,27 @@ You can store any S3 object here, but the platform will need access to the file 
 * Set it's permissions in Amazon to be globally readable.
 
 For information about how to access this information, see the "Storage" section under [Channels](#channel-channelresource).
+
+### Uploading a file
+
+```json
+{
+	"body": "SGVsbG8gd29ybGQhCg==",
+	"localName": "Hello.txt",
+	"type": "text/plain",
+	"size": 12
+}
+```
+
+If the app accepts only local files, a file can be uploaded into the app by specifying a file this way. The system will generate a URL for the file (which
+will be returned in the ``name`` property of the resulting File object).
+
+Name | Type | Description
+---- | ---- | -----------
+``body`` | String | The base64-encoded contents of the file
+``localName`` | String | The name of the file. This can only consist of alphanumeric characters, dashes, and periods.
+``type`` | String | The MIME type of the file
+``size`` | Number | The size of the file
 
 ## Media File
 
