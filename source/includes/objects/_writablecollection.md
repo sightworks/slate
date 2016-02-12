@@ -35,6 +35,9 @@ Posting an object will result in a new object being created and added to the col
 of the same structure as the ``data`` property on a resource of the same type, and will be validated according to the same rules. For more details,
 see the sections on the relevant object types.
 
+If you don't need the collection returned to you at the same time, you can make a POST to this resource with with the query parameter 'short': ``{{RESOURCE}}?short``,
+which will cause the response to not include the collection details, only the newly created object.
+
 #### Response
 
 ```
@@ -60,9 +63,9 @@ The response body for an object creation request will be a JSON object with the 
 Name | Type | Description
 ---- | ---- | -----------
 ``created`` | Resource ID | The URL to the resource that was created. This will be the same value as is in the Location header on the response.
-``collection`` | Resource ID | The URL of the collection that you requested the resource to be added to.
+``collection`` | Resource ID | If a short response is not requested, the URL of the collection that you requested the resource to be added to.
 ``resources.{{RESOURCE}}`` | [Resource](#resource-resource) | The resource that was created.
-``resources.{{RESOURCE2}}`` | [Collection](#collections-collection) | The collection that you requested the resource be added to.
+``resources.{{RESOURCE2}}`` | [Collection](#collections-collection) | If a short response is not requested, the collection that you requested the resource be added to.
 
 #### Errors
 
