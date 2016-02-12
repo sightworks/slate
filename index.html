@@ -2102,6 +2102,9 @@ Content-Type: application/json
 of the same structure as the <code class="prettyprint">data</code> property on a resource of the same type, and will be validated according to the same rules. For more details,
 see the sections on the relevant object types.</p>
 
+<p>If you don&rsquo;t need the collection returned to you at the same time, you can make a POST to this resource with with the query parameter &lsquo;short&rsquo;: <code class="prettyprint">{{RESOURCE}}?short</code>,
+which will cause the response to not include the collection details, only the newly created object.</p>
+
 <h4 id="response">Response</h4>
 <pre class="highlight plaintext"><code>HTTP/1.1 201 Created
 Location: {{RESOURCE}}
@@ -2137,7 +2140,7 @@ Location: {{RESOURCE}}
 <tr>
 <td><code class="prettyprint">collection</code></td>
 <td>Resource ID</td>
-<td>The URL of the collection that you requested the resource to be added to.</td>
+<td>If a short response is not requested, the URL of the collection that you requested the resource to be added to.</td>
 </tr>
 <tr>
 <td><code class="prettyprint">resources.{{RESOURCE}}</code></td>
@@ -2147,7 +2150,7 @@ Location: {{RESOURCE}}
 <tr>
 <td><code class="prettyprint">resources.{{RESOURCE2}}</code></td>
 <td><a href="#collections-collection">Collection</a></td>
-<td>The collection that you requested the resource be added to.</td>
+<td>If a short response is not requested, the collection that you requested the resource be added to.</td>
 </tr>
 </tbody></table>
 
@@ -2330,7 +2333,7 @@ Each object in this list will be removed from the collection.</li>
 
 <ul>
 <li>No properties exist in the outermost object.</li>
-<li>Unexpected properties exist in the outermost object. (Only &lsquo;append&rsquo; and &#39;remove&rsquo; should appear here.)</li>
+<li>Unexpected properties exist in the outermost object. (Only &#39;append&rsquo; and &#39;remove&rsquo; should appear here.)</li>
 <li>If <code class="prettyprint">append</code> or <code class="prettyprint">remove</code> is not an array, does not contain <a href="#resource-pointer">Resource Pointer</a> objects, or those resource pointers do not resolve to <a href="#resources-resource">Resource</a> objects.</li>
 <li>If both <code class="prettyprint">append</code> and <code class="prettyprint">remove</code> are specified, if any items in <code class="prettyprint">append</code> also appear in <code class="prettyprint">remove</code>.</li>
 <li>If any of the objects being added using <code class="prettyprint">append</code> are already in this collection.</li>
