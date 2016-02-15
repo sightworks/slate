@@ -38,6 +38,28 @@
 
 A tag in the LMS.
 
+When constructing a tag, the portion of the URL generated for the ``record-id`` is constructed by:
+
+* Collapsing all white space into a single space character
+* Trimming leading and trailing white space
+* Converting to lower case
+* Removing all non-alphanumeric characters [0-9, a-z]
+* Camel-casing the remaining portion.
+* Truncating to 32 characters.
+
+If a new tag is created that would have the same ``record-id`` portion as an existing tag, 
+the system will append "-{number}" to the ``record-id`` portion to make it unique.
+
+For a tag "Small Animal", the resulting URL would be:
+
+``{{ROOT}}/apps/{{KEY}}_tags/records/smallAnimal``
+
+For "Shelter Medicine & Surgery-General", the resulting URL is:
+
+``{{ROOT}}/apps/{{KEY}}_tags/records/shelterMedicineSurgerygeneral``
+
+Tag text is not considered unique in the system. (Creating a new tag with the same text as an existing tag is allowed.)
+
 ### Location
 
 Canonical URL:
