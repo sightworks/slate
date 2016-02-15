@@ -4036,6 +4036,30 @@ the course&rsquo;s &ldquo;courseInstructors&rdquo; child collection.</p>
 
 <p>A tag in the LMS.</p>
 
+<p>When constructing a tag, the portion of the URL generated for the <code class="prettyprint">record-id</code> is constructed by:</p>
+
+<ul>
+<li>Collapsing all white space into a single space character</li>
+<li>Trimming leading and trailing white space</li>
+<li>Converting to lower case</li>
+<li>Removing all non-alphanumeric characters [0-9, a-z]</li>
+<li>Camel-casing the remaining portion.</li>
+<li>Truncating to 32 characters.</li>
+</ul>
+
+<p>If a new tag is created that would have the same <code class="prettyprint">record-id</code> portion as an existing tag, 
+the system will append &ldquo;-{number}&rdquo; to the <code class="prettyprint">record-id</code> portion to make it unique.</p>
+
+<p>For a tag &ldquo;Small Animal&rdquo;, the resulting URL would be:</p>
+
+<p><code class="prettyprint">{{ROOT}}/apps/{{KEY}}_tags/records/smallAnimal</code></p>
+
+<p>For &ldquo;Shelter Medicine &amp; Surgery-General&rdquo;, the resulting URL is:</p>
+
+<p><code class="prettyprint">{{ROOT}}/apps/{{KEY}}_tags/records/shelterMedicineSurgerygeneral</code></p>
+
+<p>Tag text is not considered unique in the system. (Creating a new tag with the same text as an existing tag is allowed.)</p>
+
 <h3 id="location">Location</h3>
 
 <p>Canonical URL:</p>
