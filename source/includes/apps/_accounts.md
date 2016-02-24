@@ -82,4 +82,9 @@ Name | Type | Description
 Name | URL | Description | Item Type
 ---- | --- | ----------- | ---------
 courses | ``{{RECORD}}/related/courses`` | Courses that this user is considered to have purchased, for the purposes of the "thisCourseRequiresOffsitePurchase" flag on a Course. | [``AppRecordList``](#collection-types) with [Course](#courses) objects
-
+products | ``{{RECORD}}/related/products`` | Products that this user is considered to have purchased. | [``AppRecordList``](#collection-types) with [Product](#products) objects.
+tags | ``{{RECORD}}/related/tags`` | Tags associated with this user | [``AppRecordList``](#collection-types) with [Tag](#tags) objects.
+bookmarkCourses | ``{{RECORD}}/related/bookmarkCourses`` | Courses that this user has bookmarked / favorited | [``AppRecordList``](#collection-types) with [Course](#courses) objects.
+bookmarkAudio | ``{{RECORD}}/related/bookmarkAudio`` | Audio files that this user has bookmarked / favorited | [``AppRecordList``](#collection-types) with [Audio](#audio) objects.
+bookmarkVideo | ``{{RECORD}}/related/bookmarkVideo`` | Videos that this user has bookmarked / favorited | [``AppRecordList``](#collection-types) with [Video](#video) objects.
+bookmarkDocuments | ``{{RECORD}}/related/bookmarkDocuments`` | Documents that this user has bookmarked / favorited | [``AppRecordList``](#collection-types) with [Document](#documents) objects.
