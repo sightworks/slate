@@ -51,11 +51,6 @@ Name | Type | Description
 
 ### Children
 
-Name | URL | Description | Type
----- | ------------- | ----------- | ----
-apps | ``{{CHANNEL}}/apps`` | The collection of apps in this channel | [``AppCollection``](#collection-types)
-s3-storage | ``{{CHANNEL}}/s3-storage`` | Information about Amazon S3 storage for files in this channel | ``GenericResource``
-views | ``{{CHANNEL}}/views`` | Details about record views in this channel | [``ViewCollection``](#view-collection)
 
 ### Storage
 
@@ -173,6 +168,14 @@ would fetch the credentials from ``{{ROOT}}/channels/by-key/example/s3-storage``
 See the code example to the right for some example code for getting this information.
 
 <br style='clear: right;'>
+
+### View Parent
+
+This is a simple object that has 2 view collections as children: ``current`` and ``history``.
+
+The difference between the two: ``current`` contains view data made over the previous 8-9 hours; ``history`` contains all older data.
+
+Both children are [View Collection](#view-collection) objects.
 
 ### View Collection
 
