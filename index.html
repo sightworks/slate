@@ -607,34 +607,6 @@ Content-Type: application/json
 
 <h3 id="children">Children</h3>
 
-<table><thead>
-<tr>
-<th>Name</th>
-<th>URL</th>
-<th>Description</th>
-<th>Type</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>apps</td>
-<td><code class="prettyprint">{{CHANNEL}}/apps</code></td>
-<td>The collection of apps in this channel</td>
-<td><a href="#collection-types"><code class="prettyprint">AppCollection</code></a></td>
-</tr>
-<tr>
-<td>s3-storage</td>
-<td><code class="prettyprint">{{CHANNEL}}/s3-storage</code></td>
-<td>Information about Amazon S3 storage for files in this channel</td>
-<td><code class="prettyprint">GenericResource</code></td>
-</tr>
-<tr>
-<td>views</td>
-<td><code class="prettyprint">{{CHANNEL}}/views</code></td>
-<td>Details about record views in this channel</td>
-<td><a href="#view-collection"><code class="prettyprint">ViewCollection</code></a></td>
-</tr>
-</tbody></table>
-
 <h3 id="storage">Storage</h3>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
     </span><span class="nt">"buckets"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -805,6 +777,14 @@ would fetch the credentials from <code class="prettyprint">{{ROOT}}/channels/by-
 <p>See the code example to the right for some example code for getting this information.</p>
 
 <p><br style='clear: right;'></p>
+
+<h3 id="view-parent">View Parent</h3>
+
+<p>This is a simple object that has 2 view collections as children: <code class="prettyprint">current</code> and <code class="prettyprint">history</code>.</p>
+
+<p>The difference between the two: <code class="prettyprint">current</code> contains view data made over the previous 8-9 hours; <code class="prettyprint">history</code> contains all older data.</p>
+
+<p>Both children are <a href="#view-collection">View Collection</a> objects.</p>
 
 <h3 id="view-collection">View Collection</h3>
 
