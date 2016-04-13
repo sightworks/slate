@@ -13,6 +13,9 @@
 		},
 		"s3-storage": {
 			"$Resource": "{{CHANNEL}}/s3-storage"
+		},
+		"views": {
+			"$Resource": "{{CHANNEL}}/views"
 		}
 	},
 	"$type": [
@@ -52,6 +55,7 @@ Name | URL | Description | Type
 ---- | ------------- | ----------- | ----
 apps | ``{{CHANNEL}}/apps`` | The collection of apps in this channel | [``AppCollection``](#collection-types)
 s3-storage | ``{{CHANNEL}}/s3-storage`` | Information about Amazon S3 storage for files in this channel | ``GenericResource``
+views | ``{{CHANNEL}}/views`` | Details about record views in this channel | [``ViewCollection``](#view-collection)
 
 ### Storage
 
@@ -167,4 +171,56 @@ would fetch the credentials from ``{{ROOT}}/channels/by-key/example/s3-storage``
 ``buckets`` whose URL prefix matches the file path.)
 
 See the code example to the right for some example code for getting this information.
+
+<br style='clear: right;'>
+
+### View Collection
+
+This is a basic collection of details about record views. In addition to the normal [collection](#collections-collection) filtering rules 
+using the ``expression`` parameter, you can also filter this collection with the following:
+
+Name | Type | Default | Description
+---|---|---|---
+app | Resource ID | ``""`` | Filter the list of views by the app they came from. The resource here is an [``AppResource``](#app-appresource). Leave unspecified or pass nothing (in the query: ``app=``) to get all.
+resource | Resource ID | ``""`` | Filter the list of views by the resource they're associated with. The resource here is an [``AppGroup``](#group-appgroup) or [``AppRecord``](#record-apprecord) object. Leave unspecified to get all objects.
+user | Resource ID or String | ``""`` | Filter the list of views by the person who viewed them. This can also be one of the special values ``null`` to get all views by non-authenticated users or ``known`` to get all by authenticated users.
+site | String | ``live`` | One of the values ``dev`` to include only those requests made against the development site (``example.digitalxe.com``), ``live`` to get those to the published site, or ``both`` to get all.
+access | String | ``both`` | ``denied`` to get the items that were presented as previews, ``granted`` to get the items that were presented in their full form, or ``both`` if you don't care.
+startTime | Date and time | ``""`` | The start time to query against. This is any date string considered valid by the V8 JavaScript engine's ``Date`` constructor.
+endTime | Date and time | ``""`` | The end time to query against. This is any date string considered valid by the V8 JavaScript engine's ``Date`` constructor; if ``startTime`` is also specified, ``endTime`` must be greater than the value of ``startTime``.
+
+### View objects
+
+```json
+{
+	"id": "{{CHANNEL}}/views/1",
+	"data": {
+		"app": {
+			"$Resource": "{{APP}}"
+		},
+		"resource": {
+			"$Resource": "{{GROUP or RECORD}}"
+		},
+		"user": {
+			"$Resource": "{{RECORD}}"
+		},
+		"dev": false,
+		"accessGranted": true,
+		"time": "2016-04-13T22:20:23Z"
+	}
+}
+```
+
+These are contained by a [View Collection](#view-collection), representing a single record view.
+
+Properties:
+
+Name | Type | Description
+--- | --- | ---
+``app`` | Resource | The app that the view object came from
+``resource`` | Resource | The object that was viewed
+``user`` | Resource | The user that viewed the object. This is ``null`` if the user was anonymous.
+``dev`` | Boolean | Whether the view was done on the development site or the production site.
+``accessGranted`` | Boolean | Whether the view retrieved the full object or just a preview of the object.
+``time`` | Timestamp | The time of the record view.
 
