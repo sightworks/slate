@@ -37,7 +37,7 @@
       <div id="toc">
       </div>
         <ul class="toc-footer">
-            <li><!-- <a href='http://github.com/tripit/slate'>Documentation Powered by Slate</a>--> &copy; 2015 SightWorks</li>
+            <li><!-- <a href='http://github.com/tripit/slate'>Documentation Powered by Slate</a>--> &copy; 2016 SightWorks</li>
         </ul>
     </div>
     <div class="page-wrapper">
@@ -553,6 +553,9 @@ Content-Type: application/json
         </span><span class="p">},</span><span class="w">
         </span><span class="nt">"s3-storage"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
             </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{CHANNEL}}/s3-storage"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"views"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{CHANNEL}}/views"</span><span class="w">
         </span><span class="p">}</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="nt">"$type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
@@ -623,6 +626,12 @@ Content-Type: application/json
 <td><code class="prettyprint">{{CHANNEL}}/s3-storage</code></td>
 <td>Information about Amazon S3 storage for files in this channel</td>
 <td><code class="prettyprint">GenericResource</code></td>
+</tr>
+<tr>
+<td>views</td>
+<td><code class="prettyprint">{{CHANNEL}}/views</code></td>
+<td>Details about record views in this channel</td>
+<td><a href="#view-collection"><code class="prettyprint">ViewCollection</code></a></td>
 </tr>
 </tbody></table>
 
@@ -794,6 +803,128 @@ would fetch the credentials from <code class="prettyprint">{{ROOT}}/channels/by-
 <code class="prettyprint">buckets</code> whose URL prefix matches the file path.)</p>
 
 <p>See the code example to the right for some example code for getting this information.</p>
+
+<p><br style='clear: right;'></p>
+
+<h3 id="view-collection">View Collection</h3>
+
+<p>This is a basic collection of details about record views. In addition to the normal <a href="#collections-collection">collection</a> filtering rules 
+using the <code class="prettyprint">expression</code> parameter, you can also filter this collection with the following:</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>app</td>
+<td>Resource ID</td>
+<td><code class="prettyprint">&quot;&quot;</code></td>
+<td>Filter the list of views by the app they came from. The resource here is an <a href="#app-appresource"><code class="prettyprint">AppResource</code></a>. Leave unspecified or pass nothing (in the query: <code class="prettyprint">app=</code>) to get all.</td>
+</tr>
+<tr>
+<td>resource</td>
+<td>Resource ID</td>
+<td><code class="prettyprint">&quot;&quot;</code></td>
+<td>Filter the list of views by the resource they&rsquo;re associated with. The resource here is an <a href="#group-appgroup"><code class="prettyprint">AppGroup</code></a> or <a href="#record-apprecord"><code class="prettyprint">AppRecord</code></a> object. Leave unspecified to get all objects.</td>
+</tr>
+<tr>
+<td>user</td>
+<td>Resource ID or String</td>
+<td><code class="prettyprint">&quot;&quot;</code></td>
+<td>Filter the list of views by the person who viewed them. This can also be one of the special values <code class="prettyprint">null</code> to get all views by non-authenticated users or <code class="prettyprint">known</code> to get all by authenticated users.</td>
+</tr>
+<tr>
+<td>site</td>
+<td>String</td>
+<td><code class="prettyprint">live</code></td>
+<td>One of the values <code class="prettyprint">dev</code> to include only those requests made against the development site (<code class="prettyprint">example.digitalxe.com</code>), <code class="prettyprint">live</code> to get those to the published site, or <code class="prettyprint">both</code> to get all.</td>
+</tr>
+<tr>
+<td>access</td>
+<td>String</td>
+<td><code class="prettyprint">both</code></td>
+<td><code class="prettyprint">denied</code> to get the items that were presented as previews, <code class="prettyprint">granted</code> to get the items that were presented in their full form, or <code class="prettyprint">both</code> if you don&rsquo;t care.</td>
+</tr>
+<tr>
+<td>startTime</td>
+<td>Date and time</td>
+<td><code class="prettyprint">&quot;&quot;</code></td>
+<td>The start time to query against. This is any date string considered valid by the V8 JavaScript engine&rsquo;s <code class="prettyprint">Date</code> constructor.</td>
+</tr>
+<tr>
+<td>endTime</td>
+<td>Date and time</td>
+<td><code class="prettyprint">&quot;&quot;</code></td>
+<td>The end time to query against. This is any date string considered valid by the V8 JavaScript engine&rsquo;s <code class="prettyprint">Date</code> constructor; if <code class="prettyprint">startTime</code> is also specified, <code class="prettyprint">endTime</code> must be greater than the value of <code class="prettyprint">startTime</code>.</td>
+</tr>
+</tbody></table>
+
+<h3 id="view-objects">View objects</h3>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{CHANNEL}}/views/1"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"app"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{APP}}"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"resource"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{GROUP or RECORD}}"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"user"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"$Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{RECORD}}"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"dev"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"accessGranted"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-04-13T22:20:23Z"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>These are contained by a <a href="#view-collection">View Collection</a>, representing a single record view.</p>
+
+<p>Properties:</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">app</code></td>
+<td>Resource</td>
+<td>The app that the view object came from</td>
+</tr>
+<tr>
+<td><code class="prettyprint">resource</code></td>
+<td>Resource</td>
+<td>The object that was viewed</td>
+</tr>
+<tr>
+<td><code class="prettyprint">user</code></td>
+<td>Resource</td>
+<td>The user that viewed the object. This is <code class="prettyprint">null</code> if the user was anonymous.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">dev</code></td>
+<td>Boolean</td>
+<td>Whether the view was done on the development site or the production site.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">accessGranted</code></td>
+<td>Boolean</td>
+<td>Whether the view retrieved the full object or just a preview of the object.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">time</code></td>
+<td>Timestamp</td>
+<td>The time of the record view.</td>
+</tr>
+</tbody></table>
 
           <h2 id="app-appresource">App (<code class="prettyprint">AppResource</code>)</h2>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
