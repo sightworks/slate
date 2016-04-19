@@ -51,8 +51,15 @@ Name | Type | Description
 
 ### Children
 
+Name | Type | Description
+---- | ---- | ----
+``s3-storage`` | [S3 Storage descriptor](#s3-storage) | A description of the buckets made available from this channel along with information needed to access those buckets.
+``apps`` | [AppCollection](#collections) | A collection of the apps that are in this channel.
+``views`` | [View Parent](#view-parent) | The parent resource for all information about resource views. (This is here for completeness.)
+``views/current`` | [View Collection](#view-collection) | A collection containing current resource view information over the past 8-9 hours.
+``views/history`` | [View Collection](#view-collection) | A collection containing historic resource view information.
 
-### Storage
+## S3 Storage
 
 ```json
 {
@@ -79,7 +86,7 @@ Name | Type | Description
 		
 The ``s3-storage`` child on a channel exposes information about Amazon S3 access.
 
-Properties:
+### Properties
 
 Name | Type | Description
 --- | --- | ---
@@ -96,6 +103,8 @@ Name | Type | Description
 ``credentials.{{Type}}.secretAccessKey`` | String | The Amazon "secret access key"
 ``credentials.{{Type}}.sessionToken`` | String | The Amazon "session token". This is only provided for temporary credentials (any generated for 'Platform'), so that those credentials can be restricted.
 ``credentials.{{Type}}.expires`` | Date | The date that the credentials expire, if they are temporary credentials.
+
+### Example 
 
 ```javascript
 // The URL of the file that we want to use S3 to access
@@ -169,7 +178,7 @@ See the code example to the right for some example code for getting this informa
 
 <br style='clear: right;'>
 
-### View Parent
+## View Parent
 
 This is a simple object that has 2 view collections as children: ``current`` and ``history``.
 
@@ -177,10 +186,12 @@ The difference between the two: ``current`` contains view data made over the pre
 
 Both children are [View Collection](#view-collection) objects.
 
-### View Collection
+## View Collection
 
 This is a basic collection of details about record views. In addition to the normal [collection](#collections-collection) filtering rules 
 using the ``expression`` parameter, you can also filter this collection with the following:
+
+### Parameters
 
 Name | Type | Default | Description
 ---|---|---|---
@@ -192,7 +203,7 @@ access | String | ``both`` | ``denied`` to get the items that were presented as 
 startTime | Date and time | ``""`` | The start time to query against. This is any date string considered valid by the V8 JavaScript engine's ``Date`` constructor.
 endTime | Date and time | ``""`` | The end time to query against. This is any date string considered valid by the V8 JavaScript engine's ``Date`` constructor; if ``startTime`` is also specified, ``endTime`` must be greater than the value of ``startTime``.
 
-### View objects
+## View objects
 
 ```json
 {
@@ -216,7 +227,7 @@ endTime | Date and time | ``""`` | The end time to query against. This is any da
 
 These are contained by a [View Collection](#view-collection), representing a single record view.
 
-Properties:
+### Properties
 
 Name | Type | Description
 --- | --- | ---
