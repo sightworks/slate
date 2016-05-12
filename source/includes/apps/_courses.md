@@ -54,7 +54,9 @@
 			"externalCourseId": "",
 			"disableOffsitePurchase": false,
 			"purchaseButtonText": "",
-			"disabledPurchaseButtonText": ""
+			"disabledPurchaseButtonText": "",
+			"courseHasEndDate": false,
+			"courseEndDate": null
 		}
 	},
 	"children": {
@@ -116,7 +118,9 @@ Name | Type | Description
 ``data.courseOverviewVideoEmbedCode`` | Text | Video embed code for the course overview page (HTML)
 ``data.enforceTheOrderOfActivitiesInThisCourse`` | Boolean | Whether to force the user to go through this course in the order of activities or not.
 ``data.courseHasStartDate`` | Boolean | Whether this course has a start date
-``data.courseStartDate`` | Timestamp | When the course begins
+``data.courseStartDate`` | Timestamp | When the course begins (people cannot start the course before this date)
+``data.courseHasEndDate`` | Boolean | Whether this course has an end date
+``data.courseEndDate`` | Timestamp | When the course ends (people cannot start the course after this date)
 ``data.doNotIncludeInCourseCatalog`` | Boolean | Whether to hide this from most views of courses on the site
 ``data.thisCourseRequiresOffsitePurchase`` | Boolean | Whether this course needs to be purchased or not before it can be taken.
 ``data.externalCourseId`` | String | The external course identifier for this course.

@@ -30,7 +30,18 @@
 			"description": "Description HTML",
 			"price": "Price detail",
 			"buyButtonText": "Text for Buy Now button",
-			"buyButtonUrl": "Link for Buy Now button"
+			"buyButtonUrl": "Link for Buy Now button",
+			"availableForPurchase": true,
+			"availableStart": null,
+			"availableEnd": null,
+			"notAvailableText": "",
+			"hasBanner": false,
+			"bannerBackgroundColor": "",
+			"bannerTextColor": "",
+			"bannerText": "",
+			"bannerTextSize": "100%",
+			"bannerImage": null,
+			"bannerImageAlign": "left"
 		}
 	},
 	"children": {
@@ -60,12 +71,23 @@ In addition to those specified by [``AppRecord``](#record-apprecord), a product 
 Name | Type | Description
 ---- | ---- | -----------
 ``data.title`` | String | The name of the product
-``data.summary`` | String | The summary of the product
-``data.image`` | File | The product image
-``data.description`` | String | The product description (HTML)
+``data.summary`` | String | The summary of the product (deprecated)
+``data.image`` | File | The product image (deprecated)
+``data.description`` | String | The product description (HTML, deprecated)
 ``data.price`` | String | Pricing information
 ``data.buyButtonText`` | String | The text to display on the "Buy" button
 ``data.buyButtonUrl`` | String | The link for the "Buy" button
+``data.availableForPurchase`` | Boolean | Whether the product is available for purchase or not.
+``data.availableStart`` | Date ('YYYY-MM-DD') | If the product is available for purchase, the date the buy button becomes active
+``data.availableEnd`` | Date ('YYYY-MM-DD') | If the product is available for purchase, the date the buy button becomes inactive
+``data.notAvailableText`` | String | Text to display to the user if ``availableForPurchase`` is false.
+``data.hasBanner`` | Boolean | Whether this product has a promotional banner appearing on objects that use it
+``data.bannerBackgroundColor`` | String (CSS color) | The background color to use for the banner
+``data.bannerTextColor`` | String (CSS color) | The foreground color to use for the banner
+``data.bannerText`` | String | The text to display in the banner (HTML)
+``data.bannerTextSize`` | Enumeration | The size of text to use. Values are '50%', '75%', '100%', '125%', '150%', '200%'.
+``data.bannerImage`` | File | The image to display in the banner
+``data.bannerImageAlign`` | Enumeration | The side of the banner to display the image; 'left' or 'right'.
 
 ### Children
 
