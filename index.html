@@ -3049,7 +3049,9 @@ will be returned in the <code class="prettyprint">name</code> property of the re
             </span><span class="nt">"externalCourseId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
             </span><span class="nt">"disableOffsitePurchase"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
             </span><span class="nt">"purchaseButtonText"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-            </span><span class="nt">"disabledPurchaseButtonText"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+            </span><span class="nt">"disabledPurchaseButtonText"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"courseHasEndDate"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"courseEndDate"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
         </span><span class="p">}</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="nt">"children"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -3163,7 +3165,17 @@ will be returned in the <code class="prettyprint">name</code> property of the re
 <tr>
 <td><code class="prettyprint">data.courseStartDate</code></td>
 <td>Timestamp</td>
-<td>When the course begins</td>
+<td>When the course begins (people cannot start the course before this date)</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.courseHasEndDate</code></td>
+<td>Boolean</td>
+<td>Whether this course has an end date</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.courseEndDate</code></td>
+<td>Timestamp</td>
+<td>When the course ends (people cannot start the course after this date)</td>
 </tr>
 <tr>
 <td><code class="prettyprint">data.doNotIncludeInCourseCatalog</code></td>
@@ -4346,7 +4358,18 @@ the system will append &ldquo;-{number}&rdquo; to the <code class="prettyprint">
             </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Description HTML"</span><span class="p">,</span><span class="w">
             </span><span class="nt">"price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Price detail"</span><span class="p">,</span><span class="w">
             </span><span class="nt">"buyButtonText"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Text for Buy Now button"</span><span class="p">,</span><span class="w">
-            </span><span class="nt">"buyButtonUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Link for Buy Now button"</span><span class="w">
+            </span><span class="nt">"buyButtonUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Link for Buy Now button"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"availableForPurchase"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"availableStart"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"availableEnd"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"notAvailableText"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"hasBanner"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"bannerBackgroundColor"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"bannerTextColor"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"bannerText"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"bannerTextSize"</span><span class="p">:</span><span class="w"> </span><span class="s2">"100%"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"bannerImage"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"bannerImageAlign"</span><span class="p">:</span><span class="w"> </span><span class="s2">"left"</span><span class="w">
         </span><span class="p">}</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="nt">"children"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -4388,17 +4411,17 @@ the system will append &ldquo;-{number}&rdquo; to the <code class="prettyprint">
 <tr>
 <td><code class="prettyprint">data.summary</code></td>
 <td>String</td>
-<td>The summary of the product</td>
+<td>The summary of the product (deprecated)</td>
 </tr>
 <tr>
 <td><code class="prettyprint">data.image</code></td>
 <td>File</td>
-<td>The product image</td>
+<td>The product image (deprecated)</td>
 </tr>
 <tr>
 <td><code class="prettyprint">data.description</code></td>
 <td>String</td>
-<td>The product description (HTML)</td>
+<td>The product description (HTML, deprecated)</td>
 </tr>
 <tr>
 <td><code class="prettyprint">data.price</code></td>
@@ -4414,6 +4437,61 @@ the system will append &ldquo;-{number}&rdquo; to the <code class="prettyprint">
 <td><code class="prettyprint">data.buyButtonUrl</code></td>
 <td>String</td>
 <td>The link for the &ldquo;Buy&rdquo; button</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.availableForPurchase</code></td>
+<td>Boolean</td>
+<td>Whether the product is available for purchase or not.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.availableStart</code></td>
+<td>Date (&lsquo;YYYY-MM-DD&rsquo;)</td>
+<td>If the product is available for purchase, the date the buy button becomes active</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.availableEnd</code></td>
+<td>Date (&#39;YYYY-MM-DD&rsquo;)</td>
+<td>If the product is available for purchase, the date the buy button becomes inactive</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.notAvailableText</code></td>
+<td>String</td>
+<td>Text to display to the user if <code class="prettyprint">availableForPurchase</code> is false.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.hasBanner</code></td>
+<td>Boolean</td>
+<td>Whether this product has a promotional banner appearing on objects that use it</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.bannerBackgroundColor</code></td>
+<td>String (CSS color)</td>
+<td>The background color to use for the banner</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.bannerTextColor</code></td>
+<td>String (CSS color)</td>
+<td>The foreground color to use for the banner</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.bannerText</code></td>
+<td>String</td>
+<td>The text to display in the banner (HTML)</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.bannerTextSize</code></td>
+<td>Enumeration</td>
+<td>The size of text to use. Values are &#39;50%&rsquo;, &#39;75%&rsquo;, &#39;100%&rsquo;, &#39;125%&rsquo;, &#39;150%&rsquo;, &#39;200%&rsquo;.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.bannerImage</code></td>
+<td>File</td>
+<td>The image to display in the banner</td>
+</tr>
+<tr>
+<td><code class="prettyprint">data.bannerImageAlign</code></td>
+<td>Enumeration</td>
+<td>The side of the banner to display the image; &#39;left&rsquo; or &#39;right&rsquo;.</td>
 </tr>
 </tbody></table>
 
@@ -4509,7 +4587,7 @@ the system will append &ldquo;-{number}&rdquo; to the <code class="prettyprint">
 <tr>
 <td>course</td>
 <td><code class="prettyprint">{{ROOT}}/apps/{{KEY}}_courses/records/{{ID}}</code></td>
-<td>The course that is attached to this product item, when <code class="prettyprint">data.type</code> is &lsquo;CourseRecord&rsquo;.</td>
+<td>The course that is attached to this product item, when <code class="prettyprint">data.type</code> is &#39;CourseRecord&rsquo;.</td>
 <td><a href="#record-apprecord"><code class="prettyprint">AppRecord</code></a> from <a href="#courses">Courses</a></td>
 </tr>
 <tr>
