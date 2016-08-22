@@ -156,6 +156,38 @@ Name | Type | Description
 This is much the same as a [Writable Collection](#writable-collection-writablecollection), with the addition of ``collection.types``, 
 which describes objects that can be [linked](#link-target-linktarget) here.
 
+### Replace the list of objects in the collection
+
+```
+POST {{RESOURCE}} HTTP/1.1
+Content-Type: application/json
+
+{
+	"set": [
+		{ "$Resource": "{{RESOURCE2}}" }
+	]
+}
+```
+
+Fields in the request:
+
+Name | Type | Description
+---- | ---- | -----------
+set | Array of [Resource Pointer](#resource-pointer) | A list of resources that this collection should represent.
+
+If this is provided, the contents of the collection are replaced with the specified items. In the case of a [Sortable Collection](#sortable-collection-sortablecollection),
+the objects here also represent the ordering of the items.
+
+#### Errors
+
+- [INVALID_BODY](#invalid-body) when:
+  - No properties exist in the outermost object.
+  - Unexpected properties exist in the outermost object. (Only 'set' should appear here.)
+  - If ``set`` is not an array, does not contain [Resource Pointer](#resource-pointer) objects, or those resource pointers do not resolve to [Resource](#resources-resource) objects.
+  - If any of the objects in ``set`` are not of a suitable type.
+- [UNKNOWN_ERROR](#unknown-error) when:
+  - Another error is encountered on the server.
+
 ### Change the list of objects in the collection
 
 #### Request
@@ -353,6 +385,8 @@ remove | Optional array of [Resource Pointers](#resource-pointer) | Items to rem
 The items in ``remove`` must be items currently in the collection; those in ``append`` must be items not in the collection.
 
 The items in ``order`` must be all of the items that will be in the final collection after processing ``append`` and ``remove``.
+
+If you also want to simply outright replace the contents of the collection, use the ``set`` method from [Writable Colletion](#writable-collection-writablecollection) instead.
 
 #### Response
 

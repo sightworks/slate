@@ -39,3 +39,17 @@ Content-Type: application/json
 Invoking this method will update the representation of the resource.
 
 See [Errors](#errors) below for details of errors that might come back.
+
+### POST ``{{RESOURCE}}``
+
+```
+POST {{RESOURCE}} HTTP/1.1
+Content-Type: application/json
+
+/* Only the updated fields on the resource */
+```
+
+Invoking this method will also update the representation of the resource, in the same manner as PUT.
+
+This will merge the values in the object provided into the representation of the resource and update it accordingly. The errors here are the same as for PUT, since behind the scenes, it uses the same
+mechanisms for updating the resource.
