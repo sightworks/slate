@@ -154,6 +154,14 @@ you&rsquo;ll have to replace <code class="prettyprint">\n</code> with <code clas
 to state that the former is arbitrary text which may be used programatically, where the latter is still HTML to be sent to the user of the
 website containing this block.</p>
 
+<h2 id="link">Link</h2>
+<pre class="highlight javascript"><code><span class="k">new</span> <span class="nx">Blocks</span><span class="p">.</span><span class="nx">Link</span><span class="p">({</span>
+    <span class="na">title</span><span class="p">:</span> <span class="s1">'Link title'</span>
+<span class="p">});</span>
+</code></pre>
+
+<p>This creates a link container. There are no custom properties.</p>
+
 <h2 id="image">Image</h2>
 <pre class="highlight javascript"><code><span class="k">new</span> <span class="nx">Blocks</span><span class="p">.</span><span class="nx">Image</span><span class="p">({</span>
     <span class="na">title</span><span class="p">:</span> <span class="s1">'Image Block'</span><span class="p">,</span>
@@ -497,6 +505,7 @@ exactly where in scope the block() method is being called from.</p>
 <p>The acceptable values for defaultContent and the return value vary based on the block type:
 * Text: The argument is the text to be used, without HTML encoding. The result is always HTML encoded text.
 * RawText, HTML: The argument and the result are a string containing text.
+* Link: The argument and result is an object containing <code class="prettyprint">link</code> and <code class="prettyprint">title</code> properties, which are the default URL and title to be used for the link.
 * Image, Document: The argument is the path to a file to be used by default. The result is a fully-specified URL to the file.
 * AppGroup, AppRecord: The argument is unused; the result is a Group or Record respectively.</p>
 
