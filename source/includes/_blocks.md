@@ -72,6 +72,16 @@ The difference between ``new Blocks.RawText({ multiLine: true })`` and ``new Blo
 to state that the former is arbitrary text which may be used programatically, where the latter is still HTML to be sent to the user of the
 website containing this block.
 
+## Link
+
+```javascript
+new Blocks.Link({
+	title: 'Link title'
+});
+```
+
+This creates a link container. There are no custom properties.
+
 ## Image
 
 ```javascript
@@ -366,6 +376,7 @@ This determines the content that should appear in the block and returns it.
 The acceptable values for defaultContent and the return value vary based on the block type:
 * Text: The argument is the text to be used, without HTML encoding. The result is always HTML encoded text.
 * RawText, HTML: The argument and the result are a string containing text.
+* Link: The argument and result is an object containing ``link`` and ``title`` properties, which are the default URL and title to be used for the link.
 * Image, Document: The argument is the path to a file to be used by default. The result is a fully-specified URL to the file.
 * AppGroup, AppRecord: The argument is unused; the result is a Group or Record respectively.
 
