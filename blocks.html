@@ -502,12 +502,17 @@ exactly where in scope the block() method is being called from.</p>
 
 <p>This determines the content that should appear in the block and returns it.</p>
 
-<p>The acceptable values for defaultContent and the return value vary based on the block type:
-* Text: The argument is the text to be used, without HTML encoding. The result is always HTML encoded text.
-* RawText, HTML: The argument and the result are a string containing text.
-* Link: The argument and result is an object containing <code class="prettyprint">link</code> and <code class="prettyprint">title</code> properties, which are the default URL and title to be used for the link.
-* Image, Document: The argument is the path to a file to be used by default. The result is a fully-specified URL to the file.
-* AppGroup, AppRecord: The argument is unused; the result is a Group or Record respectively.</p>
+<p>The acceptable values for defaultContent and the return value vary based on the block type:</p>
+
+<p><code class="prettyprint">Text</code>: The argument is the text to be used, without HTML encoding. The result is always HTML encoded text.</p>
+
+<p><code class="prettyprint">RawText</code>, <code class="prettyprint">HTML</code>: The argument and the result are a string containing text.</p>
+
+<p><code class="prettyprint">Link</code>: The argument and result is an object containing <code class="prettyprint">link</code> and <code class="prettyprint">title</code> properties, which are the default URL and title to be used for the link.</p>
+
+<p><code class="prettyprint">Image</code>, <code class="prettyprint">Document</code>: The argument is the path to a file to be used by default. The result is a fully-specified URL to the file.</p>
+
+<p><code class="prettyprint">AppGroup</code>, <code class="prettyprint">AppRecord</code>: The argument is unused; the result is a Group or Record respectively.</p>
 
 <h2 id="process-callback-content-any-any-defaultcontent-any-any">process(callback:(content:Any):Any, defaultContent:Any):Any</h2>
 <pre class="highlight javascript"><code><span class="nx">block</span><span class="p">.</span><span class="nx">process</span><span class="p">(</span><span class="nx">value</span> <span class="o">=&gt;</span> <span class="nx">value</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s2">"\n"</span><span class="p">).</span><span class="nx">join</span><span class="p">(</span><span class="s2">"&lt;br&gt;"</span><span class="p">),</span> <span class="err">`</span>
